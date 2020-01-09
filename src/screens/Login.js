@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
-import {View, Text, StyleSheet, } from 'react-native';
-import {Button,Header,Input,SearchBar} from 'react-native-elements'
+import {View, StyleSheet} from 'react-native';
+import {Button,Input} from 'react-native-elements'
 import Icon from 'react-native-vector-icons/FontAwesome';
 export default class Example extends Component {
   constructor(props){
@@ -65,7 +65,7 @@ export default class Example extends Component {
             <Icon
               name='envelope'
               size={18}
-              color='gray'
+              color='#FFA500'
             />
           }></Input>
         <Input 
@@ -76,21 +76,21 @@ export default class Example extends Component {
             <Icon
             name='key'
             size={18}
-            color="gray"></Icon>
+            color="#FFA500"></Icon>
           }
           ></Input>  
           <View style={{width:'94%',marginTop:12}}>
-            <Button title="注册" onPress={this.registion.bind(this)}></Button>
+              <Button title="登陆" onPress={this.registion.bind(this)} buttonStyle={styles.bg}></Button>
           </View>
       </View>
     );
   }
 }
 const styles = StyleSheet.create({
-  search:{
-    color:'red'
+  bg:{
+   backgroundColor:'#FFA500'
   },
-  btn:{
-    backgroundColor:'red'
+  fontColor:{
+    color:'#FFA500'
   }
 })

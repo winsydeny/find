@@ -7,7 +7,7 @@ export default class Home extends Component {
     this.state = {date: getDate()}
   }
   componentDidMount(){
-    this.props.navigation.navigate('Login')
+    this.props.navigation.navigate('Registerd')
   }
   componentWillUnMount(){
 
