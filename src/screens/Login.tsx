@@ -3,7 +3,7 @@ import {View, StyleSheet} from 'react-native';
 import {Button,Input} from 'react-native-elements'
 import Icon from 'react-native-vector-icons/FontAwesome';
 export default class Example extends Component {
-  constructor(props){
+  constructor(props:any){
     super(props)
   }
   state = {
@@ -12,10 +12,10 @@ export default class Example extends Component {
     emailErrorMessage:'',
     passcodeErrorMessage:''
   }
-  onChangeEmail(inputEmail){
+  onChangeEmail(inputEmail:string){
     this.setState({ email:inputEmail })
   }
-  onChangePass(pass){
+  onChangePass(pass:string){
     this.setState({ passcode:pass })
   }
   checkData(){

@@ -1,8 +1,11 @@
 
 import React, { Component } from 'react';
 import { Text, View,Button } from 'react-native';
-export default class Home extends Component {
-  constructor(props){
+interface IState {
+  date: number
+}
+export default class Home extends Component<any,IState> {
+  constructor(props:any){
     super(props);
     this.state = {date: getDate()}
   }
@@ -27,7 +30,7 @@ export default class Home extends Component {
     );
   }
 }
-function getDate(){
+function getDate():number{
   let date = new Date()
   return date.getHours()
 }

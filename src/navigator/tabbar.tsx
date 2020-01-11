@@ -32,7 +32,7 @@ const BottomTabNavigator = createBottomTabNavigator({
         tabBarIcon: ({tintColor}) => {
             // console.log('this===',tintColor,navigation)ß
           const {routeName} = navigation.state;
-          const mapIcon = {
+          const mapIcon:any = {
             Home: 'home',
             Finds: 'bullseye',
             Mine: 'user-circle',

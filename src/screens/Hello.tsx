@@ -14,7 +14,7 @@ export default class Home extends Component {
     return (
       <View>
         <Text>微信</Text>
-        <Button title={this.state.num}></Button>
+        <Button title={this.state.num} onPress={() => {}}></Button>
       </View>
     );
   }
