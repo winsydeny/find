@@ -14,7 +14,7 @@ class App extends Component{
   }
   render(){
     return (
-      <AppContainer></AppContainer>
+      <AppContainer />
     )
   }
 }

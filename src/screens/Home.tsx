@@ -4,12 +4,14 @@ import { Text, View,Button } from 'react-native';
 interface IState {
   date: number
 }
-export default class Home extends Component<any,IState> {
+export default class Home extends Component<any>{
   constructor(props:any){
     super(props);
-    this.state = {date: getDate()}
   }
+  state = {date: getDate()}
+
   componentDidMount(){
+    // const na = this.props.navigation;
     this.props.navigation.navigate('Registerd')
   }
   componentWillUnMount(){

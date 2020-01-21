@@ -28,3 +28,8 @@
 >>> Plan
 - [input动画](https://github.com/halilb/react-native-textinput-effects)
 - 
+
+
+### Prettier
+
+### eslint 
