@@ -1,18 +1,14 @@
 
 import React, { Component } from 'react';
 import { Text, View,Button } from 'react-native';
-interface IState {
-  date: number
+interface Props {
+  navigation: any
 }
-export default class Home extends Component<any>{
-  constructor(props:any){
-    super(props);
-  }
+export default class Home extends Component<Props>{
   state = {date: getDate()}
 
   componentDidMount(){
-    // const na = this.props.navigation;
-    this.props.navigation.navigate('Registerd')
+    // this.props.navigation.navigate('Registerd')
   }
   componentWillUnMount(){
 

@@ -1,19 +1,24 @@
 
 import React, { Component } from 'react';
-import { Text, View } from 'react-native';
-const Name = 'This is my macbook pro'
-export default class Home extends Component {
+// import { Text, View } from 'react-native';
+import { Text, View, Button } from 'react-native';
+interface Props {
+  navigation: any
+}
+export default class Mine extends Component<Props> {
   componentDidMount() {
-    const value = typeof identity("xijia")
-
   }
   render() {
-    const value = identity<string>('sdf')
-
+    const value = identity<string>('Mine')
+    // const navigation = this.props.navigation
     return (
       <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-        <Text>Mine</Text>
         <Text>{value}</Text>
+        <Button title="login" onPress={() => this.props.navigation.navigate('Login')}></Button>
+        <Button title="Registerd" onPress={() =>
+          this.props.navigation.navigate('Registerd')
+        }></Button>
+        <Button title="go to hello" onPress={() => this.props.navigation.navigate('Mine')}></Button>
       </View>
     );
   }

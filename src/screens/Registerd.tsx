@@ -7,6 +7,7 @@ import {
     Text
 } from 'react-native-elements'
 import { View, ActivityIndicator, Alert } from 'react-native'
+import styles from  '../../style.js'
 export default class Registerd extends Component {
     state = {
         email: '',
@@ -43,6 +44,7 @@ export default class Registerd extends Component {
                     onChangeText={email => this.setState({ email: email })}></Input>
                 <View style={{ width: '94%', marginTop: 12 }}>
                     <Button
+                        buttonStyle={styles.bg}
                         title="一键注册"
                         loading={this.state.loading}
                         onPress={this.registerd.bind(this)}></Button>

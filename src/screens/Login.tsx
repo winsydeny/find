@@ -88,11 +88,3 @@ export default class Example extends Component {
     );
   }
 }
-// const styles = StyleSheet.create({
-//   bg: {
-//     backgroundColor: '#FFA500'
-//   },
-//   fontColor: {
-//     color: '#FFA500'
-//   }
-// })
