@@ -38,7 +38,7 @@ export default class Home extends Component<Props> {
         style={{
           paddingLeft: 12,
           paddingRight: 12,
-          paddingBottom: 60,
+          paddingBottom: 58,
           marginTop: 8,
         }}>
         <StatusBar backgroundColor="white" barStyle="dark-content"></StatusBar>
@@ -72,17 +72,18 @@ export default class Home extends Component<Props> {
 
           <Avatar
             rounded
+            size={50}
             containerStyle={styles.avatar}
             avatarStyle={{}}
             source={{
               uri:
                 'https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg',
             }}></Avatar>
-            {/* <Badge
+            <Badge
               status="error"
-              value="9"
+              value="10"
               badgeStyle={{}}
-              containerStyle={{position:'absolute',top:0,right:8}}></Badge> */}
+              containerStyle={{position:'absolute',top:0,right:2}}></Badge>
         </View>
         <ScrollView showsVerticalScrollIndicator={false}>
           <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
