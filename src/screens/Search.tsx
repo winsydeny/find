@@ -6,7 +6,7 @@ import global from '../../style';
 interface Props {
   navigation: any;
 }
-export class Search extends Component<Props> {
+export default class Search extends Component<Props> {
   state = {
     search: '',
     isShow: true,

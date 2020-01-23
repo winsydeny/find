@@ -1,8 +1,8 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import global from '../../style';
 import Icon from 'react-native-vector-icons/AntDesign';
 // import { Text, View,Button } from 'react-native';
-import {SearchBar, Text, Avatar, Button, Badge} from 'react-native-elements';
+import { SearchBar, Text, Avatar, Button, Badge } from 'react-native-elements';
 import {
   View,
   StyleSheet,
@@ -32,7 +32,8 @@ export default class Home extends Component<Props> {
     // this.props.navigation.navigate('Registerd')
   }
   render() {
-    const {search} = this.state;
+    const { search } = this.state;
+    const { navigate } = this.props.navigation
     return (
       <View
         style={{
@@ -50,7 +51,7 @@ export default class Home extends Component<Props> {
             alert("Modal has been closed.");
           }}
         > */}
-        <View style={{flexDirection: 'row', alignItems: 'center'}}>
+        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
           {/* <SearchBar 
           clearIcon={true}
           placeholder="Type here ...."
@@ -65,11 +66,10 @@ export default class Home extends Component<Props> {
             <View style={styles.searchBar}>
               <Icon
                 name="search1"
-                style={{paddingLeft: 10, color: '#867f7fc9'}}></Icon>
-              <Text style={{paddingLeft: 6, color: '#867f7fc9'}}>请输入</Text>
+                style={{ paddingLeft: 10, color: '#867f7fc9' }}></Icon>
+              <Text style={{ paddingLeft: 6, color: '#867f7fc9' }}>请输入</Text>
             </View>
           </TouchableWithoutFeedback>
-
           <Avatar
             rounded
             size={50}
@@ -79,23 +79,27 @@ export default class Home extends Component<Props> {
               uri:
                 'https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg',
             }}></Avatar>
-            <Badge
-              status="error"
-              value="10"
-              badgeStyle={{}}
-              containerStyle={{position:'absolute',top:0,right:2}}></Badge>
+          <Badge
+            status="error"
+            value="10"
+            badgeStyle={{}}
+            containerStyle={{ position: 'absolute', top: 0, right: 2 }}></Badge>
         </View>
         <ScrollView showsVerticalScrollIndicator={false}>
           <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
             <View style={styles.cardBox}>
               <View style={styles.card}></View>
               <View style={styles.card}></View>
-              <View style={[styles.card]}></View>
+              <TouchableWithoutFeedback onPress={() => navigate('Forum')}>
+                <View style={[styles.card]}>
+                  <Text>每日动态</Text>
+                </View>
+              </TouchableWithoutFeedback>
             </View>
           </ScrollView>
 
           <View>
-            <Text style={{lineHeight: 60, fontSize: 20, fontWeight: 'bold'}}>
+            <Text style={{ lineHeight: 60, fontSize: 20, fontWeight: 'bold' }}>
               今日投递
             </Text>
             <View style={[styles.defaultCard]}>
@@ -103,13 +107,13 @@ export default class Home extends Component<Props> {
             </View>
           </View>
           <View>
-            <Text style={{lineHeight: 60, fontSize: 20, fontWeight: 'bold'}}>
+            <Text style={{ lineHeight: 60, fontSize: 20, fontWeight: 'bold' }}>
               周数据
             </Text>
             <View style={[styles.defaultCard]}></View>
           </View>
-          <View style={{marginBottom: 10}}>
-            <Text style={{lineHeight: 60, fontSize: 20, fontWeight: 'bold'}}>
+          <View style={{ marginBottom: 10 }}>
+             <Text style={{ lineHeight: 60, fontSize: 20, fontWeight: 'bold' }}>
               月数据
             </Text>
             <View style={[styles.defaultCard]}></View>
@@ -120,7 +124,7 @@ export default class Home extends Component<Props> {
   }
 }
 
-const {color} = global.fontColor;
+const { color } = global.fontColor;
 const styles = StyleSheet.create({
   searchBar: {
     flex: 1,
@@ -130,12 +134,12 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     backgroundColor: '#f1f1f1',
-    marginBottom:8
+    marginBottom: 8
     // justifyContent:"center"
   },
   avatar: {
     marginRight: 8,
-    marginBottom:8,
+    marginBottom: 8,
     // width:50,
     // height:50,
     // borderRadius:200
@@ -151,6 +155,7 @@ const styles = StyleSheet.create({
     height: 180,
     backgroundColor: 'rgb(200, 204, 206)',
     justifyContent: 'center',
+    alignItems: 'center',
     borderRadius: 12,
     marginRight: 14,
   },
