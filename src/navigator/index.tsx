@@ -2,8 +2,9 @@ import {createAppContainer} from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 import Welcome from '../screens/Hello';
 import TabBar from './tabbar';
-import Login from '../screens/Login'
-import Registerd from '../screens/Registerd'
+import Login from '../screens/Login';
+import Registerd from '../screens/Registerd';
+import { Search } from '../screens/Search';
 const App = createStackNavigator({
     BottomTabNavigator:{
         screen: TabBar,
@@ -24,7 +25,12 @@ const App = createStackNavigator({
     Registerd:{
         screen: Registerd,
         navigationOptions:{
-            // cancel header style
+            header:null
+        }
+    },
+    Search:{
+        screen: Search,
+        navigationOptions:{
             header:null
         }
     }
