@@ -6,6 +6,9 @@ import Login from '../screens/Login';
 import Registerd from '../screens/Registerd';
 import Search from '../screens/Search';
 import Forum from '../screens/Forum';
+import SearchResults from '../screens/SearchResults';
+import ListDetail from '../screens/ListDetail';
+
 const App = createStackNavigator({
 	BottomTabNavigator: {
 		screen: TabBar,
@@ -40,8 +43,20 @@ const App = createStackNavigator({
 		navigationOptions: {
 
 		},
-	}
+	},
+	SearchResults: {
+		screen: SearchResults,
+		navigationOptions: {
+			header: null
+		}
+	},
+	ListDetail: {
+		screen: ListDetail,
+		navigationOptions: {
+			header: null,
 
+		}
+	}
 })
 
 export default createAppContainer(App);

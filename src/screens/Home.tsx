@@ -3,6 +3,7 @@ import global from '../../style';
 import Icon from 'react-native-vector-icons/AntDesign';
 // import { Text, View,Button } from 'react-native';
 import { SearchBar, Text, Avatar, Button, Badge } from 'react-native-elements';
+import ListItem from '../components/ListItem'
 import {
   View,
   StyleSheet,
@@ -37,12 +38,11 @@ export default class Home extends Component<Props> {
     return (
       <View
         style={{
-          paddingLeft: 12,
-          paddingRight: 12,
+
           paddingBottom: 58,
           marginTop: 8,
         }}>
-        <StatusBar backgroundColor="white" barStyle="dark-content"></StatusBar>
+        <StatusBar backgroundColor="#FFFFFF" barStyle="dark-content"></StatusBar>
         {/* <Modal
           animationType="slide"
           transparent={false}
@@ -51,7 +51,10 @@ export default class Home extends Component<Props> {
             alert("Modal has been closed.");
           }}
         > */}
-        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+        <View style={{
+          flexDirection: 'row', alignItems: 'center', paddingLeft: 12,
+          paddingRight: 12,
+        }}>
           {/* <SearchBar 
           clearIcon={true}
           placeholder="Type here ...."
@@ -85,39 +88,42 @@ export default class Home extends Component<Props> {
             badgeStyle={{}}
             containerStyle={{ position: 'absolute', top: 0, right: 2 }}></Badge>
         </View>
-        <ScrollView showsVerticalScrollIndicator={false}>
-          <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
+        <ScrollView showsVerticalScrollIndicator={false} style={{ backgroundColor: "#f4f5f5" }}>
+          <Text style={{ fontSize: 20, fontWeight: 'bold', paddingLeft: 12, paddingTop: 8 }}>
+            Top companies
+            </Text>
+          <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} style={{ paddingLeft: 12 }}>
             <View style={styles.cardBox}>
-              <View style={styles.card}></View>
-              <View style={styles.card}></View>
               <TouchableWithoutFeedback onPress={() => navigate('Forum')}>
                 <View style={[styles.card]}>
                   <Text>每日动态</Text>
                 </View>
               </TouchableWithoutFeedback>
+              <TouchableWithoutFeedback onPress={() => navigate('ListDetail')}>
+                <View style={[styles.card]}>
+                  <Text>详情</Text>
+                </View>
+              </TouchableWithoutFeedback>
+              {/* <View style={styles.card}></View> */}
+              <View style={styles.card}></View>
             </View>
           </ScrollView>
 
           <View>
-            <Text style={{ lineHeight: 60, fontSize: 20, fontWeight: 'bold' }}>
-              今日投递
+            <Text style={{ lineHeight: 60, fontSize: 20, fontWeight: 'bold', paddingLeft: 12 }}>
+              Jobs for you
             </Text>
-            <View style={[styles.defaultCard]}>
-              <Text>Status</Text>
+            <View style={{ marginBottom: 10 }}>
+              <ListItem></ListItem>
+            </View>
+            <View style={{ marginBottom: 10 }}>
+              <ListItem></ListItem>
+            </View>
+            <View style={{ marginBottom: 10 }}>
+              <ListItem></ListItem>
             </View>
           </View>
-          <View>
-            <Text style={{ lineHeight: 60, fontSize: 20, fontWeight: 'bold' }}>
-              周数据
-            </Text>
-            <View style={[styles.defaultCard]}></View>
-          </View>
-          <View style={{ marginBottom: 10 }}>
-             <Text style={{ lineHeight: 60, fontSize: 20, fontWeight: 'bold' }}>
-              月数据
-            </Text>
-            <View style={[styles.defaultCard]}></View>
-          </View>
+
         </ScrollView>
       </View>
     );
@@ -151,9 +157,9 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   card: {
-    width: 150,
-    height: 180,
-    backgroundColor: 'rgb(200, 204, 206)',
+    width: 120,
+    height: 150,
+    backgroundColor: '#FFFFFF',
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 12,

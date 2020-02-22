@@ -18,6 +18,7 @@ interface ItemList {
 }
 export default class Forum extends Component {
   _keyExtractor = (item: any, index: any) => item.id;
+  child = '';
   state = {
     // thumb:false,
     list: [],
@@ -56,6 +57,9 @@ export default class Forum extends Component {
     this.setState({ list: temp })
   };
   commentsHandle(item: any) {
+    // console.log(this.refs.Dialog)
+    // this.child.show()
+    // console.log(this.child)
     this.setState({ showDialog: true, dialogContent: item.uid })
   };
   render() {
@@ -73,7 +77,10 @@ export default class Forum extends Component {
                   source={{ uri: 'https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg' }}
                 ></Image>
                 <View style={{}}>
-                  <Text style={styles.title}>{item.title}{item.uid}</Text>
+                  <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                    <Text style={styles.title}>{item.title}{item.uid}</Text>
+                    <Text style={{ position: 'absolute', right: 26, fontSize: 12, color: 'gray' }}>2019年12月12</Text>
+                  </View>
                   <Text numberOfLines={2} style={styles.text}>{item.msg}</Text>
                   <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                     <Icon
@@ -94,7 +101,11 @@ export default class Forum extends Component {
               </View>
             </TouchableWithoutFeedback>
           )}></FlatList>
-        <BottomDialog content={dialogContent} showDialog={showDialog}></BottomDialog>
+        <BottomDialog
+          content={dialogContent}
+          showDialog={showDialog}
+          dissmiss={() => { this.setState({ showDialog: false }) }}
+        ></BottomDialog>
       </View>
     )
   }
@@ -129,7 +140,7 @@ const styles = StyleSheet.create({
   },
   icon: {
     marginRight: 4,
-    fontSize: 12,
+    fontSize: 14,
     color: 'gray'
   },
   iconText: {

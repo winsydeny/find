@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@react-native-community/blur": "^3.4.1",
+    "@react-native-community/datetimepicker": "^2.2.2",
     "react": "16.9.0",
     "react-native": "0.61.5",
     "react-native-elements": "^1.2.7",
