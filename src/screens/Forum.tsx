@@ -7,12 +7,13 @@ import {
   FlatList,
   Image,
   Button,
+  StatusBar
 } from 'react-native'
 import { } from 'react-native-elements'
 import { Dialog } from 'react-native-ui-lib'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import BottomDialog from '../components/BottomDialog'
-import global from '../../style'
+import global from '../../style';
 interface ItemList {
   title: string
 }
@@ -21,6 +22,7 @@ export default class Forum extends Component {
   child = '';
   state = {
     // thumb:false,
+    tab: 1,
     list: [],
     showDialog: false,
     dialogContent: ''
@@ -66,6 +68,20 @@ export default class Forum extends Component {
     const { list, showDialog, dialogContent } = this.state;
     return (
       <View>
+        <StatusBar backgroundColor={global.bg2.backgroundColor} barStyle="light-content"></StatusBar>
+        <View style={{ height: 30, backgroundColor: global.bg2.backgroundColor }}></View>
+        <View style={{ flexDirection: "row", alignItems: "center" }}>
+
+          <Text
+            onPress={() => this.setState({ tab: 1 })}
+            style={[styles.tab, this.state.tab === 1 ? styles.tabChose : null]}>Trend</Text>
+          <Text
+            onPress={() => this.setState({ tab: 2 })}
+            style={[styles.tab, this.state.tab === 2 ? styles.tabChose : null]}>Recent</Text>
+          <Text
+            onPress={() => this.setState({ tab: 3 })}
+            style={[styles.tab, this.state.tab === 3 ? styles.tabChose : null]}>Preference</Text>
+        </View>
         <FlatList
           data={list}
           keyExtractor={this._keyExtractor}
@@ -81,7 +97,9 @@ export default class Forum extends Component {
                     <Text style={styles.title}>{item.title}{item.uid}</Text>
                     <Text style={{ position: 'absolute', right: 26, fontSize: 12, color: 'gray' }}>2019年12月12</Text>
                   </View>
-                  <Text numberOfLines={2} style={styles.text}>{item.msg}</Text>
+                  <TouchableWithoutFeedback onPress={() => this.props.navigation.navigate("ForumDetail")}>
+                    <Text numberOfLines={2} style={styles.text}>{item.msg}</Text>
+                  </TouchableWithoutFeedback>
                   <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                     <Icon
                       name="thumb-up"
@@ -147,6 +165,17 @@ const styles = StyleSheet.create({
     fontSize: 12,
     color: 'gray',
     marginRight: 16
+  },
+  tab: {
+    flex: 1,
+    textAlign: "center",
+    // lineHeight: 50
+    paddingTop: 20,
+    paddingBottom: 8,
+    fontWeight: "bold"
+  },
+  tabChose: {
+    borderBottomColor: global.bg2.backgroundColor, borderBottomWidth: 2, color: global.bg.backgroundColor
   }
 })
 
