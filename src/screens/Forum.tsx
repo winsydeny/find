@@ -12,6 +12,8 @@ import {
 import { } from 'react-native-elements'
 import { Dialog } from 'react-native-ui-lib'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
+import AntIcon from 'react-native-vector-icons/AntDesign';
+
 import BottomDialog from '../components/BottomDialog'
 import global from '../../style';
 interface ItemList {
@@ -69,9 +71,11 @@ export default class Forum extends Component {
     return (
       <View>
         <StatusBar backgroundColor={global.bg2.backgroundColor} barStyle="light-content"></StatusBar>
-        <View style={{ height: 30, backgroundColor: global.bg2.backgroundColor }}></View>
-        <View style={{ flexDirection: "row", alignItems: "center" }}>
+        <View style={{ height: 30, backgroundColor: global.bg2.backgroundColor }}>
 
+          <AntIcon onPress={() => this.props.navigation.pop()} name="arrowleft" style={styles.arrow}></AntIcon>
+        </View>
+        <View style={{ flexDirection: "row", alignItems: "center", borderBottomWidth: 0.2, borderBottomColor: '#b5b4b494' }}>
           <Text
             onPress={() => this.setState({ tab: 1 })}
             style={[styles.tab, this.state.tab === 1 ? styles.tabChose : null]}>Trend</Text>
@@ -97,7 +101,7 @@ export default class Forum extends Component {
                     <Text style={styles.title}>{item.title}{item.uid}</Text>
                     <Text style={{ position: 'absolute', right: 26, fontSize: 12, color: 'gray' }}>2019年12月12</Text>
                   </View>
-                  <TouchableWithoutFeedback onPress={() => this.props.navigation.navigate("ForumDetail")}>
+                  <TouchableWithoutFeedback o nPress={() => this.props.navigation.navigate("ForumDetail")}>
                     <Text numberOfLines={2} style={styles.text}>{item.msg}</Text>
                   </TouchableWithoutFeedback>
                   <View style={{ flexDirection: 'row', alignItems: 'center' }}>
@@ -176,6 +180,16 @@ const styles = StyleSheet.create({
   },
   tabChose: {
     borderBottomColor: global.bg2.backgroundColor, borderBottomWidth: 2, color: global.bg.backgroundColor
-  }
+  },
+  arrow: {
+    // color: global.bg2.backgroundColor,
+    color: "#FFFFFF",
+    // color: "#000",
+    fontSize: 25,
+    marginLeft: 25
+    // top: 28,
+    // left: 25,
+    // position: "absolute"
+  },
 })
 

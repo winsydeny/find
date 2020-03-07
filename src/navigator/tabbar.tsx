@@ -5,6 +5,7 @@ import Icon from 'react-native-vector-icons/FontAwesome'
 import Home from '../screens/Home'
 import Mine from '../screens/Mine'
 import Finds from '../screens/Finds'
+import Forum from '../screens/Forum';
 
 const BottomTabNavigator = createBottomTabNavigator({
     Home: {

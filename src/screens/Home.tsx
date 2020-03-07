@@ -110,17 +110,18 @@ export default class Home extends Component<Props> {
           </ScrollView>
 
           <View>
-            <Text style={{ lineHeight: 60, fontSize: 20, fontWeight: 'bold', paddingLeft: 12 }}>
-              Jobs for you
-            </Text>
-            <View style={{ marginBottom: 10 }}>
-              <ListItem></ListItem>
+            <View style={{ height: 60, flexDirection: "row", alignItems: "center" }}>
+              <Text style={{ fontSize: 20, fontWeight: 'bold', paddingLeft: 12 }}>为你推荐</Text>
+              <Text style={{ fontSize: 14, paddingRight: 12, position: "absolute", right: 0, color: global.bg2.backgroundColor }}>查看更多</Text>
             </View>
             <View style={{ marginBottom: 10 }}>
-              <ListItem></ListItem>
+              <ListItem navigate={this.props.navigation}></ListItem>
             </View>
             <View style={{ marginBottom: 10 }}>
-              <ListItem></ListItem>
+              <ListItem navigate={this.props.navigation}></ListItem>
+            </View>
+            <View style={{ marginBottom: 10 }}>
+              <ListItem navigate={this.props.navigation}></ListItem>
             </View>
           </View>
 

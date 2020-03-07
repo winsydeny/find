@@ -9,6 +9,7 @@ import Forum from '../screens/Forum';
 import SearchResults from '../screens/SearchResults';
 import ListDetail from '../screens/ListDetail';
 import ForumDetail from '../screens/ForumDetail';
+import Identity from '../screens/Identity'
 const App = createStackNavigator({
 	BottomTabNavigator: {
 		screen: TabBar,
@@ -61,7 +62,12 @@ const App = createStackNavigator({
 		navigationOptions: {
 			// header: null
 			title: "详情",
-
+		}
+	},
+	Identity: {
+		screen: Identity,
+		navigationOptions: {
+			header: null
 		}
 	}
 })

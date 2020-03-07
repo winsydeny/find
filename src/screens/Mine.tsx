@@ -1,9 +1,10 @@
 
 import React, { Component } from 'react';
 // import { Text, View } from 'react-native';
-import { Text, View, Button,TouchableWithoutFeedback,StyleSheet,StatusBar } from 'react-native';
-import { ListItem,Avatar  } from 'react-native-elements';
-import Icon from 'react-native-vector-icons/AntDesign'
+import { Text, View, Button, TouchableWithoutFeedback, StyleSheet, StatusBar } from 'react-native';
+import { ListItem, Avatar } from 'react-native-elements';
+import Icon from 'react-native-vector-icons/AntDesign';
+import global from '../../style'
 interface Props {
   navigation: any
 }
@@ -13,20 +14,24 @@ export default class Mine extends Component<Props> {
   render() {
     const list = [
       {
-        title:'登陆',
+        title: '登陆',
         name: 'Login',
-        
+
       },
       {
-        title:'注册',
+        title: '注册',
         name: 'Registerd',
       },
       {
-        title:'我的简历',
+        title: '我的简历',
         name: 'Login'
       },
       {
-        title:'意见反馈',
+        title: '意见反馈',
+        name: 'Login'
+      },
+      {
+        title: '退出登陆',
         name: 'Login'
       }
     ]
@@ -40,25 +45,26 @@ export default class Mine extends Component<Props> {
       //   }></Button>
       // </View>
       <View>
+        {/* <StatusBar backgroundColor={global.bg2.backgroundColor} barStyle="light-content"></StatusBar> */}
         <View style={styles.avatarBg}>
-        <Avatar
-          size={120}
-          rounded
-          source={{uri: "https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg"}}
-        ></Avatar>
+          <Avatar
+            size={120}
+            rounded
+            source={{ uri: "https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg" }}
+          ></Avatar>
         </View>
         <View>
-        {
-          list.map((list,index) => (
-            <TouchableWithoutFeedback key={index} onPress={() => this.props.navigation.navigate(list.name)}>
-              <ListItem 
-              rightIcon={<Icon name="right"></Icon>}
-              title={list.title}
-              bottomDivider
-              ></ListItem>
-            </TouchableWithoutFeedback>
-          ))
-        }
+          {
+            list.map((list, index) => (
+              <TouchableWithoutFeedback key={index} onPress={() => this.props.navigation.navigate(list.name)}>
+                <ListItem
+                  rightIcon={<Icon name="right"></Icon>}
+                  title={list.title}
+                  bottomDivider
+                ></ListItem>
+              </TouchableWithoutFeedback>
+            ))
+          }
         </View>
       </View>
     );
@@ -70,11 +76,11 @@ export default class Mine extends Component<Props> {
 //   return arg
 // }
 const styles = StyleSheet.create({
-  avatarBg:{
-    justifyContent:"center",
-    alignItems:"center",
-    // backgroundColor:'green',
-    height:120,
+  avatarBg: {
+    justifyContent: "center",
+    alignItems: "center",
+    // backgroundColor: global.bg2.backgroundColor,
+    height: 160,
     // borderBottomLeftRadius:200,
     // borderBottomRightRadius:200
   }
