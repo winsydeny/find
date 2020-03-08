@@ -24,7 +24,7 @@ export default class Mine extends Component<Props> {
       },
       {
         title: '我的简历',
-        name: 'Login'
+        name: 'Resume'
       },
       {
         title: '意见反馈',
@@ -56,7 +56,7 @@ export default class Mine extends Component<Props> {
         <View>
           {
             list.map((list, index) => (
-              <TouchableWithoutFeedback key={index} onPress={() => this.props.navigation.navigate(list.name)}>
+              <TouchableWithoutFeedback key={index} onPress={() => this.props.navigation.push(list.name, { transition: 'forHorizontal' })}>
                 <ListItem
                   rightIcon={<Icon name="right"></Icon>}
                   title={list.title}

@@ -7,6 +7,7 @@ import {
   StyleSheet
 } from 'react-native';
 const Name = 'This is my macbook pro'
+import global from '../../style'
 export default class Identity extends Component {
   state = {
     num: '0'
@@ -16,10 +17,10 @@ export default class Identity extends Component {
       <View style={{ justifyContent: "center", alignItems: "center", flex: 1 }}>
         <View style={{}}>
           <View style={[styles.btn]}>
-            <Button title="求职者" onPress={() => { }} color="gray"></Button>
+            <Button title="我要找工作" onPress={() => { }} color={global.bg2.backgroundColor}></Button>
           </View>
           <View style={[styles.btn]}>
-            <Button title="招聘者" onPress={() => { }} color="gray"></Button>
+            <Button title="我要招人" onPress={() => { }} color={global.bg2.backgroundColor}></Button>
           </View>
         </View>
 

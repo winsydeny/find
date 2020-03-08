@@ -90,22 +90,24 @@ export default class Home extends Component<Props> {
         </View>
         <ScrollView showsVerticalScrollIndicator={false} style={{ backgroundColor: "#f4f5f5" }}>
           <Text style={{ fontSize: 20, fontWeight: 'bold', paddingLeft: 12, paddingTop: 8 }}>
-            Top companies
+            公司推荐
             </Text>
           <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} style={{ paddingLeft: 12 }}>
             <View style={styles.cardBox}>
               <TouchableWithoutFeedback onPress={() => navigate('Forum')}>
-                <View style={[styles.card]}>
-                  <Text>每日动态</Text>
+                <View style={[styles.card, styles.bg1]}>
+                  <Text style={{ color: "#FFFFFF", fontWeight: "bold" }}>FaceBook</Text>
                 </View>
               </TouchableWithoutFeedback>
               <TouchableWithoutFeedback onPress={() => navigate('ListDetail')}>
-                <View style={[styles.card]}>
-                  <Text>详情</Text>
+                <View style={[styles.card, styles.bg2]}>
+                  <Text style={{ color: "#FFFFFF", fontWeight: "bold" }}>Apple</Text>
                 </View>
               </TouchableWithoutFeedback>
               {/* <View style={styles.card}></View> */}
-              <View style={styles.card}></View>
+              <View style={[styles.card, styles.bg3, { marginRight: 28 }]}>
+                <Text style={{ color: "#FFFFFF", fontWeight: "bold" }}>Baidu</Text>
+              </View>
             </View>
           </ScrollView>
 
@@ -160,7 +162,7 @@ const styles = StyleSheet.create({
   card: {
     width: 120,
     height: 150,
-    backgroundColor: '#FFFFFF',
+    backgroundColor: '#2e77f3',
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 12,
@@ -171,4 +173,15 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgb(200, 204, 206)',
     borderRadius: 8,
   },
+  bg1: {
+    backgroundColor: '#2e77f3'
+  },
+  bg2: {
+    backgroundColor: '#c0c0c0',
+    color: "#FFFFFF",
+  },
+  bg3: {
+    backgroundColor: '#e10602',
+    color: "#FFF",
+  }
 });

@@ -78,13 +78,13 @@ export default class Forum extends Component {
         <View style={{ flexDirection: "row", alignItems: "center", borderBottomWidth: 0.2, borderBottomColor: '#b5b4b494' }}>
           <Text
             onPress={() => this.setState({ tab: 1 })}
-            style={[styles.tab, this.state.tab === 1 ? styles.tabChose : null]}>Trend</Text>
+            style={[styles.tab, this.state.tab === 1 ? styles.tabChose : null]}>最新发布</Text>
           <Text
             onPress={() => this.setState({ tab: 2 })}
-            style={[styles.tab, this.state.tab === 2 ? styles.tabChose : null]}>Recent</Text>
+            style={[styles.tab, this.state.tab === 2 ? styles.tabChose : null]}>讨论区</Text>
           <Text
             onPress={() => this.setState({ tab: 3 })}
-            style={[styles.tab, this.state.tab === 3 ? styles.tabChose : null]}>Preference</Text>
+            style={[styles.tab, this.state.tab === 3 ? styles.tabChose : null]}>其他</Text>
         </View>
         <FlatList
           data={list}
