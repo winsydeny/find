@@ -5,7 +5,7 @@ import Icon from 'react-native-vector-icons/AntDesign';
 import { SearchBar, Text, Avatar, Button, Badge } from 'react-native-elements';
 import ListItem from '../components/ListItem';
 import Geolocation from '@react-native-community/geolocation';
-
+import { _storeData } from '../assets/utils'
 import {
   View,
   StyleSheet,
@@ -14,6 +14,8 @@ import {
   TouchableWithoutFeedback,
   Alert,
   PermissionsAndroid,
+  ToastAndroid,
+  AsyncStorage
 } from 'react-native';
 interface Props {
   navigation: any;
@@ -52,11 +54,13 @@ export default class Home extends Component<Props> {
         fetch(`https://restapi.amap.com/v3/geocode/regeo?key=3e682fe78613fe4f024e2d2d5ac98940&location=${longitude},${latitude}`)
           .then((response) => response.json())
           .then((responseJson: any) => {
-            console.log(responseJson)
+            // console.log(responseJson)
             const { city, province } = responseJson.regeocode.addressComponent;
             const current = city.length === 0 ? province : city;
             // const city = responseJson.regeocode.addressComponent.city.length === 0?
-            Alert.alert(current);
+            // Alert.alert(current);
+            _storeData('city', current)
+            ToastAndroid.show('11', ToastAndroid.SHORT);
           }).catch((err: any) => console.log(err))
         // Alert.alert(longitude.toString(), latitude.toString())
       })
