@@ -1,16 +1,44 @@
 
 import React, { Component } from 'react';
+// import Geolocation from '@react-native-community/g'
 // import { Text, View } from 'react-native';
-import { Text, View, Button, TouchableWithoutFeedback, StyleSheet, StatusBar } from 'react-native';
+import { Text, View, Button, TouchableWithoutFeedback, StyleSheet, StatusBar, Alert, PermissionsAndroid } from 'react-native';
 import { ListItem, Avatar } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/AntDesign';
 import global from '../../style'
+import Geolocation from '@react-native-community/geolocation';
+
 interface Props {
   navigation: any
 }
 export default class Mine extends Component<Props> {
   componentDidMount() {
-  }
+    console.log("minesa")
+  };
+  // async getLocation() {
+  //   const permissions = [
+  //     PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+  //   ]
+  //   const granteds = await PermissionsAndroid.requestMultiple(permissions);
+  //   if (granteds["android.permission.ACCESS_FINE_LOCATION"] === "granted") {
+  //     //  this.getPosition();
+  //     // console.log()
+  //     Geolocation.getCurrentPosition((res: any) => {
+  //       console.log(res)
+
+  //     })
+  //     // Toast("定位权限被禁止")
+  //     // let rs = ''
+  //     // for (let i in navigator) {
+  //     //   rs += i
+  //     // }
+  //     // Alert.alert(navigator.geolocation)
+
+  //     // 
+  //   } else {
+  //     // Toast("定位权限被禁止")
+  //   }
+  // };
   render() {
     const list = [
       {
@@ -32,7 +60,7 @@ export default class Mine extends Component<Props> {
       },
       {
         title: '退出登陆',
-        name: 'Login'
+        name: 'Location'
       }
     ]
     // const value = identity<string>('Mine')
@@ -65,6 +93,7 @@ export default class Mine extends Component<Props> {
               </TouchableWithoutFeedback>
             ))
           }
+          <Text></Text>
         </View>
       </View>
     );

@@ -1,4 +1,4 @@
-import { createAppContainer } from 'react-navigation';
+import { createAppContainer, } from 'react-navigation';
 import { createStackNavigator, StackViewStyleInterpolator } from 'react-navigation-stack';
 import Welcome from '../screens/Hello';
 import TabBar from './tabbar';
@@ -11,6 +11,8 @@ import ListDetail from '../screens/ListDetail';
 import ForumDetail from '../screens/ForumDetail';
 import Identity from '../screens/Identity'
 import Resume from '../screens/Resume';
+import Location from '../screens/Location';
+
 /**
 * 1、从右向左：forHorizontal
 * 2、从下向上：forVertical
@@ -95,7 +97,12 @@ const App = createStackNavigator({
 		navigationOptions: {
 			header: null
 		},
-
+	},
+	Location: {
+		screen: Location,
+		navigationOptions: {
+			header: null
+		},
 	}
 }, {
 	defaultNavigationOptions: {

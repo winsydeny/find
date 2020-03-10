@@ -3,7 +3,9 @@ import global from '../../style';
 import Icon from 'react-native-vector-icons/AntDesign';
 // import { Text, View,Button } from 'react-native';
 import { SearchBar, Text, Avatar, Button, Badge } from 'react-native-elements';
-import ListItem from '../components/ListItem'
+import ListItem from '../components/ListItem';
+import Geolocation from '@react-native-community/geolocation';
+
 import {
   View,
   StyleSheet,
@@ -11,6 +13,7 @@ import {
   ScrollView,
   TouchableWithoutFeedback,
   Alert,
+  PermissionsAndroid,
 } from 'react-native';
 interface Props {
   navigation: any;
@@ -19,6 +22,8 @@ export default class Home extends Component<Props> {
   state = {
     search: '',
     modalVisible: false,
+    latitude: null,
+    longitude: null
   };
   updateSearch(search: string) {
     this.setState({
@@ -29,7 +34,39 @@ export default class Home extends Component<Props> {
     console.log('search');
     Alert.alert('search successful');
   }
+  async getLocation() {
+    const permissions = [
+      PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+    ]
+    const granteds = await PermissionsAndroid.requestMultiple(permissions);
+    if (granteds["android.permission.ACCESS_FINE_LOCATION"] === "granted") {
+      //  this.getPosition();
+      // console.log()
+      Geolocation.getCurrentPosition((res: any) => {
+        console.log(res.coords)
+        const { longitude, latitude } = res.coords
+        this.setState({
+          latitude: latitude,
+          longitude: longitude
+        });
+        fetch(`https://restapi.amap.com/v3/geocode/regeo?key=3e682fe78613fe4f024e2d2d5ac98940&location=${longitude},${latitude}`)
+          .then((response) => response.json())
+          .then((responseJson: any) => {
+            console.log(responseJson)
+            const { city, province } = responseJson.regeocode.addressComponent;
+            const current = city.length === 0 ? province : city;
+            // const city = responseJson.regeocode.addressComponent.city.length === 0?
+            Alert.alert(current);
+          }).catch((err: any) => console.log(err))
+        // Alert.alert(longitude.toString(), latitude.toString())
+      })
+    } else {
+      Alert.alert("定位权限被禁止")
+    }
+  };
   componentDidMount() {
+    this.getLocation()
+    // console.log('loca');
     // this.props.navigation.navigate('Registerd')
   }
   render() {
@@ -38,7 +75,6 @@ export default class Home extends Component<Props> {
     return (
       <View
         style={{
-
           paddingBottom: 58,
           marginTop: 8,
         }}>
