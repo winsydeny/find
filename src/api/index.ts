@@ -1,5 +1,6 @@
+const url = 'https://www.vanlansh.wang/api';
 export const saveImg = (path: string) => {
-  fetch('www.vanlansh.wang/api/upload?image=true', {
+  fetch(`${url}/upload?image=true`, {
     method: 'POST',
   }).then((res: any) => {
     if (res.status === 0) {
@@ -9,3 +10,4 @@ export const saveImg = (path: string) => {
     }
   });
 };
+export const request = (path: string) => fetch(`${url}/${path}`);

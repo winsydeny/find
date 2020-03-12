@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 // import Geolocation from '@react-native-community/g'
 // import { Text, View } from 'react-native';
-import { Text, View, Button, TouchableWithoutFeedback, StyleSheet, StatusBar, Alert, PermissionsAndroid } from 'react-native';
+import { Text, View, Button, TouchableWithoutFeedback, StyleSheet, StatusBar, Alert, PermissionsAndroid, ActivityIndicator } from 'react-native';
 import { ListItem, Avatar } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/AntDesign';
 import global from '../../style'
@@ -18,8 +18,6 @@ export default class Mine extends Component<Props> {
     avatarSource: ''
   }
   componentDidMount() {
-    console.log("minesa")
-    toast('ss');
     this.requestCarmeraPermission()
 
   };
@@ -120,7 +118,7 @@ export default class Mine extends Component<Props> {
       },
       {
         title: '退出登陆',
-        name: 'Location'
+        name: 'Login'
       }
     ]
     // const value = identity<string>('Mine')
@@ -154,6 +152,8 @@ export default class Mine extends Component<Props> {
               </TouchableWithoutFeedback>
             ))
           }
+          <View>
+          </View>
           <Button title="camera" onPress={() => this.onClickChoosePicture()}></Button>
         </View>
       </View>

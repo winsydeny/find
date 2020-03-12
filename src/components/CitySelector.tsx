@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
-import { FlatList, View, StyleSheet, Text, TouchableOpacity } from 'react-native';
-
-export default class ChoseCity extends Component {
+import { FlatList, View, StyleSheet, Text, TouchableOpacity, Alert } from 'react-native';
+interface Prop {
+    chooseCity: Function
+}
+export default class ChoseCity extends Component<Prop> {
 
     state = {
         data: [],               // 用于存放所有的城市数据
@@ -22,16 +24,21 @@ export default class ChoseCity extends Component {
         });
 
         this.setState({ data: cityInfo, right: right });
-    }
-
+    };
+    // chooseCity(city: string) {
+    //     this.props.chooseCity(city);
+    //     // console.log(city);
+    //     // Alert.alert(city);
+    // };
     renderItem = ({ item, index }) => (
         <View style={styles.cityPiece}>
             <Text style={styles.keyText}>{item.key}</Text>
             <View style={styles.cities}>
                 {item.data.map(({ city }, index) => (
-                    <TouchableOpacity key={index} style={styles.cityItem}>
-                        <Text>{city}</Text>
+                    <TouchableOpacity key={index} style={styles.cityItem} onPress={() => this.props.chooseCity(city)}>
+                        <Text >{city}</Text>
                     </TouchableOpacity>
+                    // <Text>11</Text>
                 ))}
             </View>
         </View>

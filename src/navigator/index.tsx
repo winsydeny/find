@@ -12,6 +12,7 @@ import ForumDetail from '../screens/ForumDetail';
 import Identity from '../screens/Identity'
 import Resume from '../screens/Resume';
 import Location from '../screens/Location';
+import Filter from '../screens/Filter';
 
 /**
 * 1、从右向左：forHorizontal
@@ -100,6 +101,12 @@ const App = createStackNavigator({
 	},
 	Location: {
 		screen: Location,
+		navigationOptions: {
+			header: null
+		},
+	},
+	Filter: {
+		screen: Filter,
 		navigationOptions: {
 			header: null
 		},

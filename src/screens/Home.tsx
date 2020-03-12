@@ -5,7 +5,7 @@ import Icon from 'react-native-vector-icons/AntDesign';
 import { SearchBar, Text, Avatar, Button, Badge } from 'react-native-elements';
 import ListItem from '../components/ListItem';
 import Geolocation from '@react-native-community/geolocation';
-import { _storeData } from '../assets/utils'
+import { _storeData, toast } from '../assets/utils'
 import {
   View,
   StyleSheet,
@@ -14,8 +14,8 @@ import {
   TouchableWithoutFeedback,
   Alert,
   PermissionsAndroid,
-  ToastAndroid,
-  AsyncStorage
+  AsyncStorage,
+  DeviceEventEmitter
 } from 'react-native';
 interface Props {
   navigation: any;
@@ -25,8 +25,10 @@ export default class Home extends Component<Props> {
     search: '',
     modalVisible: false,
     latitude: null,
-    longitude: null
+    longitude: null,
+    current: null,
   };
+  listener: any;
   updateSearch(search: string) {
     this.setState({
       search: search,
@@ -42,10 +44,7 @@ export default class Home extends Component<Props> {
     ]
     const granteds = await PermissionsAndroid.requestMultiple(permissions);
     if (granteds["android.permission.ACCESS_FINE_LOCATION"] === "granted") {
-      //  this.getPosition();
-      // console.log()
       Geolocation.getCurrentPosition((res: any) => {
-        console.log(res.coords)
         const { longitude, latitude } = res.coords
         this.setState({
           latitude: latitude,
@@ -54,25 +53,34 @@ export default class Home extends Component<Props> {
         fetch(`https://restapi.amap.com/v3/geocode/regeo?key=3e682fe78613fe4f024e2d2d5ac98940&location=${longitude},${latitude}`)
           .then((response) => response.json())
           .then((responseJson: any) => {
-            // console.log(responseJson)
             const { city, province } = responseJson.regeocode.addressComponent;
-            const current = city.length === 0 ? province : city;
-            // const city = responseJson.regeocode.addressComponent.city.length === 0?
-            // Alert.alert(current);
-            _storeData('city', current)
-            ToastAndroid.show('11', ToastAndroid.SHORT);
+            let current = city.length === 0 ? province : city;
+            if (province.length === 0 && city.length === 0) {
+              current = '定位失败'
+            }
+            this.setState({
+              current: current
+            })
           }).catch((err: any) => console.log(err))
-        // Alert.alert(longitude.toString(), latitude.toString())
       })
     } else {
       Alert.alert("定位权限被禁止")
     }
   };
   componentDidMount() {
-    this.getLocation()
-    // console.log('loca');
-    // this.props.navigation.navigate('Registerd')
+    this.getLocation();
+    this.listener = DeviceEventEmitter.addListener('@Location', (city) => {
+      this.setState({
+        current: city
+      })
+    })
   }
+  componentDidUpdate() {
+    // toast('update');
+  };
+  componentWillUnmount() {
+    this.listener.remove();
+  };
   render() {
     const { search } = this.state;
     const { navigate } = this.props.navigation
@@ -113,7 +121,8 @@ export default class Home extends Component<Props> {
               <Text style={{ paddingLeft: 6, color: '#867f7fc9' }}>请输入</Text>
             </View>
           </TouchableWithoutFeedback>
-          <Avatar
+          <Text style={{ paddingBottom: 10 }} onPress={() => this.props.navigation.navigate("Location")}>{this.state.current}</Text>
+          {/* <Avatar
             rounded
             size={50}
             containerStyle={styles.avatar}
@@ -126,7 +135,7 @@ export default class Home extends Component<Props> {
             status="error"
             value="10"
             badgeStyle={{}}
-            containerStyle={{ position: 'absolute', top: 0, right: 2 }}></Badge>
+            containerStyle={{ position: 'absolute', top: 0, right: 2 }}></Badge> */}
         </View>
         <ScrollView showsVerticalScrollIndicator={false} style={{ backgroundColor: "#f4f5f5" }}>
           <Text style={{ fontSize: 20, fontWeight: 'bold', paddingLeft: 12, paddingTop: 8 }}>

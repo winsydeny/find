@@ -842,6 +842,11 @@
     "@types/istanbul-reports" "^1.1.1"
     "@types/yargs" "^13.0.0"
 
+"@react-native-community/async-storage@^1.8.1":
+  version "1.8.1"
+  resolved "https://registry.npm.taobao.org/@react-native-community/async-storage/download/@react-native-community/async-storage-1.8.1.tgz#c93e69dcf948667b207e409b8039b7edf199159b"
+  integrity sha1-yT5p3PlIZnsgfkCbgDm37fGZFZs=
+
 "@react-native-community/blur@^3.4.1":
   version "3.4.1"
   resolved "https://registry.npm.taobao.org/@react-native-community/blur/download/@react-native-community/blur-3.4.1.tgz#dec04c7d60dd6a4fa7e3af3506feefec804728d0"
