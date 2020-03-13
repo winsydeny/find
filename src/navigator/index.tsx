@@ -1,6 +1,6 @@
 import { createAppContainer, } from 'react-navigation';
 import { createStackNavigator, StackViewStyleInterpolator } from 'react-navigation-stack';
-import Welcome from '../screens/Hello';
+import Welcome from '../screens/Start';
 import TabBar from './tabbar';
 import Login from '../screens/Login';
 import Registerd from '../screens/Registerd';
@@ -13,7 +13,8 @@ import Identity from '../screens/Identity'
 import Resume from '../screens/Resume';
 import Location from '../screens/Location';
 import Filter from '../screens/Filter';
-
+import ResumePersonal from '../screens/ResumePersonal';
+import ResumeAdvantage from '../screens/ResumeAdvantage'
 /**
 * 1、从右向左：forHorizontal
 * 2、从下向上：forVertical
@@ -41,7 +42,11 @@ const App = createStackNavigator({
 		}
 	},
 	Welcome: {
-		screen: Welcome
+		screen: Welcome,
+		navigationOptions: {
+			// cancel header style
+			header: null
+		}
 	},
 	Login: {
 		screen: Login,
@@ -110,8 +115,21 @@ const App = createStackNavigator({
 		navigationOptions: {
 			header: null
 		},
+	},
+	ResumePersonal: {
+		screen: ResumePersonal,
+		navigationOptions: {
+			header: null
+		},
+	},
+	ResumeAdvantage: {
+		screen: ResumeAdvantage,
+		navigationOptions: {
+			header: null
+		},
 	}
 }, {
+	// initialRouteName: "Welcome",
 	defaultNavigationOptions: {
 		gesturesEnabled: true
 	},

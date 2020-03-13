@@ -2,11 +2,11 @@ import React, { Component } from 'react';
 import { View, StyleSheet } from 'react-native';
 import { Button, Input } from 'react-native-elements'
 import Icon from 'react-native-vector-icons/FontAwesome';
-import styles from '../../style'
-export default class Example extends Component {
-  constructor(props: any) {
-    super(props)
-  }
+import styles from '../../style';
+interface Prop {
+  navigation: any
+}
+export default class Login extends Component<Prop>{
   state = {
     email: '',
     passcode: '',
@@ -43,7 +43,9 @@ export default class Example extends Component {
     return false
   }
   registion() {
+    // _storeData('isLogin', 'true');
 
+    // toast('login')
     if (this.checkData()) {
       // success
       console.log(this)
@@ -51,6 +53,7 @@ export default class Example extends Component {
       // this.props.navigation.navigate('Mine')
     }
   }
+
   render() {
     return (
       <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>

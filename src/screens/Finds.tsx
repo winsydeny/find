@@ -8,18 +8,23 @@ import {
   Image,
   Button,
   StatusBar,
-  Alert
+  Alert,
+  Platform,
+  BackHandler
 } from 'react-native'
 import { } from 'react-native-elements'
 import { Dialog } from 'react-native-ui-lib'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import Micon from 'react-native-vector-icons/MaterialIcons'
 import AntIcon from 'react-native-vector-icons/AntDesign';
-
 import BottomDialog from '../components/BottomDialog'
 import global from '../../style';
 import ListItem from "../components/ListItem";
 import { ScrollView } from "react-native-gesture-handler";
+import { toast } from "../assets/utils";
+
+// https://github.com/ptomasroos/react-native-scrollable-tab-view => 
+
 interface ItemList {
   title: string
 }
@@ -49,7 +54,12 @@ export default class Forum extends Component<Prop> {
         msg: '据国家卫健委最新消息：截至1月22日24时，我委收到国内25个省（区、市）累计报告新型冠状病毒感染的肺炎确诊病例571例，其中重症95例，死亡17例（均来自湖北省）'
       })
     }
-    this.setState({ list })
+    this.setState({ list });
+    if (Platform.OS === 'android') {
+      BackHandler.addEventListener('hardwareBackPress', () => {
+        BackHandler.exitApp();
+      });
+    }
   };
   thumbHandle(item: any) {
     const { list } = this.state
@@ -73,6 +83,13 @@ export default class Forum extends Component<Prop> {
     // console.log(this.child)
     this.setState({ showDialog: true, dialogContent: item.uid })
   };
+  // componentWillMount() {
+  //   if (Platform.OS === 'android') {
+  //     BackHandler.addEventListener('hardwareBackPress', () => {
+  //       BackHandler.exitApp();
+  //     });
+  //   }
+  // };
   render() {
     const { list, showDialog, dialogContent, tab } = this.state;
     return (

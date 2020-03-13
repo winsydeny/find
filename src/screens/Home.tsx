@@ -14,8 +14,7 @@ import {
   TouchableWithoutFeedback,
   Alert,
   PermissionsAndroid,
-  AsyncStorage,
-  DeviceEventEmitter
+  DeviceEventEmitter,
 } from 'react-native';
 interface Props {
   navigation: any;
@@ -67,12 +66,20 @@ export default class Home extends Component<Props> {
       Alert.alert("定位权限被禁止")
     }
   };
+  // componentWillMount() {
+  //   if (Platform.OS === 'android') {
+  //     BackHandler.addEventListener('hardwareBackPress', () => {
+  //       toast("back")
+  //     });
+  //   }
+  // };
   componentDidMount() {
     this.getLocation();
     this.listener = DeviceEventEmitter.addListener('@Location', (city) => {
       this.setState({
         current: city
-      })
+      });
+      toast("位置修改成功");
     })
   }
   componentDidUpdate() {

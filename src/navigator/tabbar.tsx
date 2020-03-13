@@ -38,7 +38,7 @@ const BottomTabNavigator = createBottomTabNavigator({
                 Finds: 'bullseye',
                 Mine: 'user-circle',
             };
-            return <Icon name={mapIcon[routeName]} size={20} color={tintColor} />;
+            return <Icon name={mapIcon[routeName]} size={22} color={tintColor} />;
         },
     }),
     tabBarOptions: {
@@ -46,5 +46,10 @@ const BottomTabNavigator = createBottomTabNavigator({
         inactiveTintColor: 'black',
     },
 });
-
+function Init() {
+    setTimeout(() => {
+        return 'Home';
+    }, 2000)
+    return 'Login'
+}
 export default BottomTabNavigator

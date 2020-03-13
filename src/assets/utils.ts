@@ -4,7 +4,7 @@ export const _storeData = async (key: string, value: string) => {
   try {
     console.log('soter', key, value);
     await AsyncStorage.setItem('@find_' + key, value);
-    ToastAndroid.show('success', ToastAndroid.SHORT);
+    // ToastAndroid.show('success', ToastAndroid.SHORT);
   } catch (error) {
     ToastAndroid.show('存储失败', ToastAndroid.SHORT);
     // Error saving data

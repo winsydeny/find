@@ -19,10 +19,11 @@ export default class Home extends Component<Prop> {
     city: ''
   }
   _chooseCity(city: string) {
+    // 后期可以直接通过navigation传值
+    this.back()
     this.setState({ city: city });
     _storeData('citys', city);
     DeviceEventEmitter.emit('@Location', city);
-    this.back()
 
   };
   componentDidMount() {

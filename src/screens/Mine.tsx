@@ -15,7 +15,7 @@ interface Props {
 }
 export default class Mine extends Component<Props> {
   state = {
-    avatarSource: ''
+    avatarSource: 'https://www.vanlansh.wang/boy.png'
   }
   componentDidMount() {
     this.requestCarmeraPermission()
@@ -25,15 +25,11 @@ export default class Mine extends Component<Props> {
     try {
       const granted = await PermissionsAndroid.request(
         PermissionsAndroid.PERMISSIONS.CAMERA,
-        // {
-        //   title: 'Camera Permission',
-        //   message: 'the project needs access to your camera ' + 'so you can take awesome pictures.'
-        // }
       )
       if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-        toast("你已获取了相机权限")
+        // toast("你已获取了相机权限")
       } else {
-        toast("获取相机失败")
+        toast("获取相机权限失败")
       }
     } catch (err) {
       toast(err.toString())
@@ -61,7 +57,11 @@ export default class Mine extends Component<Props> {
       } else if (response.customButton) {
         console.log('User tapped custom button: ', response.customButton);
       } else {
-        const msg = saveImg(response.path);
+        toast(response.uri)
+        this.setState({
+          avatarSource: response.uri
+        })
+        // const msg = saveImg(response.path);
         // toast(msg);
         // const source = { uri: response.uri };
         // this.setState({
@@ -71,32 +71,6 @@ export default class Mine extends Component<Props> {
       }
     });
   };
-
-
-  // async getLocation() {
-  //   const permissions = [
-  //     PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
-  //   ]
-  //   const granteds = await PermissionsAndroid.requestMultiple(permissions);
-  //   if (granteds["android.permission.ACCESS_FINE_LOCATION"] === "granted") {
-  //     //  this.getPosition();
-  //     // console.log()
-  //     Geolocation.getCurrentPosition((res: any) => {
-  //       console.log(res)
-
-  //     })
-  //     // Toast("定位权限被禁止")
-  //     // let rs = ''
-  //     // for (let i in navigator) {
-  //     //   rs += i
-  //     // }
-  //     // Alert.alert(navigator.geolocation)
-
-  //     // 
-  //   } else {
-  //     // Toast("定位权限被禁止")
-  //   }
-  // };
   render() {
     const list = [
       {
@@ -113,13 +87,17 @@ export default class Mine extends Component<Props> {
         name: 'Resume'
       },
       {
-        title: '意见反馈',
-        name: 'Login'
-      },
-      {
-        title: '退出登陆',
-        name: 'Login'
+        title: "我的收藏",
+        name: 'Resume'
       }
+      // {
+      //   title: '意见反馈',
+      //   name: 'Login'
+      // },
+      // {
+      //   title: '退出登陆',
+      //   name: 'Login'
+      // }
     ]
     // const value = identity<string>('Mine')
     // const navigation = this.props.navigation
@@ -136,7 +114,10 @@ export default class Mine extends Component<Props> {
           <Avatar
             size={120}
             rounded
+            // title="sd"
             source={{ uri: this.state.avatarSource }}
+            showEditButton
+            onPress={() => this.onClickChoosePicture()}
           // source={{ uri: "https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg" }}
           ></Avatar>
         </View>
@@ -154,7 +135,7 @@ export default class Mine extends Component<Props> {
           }
           <View>
           </View>
-          <Button title="camera" onPress={() => this.onClickChoosePicture()}></Button>
+          {/* <Button title="camera" onPress={() => this.onClickChoosePicture()}></Button> */}
         </View>
       </View>
     );
