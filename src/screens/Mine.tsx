@@ -78,8 +78,8 @@ export default class Mine extends Component<Props> {
   render() {
     const list = [
       {
-        title: '登陆',
-        name: 'Login',
+        title: '消息',
+        name: 'Message',
 
       },
       {

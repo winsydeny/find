@@ -16,6 +16,8 @@ import Filter from '../screens/Filter';
 import ResumePersonal from '../screens/ResumePersonal';
 import ResumeAdvantage from '../screens/ResumeAdvantage';
 import RegisterPersonal from '../screens/RegisterPersonal';
+import Message from '../screens/Message';
+
 
 /**
 * 1、从右向左：forHorizontal
@@ -38,6 +40,12 @@ const TransitionConfiguration = () => ({
 // import Views from 'react-navigation-stack/lib/commonjs/views/StackView/StackViewStyleInterpolator.js'
 const App = (isLogined: boolean) => {
 	return createStackNavigator({
+		BottomTabNavigator: {
+			screen: TabBar,
+			navigationOptions: {
+				header: null
+			}
+		},
 		Welcome: {
 			screen: Welcome,
 			navigationOptions: {
@@ -131,12 +139,13 @@ const App = (isLogined: boolean) => {
 				header: null
 			},
 		},
-		BottomTabNavigator: {
-			screen: TabBar,
+		Message: {
+			screen: Message,
 			navigationOptions: {
 				header: null
-			}
-		},
+			},
+		}
+
 	}, {
 		initialRouteName: false ? 'BottomTabNavigator' : 'Login',
 		defaultNavigationOptions: {
