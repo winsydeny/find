@@ -2,13 +2,13 @@
 import React, { Component } from 'react';
 // import Geolocation from '@react-native-community/g'
 // import { Text, View } from 'react-native';
-import { Text, View, Button, TouchableWithoutFeedback, StyleSheet, StatusBar, Alert, PermissionsAndroid, ActivityIndicator } from 'react-native';
+import { Text, View, Button, TouchableWithoutFeedback, StyleSheet, StatusBar, Alert, PermissionsAndroid, ActivityIndicator, AsyncStorage } from 'react-native';
 import { ListItem, Avatar } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/AntDesign';
 import global from '../../style'
 import Geolocation from '@react-native-community/geolocation';
-import { toast } from '../assets/utils';
-import { saveImg } from '../api/index'
+import { toast, _remove, _getAllKey } from '../assets/utils';
+import { saveImg, request } from '../api/index'
 import ImagePicker from 'react-native-image-picker';
 interface Props {
   navigation: any
@@ -71,6 +71,10 @@ export default class Mine extends Component<Props> {
       }
     });
   };
+  async get() {
+    const data = await request('test');
+    console.log(data)
+  }
   render() {
     const list = [
       {
@@ -79,25 +83,29 @@ export default class Mine extends Component<Props> {
 
       },
       {
-        title: '注册',
-        name: 'Registerd',
-      },
-      {
-        title: '我的简历',
+        title: '简历',
         name: 'Resume'
       },
       {
-        title: "我的收藏",
+        title: "收藏",
         name: 'Resume'
-      }
+      },
       // {
-      //   title: '意见反馈',
-      //   name: 'Login'
+      //   title: "意见反馈",
+      //   name: 'Resume'
       // },
       // {
-      //   title: '退出登陆',
-      //   name: 'Login'
-      // }
+      //   title: "关于",
+      //   name: 'Resume'
+      // },
+      // {
+      //   title: "设置",
+      //   name: 'Resume'
+      // },
+      {
+        title: '退出登陆',
+        name: 'Login'
+      }
     ]
     // const value = identity<string>('Mine')
     // const navigation = this.props.navigation
@@ -120,6 +128,10 @@ export default class Mine extends Component<Props> {
             onPress={() => this.onClickChoosePicture()}
           // source={{ uri: "https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg" }}
           ></Avatar>
+          <View style={{ marginLeft: 22 }}>
+            <Text style={styles.info}>席佳</Text>
+            <Text>Front End Develop</Text>
+          </View>
         </View>
         <View>
           {
@@ -135,9 +147,13 @@ export default class Mine extends Component<Props> {
           }
           <View>
           </View>
-          {/* <Button title="camera" onPress={() => this.onClickChoosePicture()}></Button> */}
+          <Button title="查看缓存" onPress={() => _getAllKey()}></Button>
+          <Button title="清除缓存" onPress={() => _remove("isLogin")}></Button>
+          <Button title="Request" onPress={() => this.get()}></Button>
+
+
         </View>
-      </View>
+      </View >
     );
   }
 }
@@ -148,11 +164,17 @@ export default class Mine extends Component<Props> {
 // }
 const styles = StyleSheet.create({
   avatarBg: {
-    justifyContent: "center",
+    // justifyContent: "center",
+    flexDirection: "row",
+    marginLeft: 20,
     alignItems: "center",
     // backgroundColor: global.bg2.backgroundColor,
     height: 160,
     // borderBottomLeftRadius:200,
     // borderBottomRightRadius:200
+  },
+  info: {
+    fontWeight: "bold",
+    fontSize: 22
   }
 })

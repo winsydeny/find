@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, FlatList, TouchableWithoutFeedback } from 'reac
 import { SearchBar, Button } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/Feather';
 import global from '../../style';
+import { suggest } from '../api';
 interface Props {
   navigation: any;
 }
@@ -31,6 +32,8 @@ export default class Search extends Component<Props> {
     });
   }
   getSearchList() {
+
+    // console.log(list)
     return [
       { info: 'test', key: '0' },
       { info: 'any', key: '1' },
@@ -41,7 +44,7 @@ export default class Search extends Component<Props> {
   };
   searchInfo(item: any) {
     this.setState({ search: item.info, isShow: false, keyWord: item.info })
-    this.props.navigation.navigate('SearchResults', { keyWord: item.info });
+    this.props.navigation.navigate('SearchResults', { transition: 'forHorizontal', keyWord: item.info });
     // Alert.alert(item.info)
   }
   render() {

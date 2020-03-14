@@ -4,7 +4,8 @@ import {
   View,
   Button,
   Alert,
-  DeviceEventEmitter
+  DeviceEventEmitter,
+  BackHandler
 } from 'react-native';
 import CitySelector from '../components/CitySelector';
 import Icon from 'react-native-vector-icons/MaterialIcons';
@@ -27,6 +28,11 @@ export default class Home extends Component<Prop> {
 
   };
   componentDidMount() {
+
+    // BackHandler.addEventListener('hardwareBackPress', () => {
+    //   // this.props.naivigation.pop();
+    //   this.back()
+    // });
     // _retrieveData('citys')
     //   .then((res: any) => {
     //     this.setState({

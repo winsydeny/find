@@ -9,7 +9,8 @@ import {
 const { width, height } = Dimensions.get('window');
 let _this = null;
 interface Prop {
-  show: Boolean
+  show: Boolean,
+  title?: String
 }
 class Loading extends Component<Prop> {
   state = {
@@ -20,6 +21,7 @@ class Loading extends Component<Prop> {
   }
   render() {
     const loading = this.props.show;
+    const title = this.props.title || '正在加载'
     if (loading) {
       return (
         <View style={styles.LoadingPage}>
@@ -35,7 +37,7 @@ class Loading extends Component<Prop> {
             }}>
             <ActivityIndicator size="large" color="#FFF" />
             <Text style={{ marginLeft: 10, color: '#FFF', marginTop: 10 }}>
-              正在加载...
+              {title}...
             </Text>
           </View>
         </View>

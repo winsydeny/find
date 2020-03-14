@@ -22,7 +22,9 @@ import global from '../../style';
 import ListItem from "../components/ListItem";
 import { ScrollView } from "react-native-gesture-handler";
 import { toast } from "../assets/utils";
-
+import ScrollableTabView from 'react-native-scrollable-tab-view';
+import Login from "./Login";
+import Registerd from "./Registerd";
 // https://github.com/ptomasroos/react-native-scrollable-tab-view => 
 
 interface ItemList {
@@ -55,11 +57,11 @@ export default class Forum extends Component<Prop> {
       })
     }
     this.setState({ list });
-    if (Platform.OS === 'android') {
-      BackHandler.addEventListener('hardwareBackPress', () => {
-        BackHandler.exitApp();
-      });
-    }
+    // if (Platform.OS === 'android') {
+    //   BackHandler.addEventListener('hardwareBackPress', () => {
+    //     BackHandler.exitApp();
+    //   });
+    // }
   };
   thumbHandle(item: any) {
     const { list } = this.state
@@ -90,13 +92,31 @@ export default class Forum extends Component<Prop> {
   //     });
   //   }
   // };
+  componentWillUnmount() {
+    // toast("exit finds")
+  };
+  // render() {
+  //   return (
+  //     <ScrollableTabView renderTabBar={() => this.Tab()}>
+  //       <Text>sdf</Text>
+  //       <Text>sdf</Text>
+  //       <Text>sdf</Text>
+  //     </ScrollableTabView>
+  //   )
+  // }
+
+
+
+
+
+
   render() {
     const { list, showDialog, dialogContent, tab } = this.state;
     return (
       <View>
         {/* <StatusBar backgroundColor={global.bg2.backgroundColor} barStyle="light-content"></StatusBar>
           <View style={{ height: 30, backgroundColor: global.bg2.backgroundColor }}>
-  
+
             <AntIcon onPress={() => this.props.navigation.pop()} name="arrowleft" style={styles.arrow}></AntIcon>
           </View> */}
         <View style={{ flexDirection: "row", alignItems: "center", borderBottomWidth: 0.2, borderBottomColor: '#b5b4b494' }}>

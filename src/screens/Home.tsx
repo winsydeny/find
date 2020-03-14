@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
 import global from '../../style';
 import Icon from 'react-native-vector-icons/AntDesign';
+import Login from './Login'
 // import { Text, View,Button } from 'react-native';
 import { SearchBar, Text, Avatar, Button, Badge } from 'react-native-elements';
 import ListItem from '../components/ListItem';
 import Geolocation from '@react-native-community/geolocation';
-import { _storeData, toast } from '../assets/utils'
+import { _storeData, toast, reset } from '../assets/utils';
+import { StackActions, NavigationActions } from "react-navigation"
 import {
   View,
   StyleSheet,
@@ -15,6 +17,8 @@ import {
   Alert,
   PermissionsAndroid,
   DeviceEventEmitter,
+  Platform,
+  BackHandler,
 } from 'react-native';
 interface Props {
   navigation: any;
@@ -34,7 +38,7 @@ export default class Home extends Component<Props> {
     });
   }
   search() {
-    console.log('search');
+    // console.log('search');
     Alert.alert('search successful');
   }
   async getLocation() {
@@ -66,14 +70,15 @@ export default class Home extends Component<Props> {
       Alert.alert("定位权限被禁止")
     }
   };
-  // componentWillMount() {
-  //   if (Platform.OS === 'android') {
-  //     BackHandler.addEventListener('hardwareBackPress', () => {
-  //       toast("back")
-  //     });
-  //   }
-  // };
+
+  exitApp() {
+  }
   componentDidMount() {
+    // console.log(this.props)
+    // this.props.navigation.actions.reset();
+    // this.props.navigation.navigate("Login")
+
+    BackHandler.addEventListener('hardwareBackPress', this.exitApp);
     this.getLocation();
     this.listener = DeviceEventEmitter.addListener('@Location', (city) => {
       this.setState({
@@ -81,16 +86,23 @@ export default class Home extends Component<Props> {
       });
       toast("位置修改成功");
     })
-  }
+  };
   componentDidUpdate() {
     // toast('update');
   };
   componentWillUnmount() {
     this.listener.remove();
+    BackHandler.removeEventListener("hardwareBackPress", this.exitApp);
+    // ExceptionsManager.js:126 Warning: Can't perform a React state update on an unmounted component. 用下面这段代码解决这个问题
+    this.setState = (state, callback) => {
+      return;
+    };
+    // toast('exit')
   };
   render() {
     const { search } = this.state;
     const { navigate } = this.props.navigation
+    // this.renderLogin();
     return (
       <View
         style={{
@@ -128,7 +140,7 @@ export default class Home extends Component<Props> {
               <Text style={{ paddingLeft: 6, color: '#867f7fc9' }}>请输入</Text>
             </View>
           </TouchableWithoutFeedback>
-          <Text style={{ paddingBottom: 10 }} onPress={() => this.props.navigation.navigate("Location")}>{this.state.current}</Text>
+          <Text style={{ paddingBottom: 10 }} onPress={() => this.props.navigation.push("Location")}>{this.state.current}</Text>
           {/* <Avatar
             rounded
             size={50}

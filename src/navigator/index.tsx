@@ -14,7 +14,9 @@ import Resume from '../screens/Resume';
 import Location from '../screens/Location';
 import Filter from '../screens/Filter';
 import ResumePersonal from '../screens/ResumePersonal';
-import ResumeAdvantage from '../screens/ResumeAdvantage'
+import ResumeAdvantage from '../screens/ResumeAdvantage';
+import RegisterPersonal from '../screens/RegisterPersonal';
+
 /**
 * 1、从右向左：forHorizontal
 * 2、从下向上：forVertical
@@ -34,106 +36,117 @@ const TransitionConfiguration = () => ({
 	},
 });
 // import Views from 'react-navigation-stack/lib/commonjs/views/StackView/StackViewStyleInterpolator.js'
-const App = createStackNavigator({
-	BottomTabNavigator: {
-		screen: TabBar,
-		navigationOptions: {
-			header: null
-		}
-	},
-	Welcome: {
-		screen: Welcome,
-		navigationOptions: {
-			// cancel header style
-			header: null
-		}
-	},
-	Login: {
-		screen: Login,
-		navigationOptions: {
-			// cancel header style
-			header: null
-		}
-	},
-	Registerd: {
-		screen: Registerd,
-		navigationOptions: {
-			header: null
-		}
-	},
-	Search: {
-		screen: Search,
-		navigationOptions: {
-			header: null
-		}
-	},
-	Forum: {
-		screen: Forum,
-		navigationOptions: {
-			header: null
+const App = (isLogined: boolean) => {
+	return createStackNavigator({
+		Welcome: {
+			screen: Welcome,
+			navigationOptions: {
+				// cancel header style
+				header: null
+			}
 		},
-	},
-	SearchResults: {
-		screen: SearchResults,
-		navigationOptions: {
-			header: null
-		}
-	},
-	ListDetail: {
-		screen: ListDetail,
-		navigationOptions: {
-			header: null,
-		}
-	},
-	ForumDetail: {
-		screen: ForumDetail,
-		navigationOptions: {
-			// header: null
-			title: "详情",
-		}
-	},
-	Identity: {
-		screen: Identity,
-		navigationOptions: {
-			header: null
-		}
-	},
-	Resume: {
-		screen: Resume,
-		navigationOptions: {
-			header: null
+		Login: {
+			screen: Login,
+			navigationOptions: {
+				// cancel header style
+				header: null
+			}
 		},
-	},
-	Location: {
-		screen: Location,
-		navigationOptions: {
-			header: null
+		Registerd: {
+			screen: Registerd,
+			navigationOptions: {
+				header: null
+			}
 		},
-	},
-	Filter: {
-		screen: Filter,
-		navigationOptions: {
-			header: null
+		Search: {
+			screen: Search,
+			navigationOptions: {
+				header: null
+			}
 		},
-	},
-	ResumePersonal: {
-		screen: ResumePersonal,
-		navigationOptions: {
-			header: null
+		Forum: {
+			screen: Forum,
+			navigationOptions: {
+				header: null
+			},
 		},
-	},
-	ResumeAdvantage: {
-		screen: ResumeAdvantage,
-		navigationOptions: {
-			header: null
+		SearchResults: {
+			screen: SearchResults,
+			navigationOptions: {
+				header: null
+			}
 		},
-	}
-}, {
-	// initialRouteName: "Welcome",
-	defaultNavigationOptions: {
-		gesturesEnabled: true
-	},
-	transitionConfig: TransitionConfiguration
-})
-
-export default createAppContainer(App);
+		ListDetail: {
+			screen: ListDetail,
+			navigationOptions: {
+				header: null,
+			}
+		},
+		ForumDetail: {
+			screen: ForumDetail,
+			navigationOptions: {
+				// header: null
+				title: "详情",
+			}
+		},
+		Identity: {
+			screen: Identity,
+			navigationOptions: {
+				header: null
+			}
+		},
+		Resume: {
+			screen: Resume,
+			navigationOptions: {
+				header: null
+			},
+		},
+		Location: {
+			screen: Location,
+			navigationOptions: {
+				header: null
+			},
+		},
+		Filter: {
+			screen: Filter,
+			navigationOptions: {
+				header: null
+			},
+		},
+		ResumePersonal: {
+			screen: ResumePersonal,
+			navigationOptions: {
+				header: null
+			},
+		},
+		ResumeAdvantage: {
+			screen: ResumeAdvantage,
+			navigationOptions: {
+				header: null
+			},
+		},
+		RegisterPersonal: {
+			screen: RegisterPersonal,
+			navigationOptions: {
+				header: null
+			},
+		},
+		BottomTabNavigator: {
+			screen: TabBar,
+			navigationOptions: {
+				header: null
+			}
+		},
+	}, {
+		initialRouteName: false ? 'BottomTabNavigator' : 'Login',
+		defaultNavigationOptions: {
+			gesturesEnabled: true
+		},
+		transitionConfig: TransitionConfiguration
+	})
+}
+// configAppNavigator(){
+// 	return createAppContainer(App);
+// }
+// console.log('sd', createAppContainer(App))
+export default App;

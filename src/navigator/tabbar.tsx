@@ -6,10 +6,12 @@ import Home from '../screens/Home'
 import Mine from '../screens/Mine'
 import Finds from '../screens/Finds'
 import Forum from '../screens/Forum';
+import { BackHandler } from 'react-native';
 
 const BottomTabNavigator = createBottomTabNavigator({
     Home: {
         screen: Home,
+
         navigationOptions: {
             tabBarLabel: '首页',
         }
@@ -46,6 +48,15 @@ const BottomTabNavigator = createBottomTabNavigator({
         inactiveTintColor: 'black',
     },
 });
+// const defaultGetStateForAction = BottomTabNavigator.router.getStateForAction;
+// BottomTabNavigator.router.getStateForAction = (action, state) => {
+//     console.log(state)
+//     // if (state && state.routes.length == 1 && action.type == 'Navigation/BACK') {
+//     //     //在项目首页并且按了物理键返回
+//     //     BackHandler.exitApp()
+//     // }
+//     return defaultGetStateForAction(action, state);
+// };
 function Init() {
     setTimeout(() => {
         return 'Home';
