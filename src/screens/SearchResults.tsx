@@ -113,7 +113,7 @@ export default class SearchResults extends Component<Prop> {
           onEndReached={() => this.getMore()}
           data={this.state.jobList}
           onEndReachedThreshold={0.1}
-          renderItem={(item: any) => {
+          renderItem={({ item }) => {
             return (
               <View style={{ marginTop: 12 }}>
                 <ListItem

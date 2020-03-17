@@ -20,6 +20,8 @@ import {
   Platform,
   BackHandler,
 } from 'react-native';
+import { FlatList } from 'react-native-gesture-handler';
+import { getData } from '../api';
 interface Props {
   navigation: any;
 }
@@ -30,6 +32,7 @@ export default class Home extends Component<Props> {
     latitude: null,
     longitude: null,
     current: null,
+    recommendList: []
   };
   listener: any;
   updateSearch(search: string) {
@@ -72,12 +75,17 @@ export default class Home extends Component<Props> {
   };
 
   exitApp() {
+  };
+  async getRecommend() {
+    const { data } = await getData('search', { keyword: 'java' });
+    console.log(data)
+    this.setState({ recommendList: data })
   }
   componentDidMount() {
     // console.log(this.props)
     // this.props.navigation.actions.reset();
     // this.props.navigation.navigate("Login")
-
+    this.getRecommend();
     BackHandler.addEventListener('hardwareBackPress', this.exitApp);
     this.getLocation();
     this.listener = DeviceEventEmitter.addListener('@Location', (city) => {
@@ -108,6 +116,7 @@ export default class Home extends Component<Props> {
         style={{
           paddingBottom: 44,
           marginTop: global.statusBarHeight.paddingTop,
+          backgroundColor: "#f1f1f1"
         }}>
         {/* <StatusBar translucent={true} backgroundColor={'transparent'} barStyle="dark-content"></StatusBar> */}
 
@@ -121,8 +130,10 @@ export default class Home extends Component<Props> {
           }}
         > */}
         <View style={{
-          flexDirection: 'row', alignItems: 'center', paddingLeft: 12,
-          paddingRight: 12,
+          flexDirection: 'row',
+          alignItems: 'center',
+          paddingHorizontal: 12,
+          backgroundColor: "#FFFFFF"
         }}>
           {/* <SearchBar 
           clearIcon={true}
@@ -158,7 +169,7 @@ export default class Home extends Component<Props> {
             badgeStyle={{}}
             containerStyle={{ position: 'absolute', top: 0, right: 2 }}></Badge> */}
         </View>
-        <ScrollView showsVerticalScrollIndicator={false} style={{ backgroundColor: "#f4f5f5" }}>
+        <ScrollView showsVerticalScrollIndicator={false} style={{ backgroundColor: "", }}>
           <Text style={{ fontSize: 20, fontWeight: 'bold', paddingLeft: 12, paddingTop: 8 }}>
             公司推荐
             </Text>
@@ -174,32 +185,39 @@ export default class Home extends Component<Props> {
                   <Text style={{ color: "#FFFFFF", fontWeight: "bold" }}>Apple</Text>
                 </View>
               </TouchableWithoutFeedback>
-              {/* <View style={styles.card}></View> */}
               <View style={[styles.card, styles.bg3, { marginRight: 28 }]}>
                 <Text style={{ color: "#FFFFFF", fontWeight: "bold" }}>Baidu</Text>
               </View>
             </View>
           </ScrollView>
-
-          <View>
-            <View style={{ height: 60, flexDirection: "row", alignItems: "center" }}>
-              <Text style={{ fontSize: 20, fontWeight: 'bold', paddingLeft: 12 }}>为你推荐</Text>
-              <Text style={{ fontSize: 14, paddingRight: 12, position: "absolute", right: 0, color: global.bg2.backgroundColor }}>查看更多</Text>
-            </View>
-            {/* <View style={{ marginBottom: 10 }}>
-              <ListItem
-                navigate={this.props.navigation}
-                data={{ key: 'sdf' }}></ListItem>
-            </View>
-            <View style={{ marginBottom: 10 }}>
-              <ListItem navigate={this.props.navigation}></ListItem>
-            </View>
-            <View style={{ marginBottom: 10 }}>
-              <ListItem navigate={this.props.navigation}></ListItem>
-            </View> */}
+          <View style={{ height: 60, flexDirection: "row", alignItems: "center" }}>
+            <Text style={{ fontSize: 20, fontWeight: 'bold', paddingLeft: 12 }}>为你推荐</Text>
+            <Text style={{ fontSize: 14, paddingRight: 12, position: "absolute", right: 0, color: global.bg2.backgroundColor }}>查看更多</Text>
           </View>
+          {
+            this.state.recommendList.map((item, index) => (
+              <View style={{ marginBottom: 12 }} key={index}>
+                <ListItem
+                  navigate={this.props.navigation}
+                  data={item}></ListItem>
+              </View>
+            ))
+          }
+          {/* <FlatList
+            keyExtractor={(item, index) => index.toString()}
+            data={this.state.recommendList}
+            renderItem={(item: any) => (
+              <View style={{ marginBottom: 12 }}>
+                <ListItem
+                  navigate={this.props.navigation}
+                  data={item}></ListItem>
+              </View>
+            )
 
+            }
+          ></FlatList> */}
         </ScrollView>
+
       </View>
     );
   }

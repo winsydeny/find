@@ -30,7 +30,8 @@ export default class ListItem extends Component<Props> {
   };
   render() {
     const nav = this.props.navigate;
-    const data: JobList = this.props.data.item;
+    const data: JobList = this.props.data;
+    // const data:JobList = job.item;
     return (
       <View style={styles.listCard}>
         <TouchableWithoutFeedback onPress={() => nav.navigate('ListDetail', { transition: 'forHorizontal', jobdetail: data })}>
