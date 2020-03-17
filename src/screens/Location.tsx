@@ -25,7 +25,6 @@ export default class Home extends Component<Prop> {
     this.setState({ city: city });
     _storeData('citys', city);
     DeviceEventEmitter.emit('@Location', city);
-
   };
   componentDidMount() {
 
@@ -46,7 +45,7 @@ export default class Home extends Component<Prop> {
   render() {
     const { city } = this.state
     return (
-      <View>
+      <View style={{ paddingTop: global.statusBarHeight.paddingTop }}>
         <View style={{ flexDirection: "row", height: 40, alignItems: "center" }}>
           <CIon name="ios-arrow-back" style={{ fontSize: 20, marginLeft: 18 }} onPress={() => this.back()}></CIon>
           <Text style={{ marginLeft: 12, fontWeight: "bold" }}>当前定位:</Text>

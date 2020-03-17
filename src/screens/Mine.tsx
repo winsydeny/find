@@ -8,7 +8,7 @@ import Icon from 'react-native-vector-icons/AntDesign';
 import global from '../../style'
 import Geolocation from '@react-native-community/geolocation';
 import { toast, _remove, _getAllKey } from '../assets/utils';
-import { saveImg, request } from '../api/index'
+import { saveImg, getData } from '../api/index'
 import ImagePicker from 'react-native-image-picker';
 interface Props {
   navigation: any
@@ -72,13 +72,13 @@ export default class Mine extends Component<Props> {
     });
   };
   async get() {
-    const data = await request('test');
-    console.log(data)
+    const { data } = await getData('search', { keyword: 'java' });
+    console.log(data.length)
   }
   render() {
     const list = [
       {
-        title: '消息',
+        title: '面试',
         name: 'Message',
 
       },
@@ -88,11 +88,19 @@ export default class Mine extends Component<Props> {
       },
       {
         title: "收藏",
-        name: 'Resume'
+        name: 'Collection'
+      },
+      {
+        title: "投递记录",
+        name: 'ForumPublish'
+      },
+      {
+        title: "意见反馈",
+        name: 'ForumPublish'
       },
       // {
-      //   title: "意见反馈",
-      //   name: 'Resume'
+      //   title: "我的投递",
+      //   name: 'ForumPublish'
       // },
       // {
       //   title: "关于",
@@ -102,10 +110,10 @@ export default class Mine extends Component<Props> {
       //   title: "设置",
       //   name: 'Resume'
       // },
-      {
-        title: '退出登陆',
-        name: 'Login'
-      }
+      // {
+      //   title: '退出登陆',
+      //   name: 'Login'
+      // }
     ]
     // const value = identity<string>('Mine')
     // const navigation = this.props.navigation
@@ -116,7 +124,8 @@ export default class Mine extends Component<Props> {
       //     this.props.navigation.navigate('Registerd')
       //   }></Button>
       // </View>
-      <View>
+      <View style={{ paddingTop: 0 }}>
+        {/* <StatusBar translucent={true} backgroundColor={'transparent'} barStyle="dark-content"></StatusBar> */}
         {/* <StatusBar backgroundColor={global.bg2.backgroundColor} barStyle="light-content"></StatusBar> */}
         <View style={styles.avatarBg}>
           <Avatar
@@ -150,8 +159,6 @@ export default class Mine extends Component<Props> {
           <Button title="查看缓存" onPress={() => _getAllKey()}></Button>
           <Button title="清除缓存" onPress={() => _remove("isLogin")}></Button>
           <Button title="Request" onPress={() => this.get()}></Button>
-
-
         </View>
       </View >
     );

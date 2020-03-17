@@ -5,7 +5,19 @@ import AIcon from 'react-native-vector-icons/FontAwesome';
 import global from '../../style';
 import { View, Text, StyleSheet, FlatList, TouchableWithoutFeedback, Button, Alert, Image } from 'react-native';
 interface Props {
-  navigate?: any
+  navigate?: any,
+  data?: any
+}
+interface JobList {
+  position: string,
+  company: string,
+  location: string,
+  created: number,
+  type: string,
+  preview: string,
+  salary: number,
+  description: string,
+  experience: string
 }
 export default class ListItem extends Component<Props> {
   state = {
@@ -18,9 +30,10 @@ export default class ListItem extends Component<Props> {
   };
   render() {
     const nav = this.props.navigate;
+    const data: JobList = this.props.data.item;
     return (
       <View style={styles.listCard}>
-        <TouchableWithoutFeedback onPress={() => nav.navigate('ListDetail')}>
+        <TouchableWithoutFeedback onPress={() => nav.navigate('ListDetail', { transition: 'forHorizontal', jobdetail: data })}>
           <Image
             style={styles.img}
             source={{ uri: "https://facebook.github.io/react-native/img/tiny_logo.png" }}>
@@ -29,7 +42,7 @@ export default class ListItem extends Component<Props> {
 
         <View style={{ flex: 1 }}>
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-            <Text style={{ fontWeight: 'bold', fontSize: 16 }}>Director of Product Design</Text>
+            <Text style={{ fontWeight: 'bold', fontSize: 16 }}>{data.position}</Text>
             <TouchableWithoutFeedback onPress={() => this.collectJob()}>
               {
                 this.state.bookmark ?
@@ -40,15 +53,15 @@ export default class ListItem extends Component<Props> {
 
           </View>
 
-          <Text>Airbnb</Text>
+          <Text>{data.company}</Text>
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
             <EnIcon name="location-pin" style={{ fontSize: 14, color: fontGray2 }}></EnIcon>
-            <Text style={{ color: fontGray2 }}>San Jose,California,US</Text>
-            <Text style={[styles.textRight, { color: fontGray }]}>2 days ago</Text>
+            <Text style={{ color: fontGray2 }}>{data.location}</Text>
+            <Text style={[styles.textRight, { color: fontGray }]}>{data.created}</Text>
           </View>
           <View style={{ flexDirection: 'row', marginTop: 12 }}>
-            <Text style={{ color: fontGray }}>Full Time</Text>
-            <Text style={[styles.textRight, { color: blue, fontWeight: "bold" }]} onPress={() => Alert.alert("Apply for it")}>Apply for this job</Text>
+            <Text style={{ color: fontGray }}>{data.type}</Text>
+            <Text style={[styles.textRight, { color: blue, fontWeight: "bold" }]} onPress={() => Alert.alert("Apply for it")}>申请职位</Text>
           </View>
         </View>
       </View>

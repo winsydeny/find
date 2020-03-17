@@ -27,10 +27,13 @@ export default class RegisterPersonal extends Component {
       <View style={{ flex: 1, alignItems: "center" }}>
         <View style={{ height: 40, alignItems: "center", flexDirection: "row" }}>
           {/* <CIon name="ios-arrow-back" style={{ fontSize: 24, marginLeft: 18 }} onPress={() => this.props.navigation.pop()}></CIon> */}
-          <View style={{ alignItems: "center", marginLeft: -20 }}>
+          <View style={{ alignItems: "center", marginLeft: -20, flexDirection: "row" }}>
             <Text style={{ fontSize: 16, fontWeight: "bold" }}>个人信息</Text>
           </View>
         </View>
+        <Text
+          style={{ fontSize: 14, position: "absolute", right: 20, top: 12, color: global.bg2.backgroundColor }}
+          onPress={() => this.props.navigation.navigate('Login')}>跳过</Text>
         <View style={{ width: "92%" }}>
           <TouchableWithoutFeedback>
             <View style={styles.box}>
@@ -82,7 +85,7 @@ export default class RegisterPersonal extends Component {
         <View style={{ position: "absolute", bottom: 20, width: "94%" }}>
           <Button
             buttonStyle={{ backgroundColor: global.bg2.backgroundColor }}
-            title="完成注册"
+            title="完成填写"
             // loading={this.state.loading}
             onPress={() => this.register()}></Button>
         </View>

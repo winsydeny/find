@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, FlatList, TouchableWithoutFeedback } from 'react-native';
+import { View, Text, StyleSheet, FlatList, TouchableWithoutFeedback, StatusBar } from 'react-native';
 import { SearchBar, Button } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/Feather';
 import global from '../../style';
@@ -35,8 +35,8 @@ export default class Search extends Component<Props> {
 
     // console.log(list)
     return [
-      { info: 'test', key: '0' },
-      { info: 'any', key: '1' },
+      { info: 'java', key: '0' },
+      { info: '前端', key: '1' },
       { info: 'jack', key: '2' },
       { info: 'tom', key: '3' },
       { info: 'hello', key: '4' },
@@ -52,7 +52,8 @@ export default class Search extends Component<Props> {
     const display = isShow ? 'flex' : 'none';
     const btn = isShow ? 'none' : 'flex';
     return (
-      <View>
+      <View style={{ paddingTop: global.statusBarHeight.paddingTop }}>
+        <StatusBar translucent={true} backgroundColor={'transparent'} barStyle="dark-content"></StatusBar>
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
           <SearchBar
             clearIcon={true}

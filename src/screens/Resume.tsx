@@ -7,6 +7,7 @@ import {
   StyleSheet,
   TouchableNativeFeedbackBase,
   Picker,
+  Alert,
   // DeviceEventEmitter
 } from 'react-native';
 import CIon from 'react-native-vector-icons/Ionicons'
@@ -19,11 +20,13 @@ export default class Resume extends Component<Prop> {
   state = {
     num: '0',
     advantage: null,
-    position: null
+    position: null,
+    resume: null,
+    eduction: null
   }
   render() {
     return (
-      <View>
+      <View style={{}}>
         <View style={{ height: 40, alignItems: "center", flexDirection: "row" }}>
           <CIon name="ios-arrow-back" style={{ fontSize: 24, marginLeft: 18 }} onPress={() => this.props.navigation.pop()}></CIon>
           <View style={{ alignItems: "center", flex: 1, marginLeft: -20 }}>
@@ -54,7 +57,13 @@ export default class Resume extends Component<Prop> {
           <TouchableWithoutFeedback>
             <View style={styles.box}>
               <Text style={styles.h1}>教育经历</Text>
-              <Text style={styles.text}>兰州文理学院</Text>
+              <Text style={styles.text}>{this.state.eduction === null ? '点击填写教育经历' : this.state.eduction}</Text>
+            </View>
+          </TouchableWithoutFeedback>
+          <TouchableWithoutFeedback onPress={() => Alert.alert("success")}>
+            <View style={styles.box}>
+              <Text style={styles.h1}>简历附件</Text>
+              <Text style={styles.text}>{this.state.resume === null ? '点击上传' : this.state.resume}</Text>
             </View>
           </TouchableWithoutFeedback>
         </View>

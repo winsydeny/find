@@ -17,8 +17,11 @@ interface Prop {
 }
 export default class ListDetail extends Component<Prop> {
   render() {
+    // console.log(this.props.navigation.state.params)
+    const { jobdetail } = this.props.navigation.state.params;
+    console.log('listDetail', jobdetail)
     return (
-      <View >
+      <View style={{ flex: 1 }}>
         <StatusBar translucent={true} backgroundColor={'transparent'} barStyle="light-content"></StatusBar>
         {/* <View style={styles.header}>
           <Icon onPress={() => this.props.navigation.pop()} name="arrowleft" style={styles.arrow}></Icon>
@@ -34,49 +37,50 @@ export default class ListDetail extends Component<Prop> {
             </View>
           </View>
           <View style={{ paddingLeft: 18, paddingRight: 18 }}>
-            <Text style={{ fontSize: 18, textAlign: "center" }}>FaceBook</Text>
-            <Text style={{ fontSize: 24, fontWeight: "bold" }}>Princile & Lead UX Engineer</Text>
+            <Text style={{ fontSize: 18, textAlign: "center" }}>{jobdetail.company}</Text>
+            <Text style={{ fontSize: 24, fontWeight: "bold" }}>{jobdetail.position}</Text>
             <View style={{ flexDirection: 'row', alignItems: "center" }}>
               <EnIcon name="location-pin" style={{ fontSize: 22, marginLeft: -5, color: fontGray2 }}></EnIcon>
-              <Text style={{ color: fontGray2, fontSize: 16, paddingBottom: 6 }}>Sydney,Australia</Text>
+              <Text style={{ color: fontGray2, fontSize: 16, paddingBottom: 6 }}>{jobdetail.location}</Text>
             </View>
             <View style={{ flexDirection: "row", alignItems: "center", marginBottom: 12 }}>
-              <Text style={{ color: fontGray, fontSize: 16, }}>4 days ago</Text>
+              <Text style={{ color: fontGray, fontSize: 16, }}>{jobdetail.created}</Text>
               <Text style={{ right: 0, position: "absolute", color: fontGray }}>14+ Applicants</Text>
             </View>
             <View style={styles.information}>
               <View style={styles.infoItem}>
-                <Text style={{ color: fontGray2 }}>Experience</Text>
-                <Text style={[styles.top, { fontWeight: "bold" }]}>2-5 Years</Text>
+                <Text style={{ color: fontGray2 }}>经验</Text>
+                <Text style={[styles.top, { fontWeight: "bold" }]}>{jobdetail.experience}</Text>
               </View>
               <View style={[styles.infoItem,]}>
-                <Text style={{ textAlign: "center", color: fontGray2 }}>Employment</Text>
-                <Text style={[, styles.top, { textAlign: "center", fontWeight: "bold" }]}>Full Time</Text>
+                <Text style={{ textAlign: "center", color: fontGray2 }}>工作类型</Text>
+                <Text style={[, styles.top, { textAlign: "center", fontWeight: "bold" }]}>{jobdetail.type}</Text>
               </View>
               <View style={[styles.infoItem]}>
-                <Text style={{ textAlign: "right", marginRight: 10, color: fontGray2 }}>Salary</Text>
-                <Text style={[styles.top, { textAlign: "right", fontWeight: "bold" }]}>$10,000</Text>
+                <Text style={{ textAlign: "right", marginRight: 10, color: fontGray2 }}>薪水</Text>
+                <Text style={[styles.top, { textAlign: "right", fontWeight: "bold" }]}>{jobdetail.salary}</Text>
               </View>
 
             </View>
             <View style={{ height: 0.6, backgroundColor: "#dcdcdcc7" }}></View>
           </View>
           <View style={{ paddingLeft: 18, paddingRight: 18, paddingBottom: 20 }}>
-            <Text style={styles.h1}>Job Description</Text>
+            <Text style={styles.h1}>职位描述（JD）</Text>
             <Text style={styles.content}>
-              Vue.js is an open-source Model–view–viewmodel JavaScript{"\n"}
+              {jobdetail.description}
+              {/* Vue.js is an open-source Model–view–viewmodel JavaScript{"\n"}
               1.Original author(s): Evan You{"\n"}
               {"\n"}
               2.Initial release: February 2014; 6 years ago\n{"\n"}
               {"\n"}
               3.License: MIT License\n{"\n"}
               4.Written in: JavaScript\n{"\n"}
-              Stable release: 2.6.11 / December 13, 2019; 2 months ago{"\n"}
+              Stable release: 2.6.11 / December 13, 2019; 2 months ago{"\n"} */}
             </Text>
             <Button
               buttonStyle={{ borderRadius: 30, backgroundColor: global.bg2.backgroundColor }}
               onPress={() => Alert.alert("Already Apply")}
-              title="Apply for this job"></Button>
+              title="申请此职位"></Button>
           </View>
         </ScrollView>
       </View >

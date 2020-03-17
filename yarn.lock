@@ -5519,6 +5519,14 @@ react-native-vector-icons@^6.6.0:
     prop-types "^15.6.2"
     yargs "^13.2.2"
 
+react-native-viewpager@^0.2.13:
+  version "0.2.13"
+  resolved "https://registry.npm.taobao.org/react-native-viewpager/download/react-native-viewpager-0.2.13.tgz#75e421ae90e89efcd77d2c077c0525382b7c39c5"
+  integrity sha1-deQhrpDonvzXfSwHfAUlOCt8OcU=
+  dependencies:
+    react-timer-mixin "^0.13.3"
+    warning "^2.1.0"
+
 react-native@0.61.5:
   version "0.61.5"
   resolved "https://registry.npm.taobao.org/react-native/download/react-native-0.61.5.tgz#6e21acb56cbd75a3baeb1f70201a66f42600bba8"
@@ -6830,6 +6838,13 @@ walker@^1.0.7, walker@~1.0.5:
   integrity sha1-L3+bj9ENZ3JisYqITijRlhjgKPs=
   dependencies:
     makeerror "1.0.x"
+
+warning@^2.1.0:
+  version "2.1.0"
+  resolved "https://registry.npm.taobao.org/warning/download/warning-2.1.0.tgz#21220d9c63afc77a8c92111e011af705ce0c6901"
+  integrity sha1-ISINnGOvx3qMkhEeARr3Bc4MaQE=
+  dependencies:
+    loose-envify "^1.0.0"
 
 wcwidth@^1.0.1:
   version "1.0.1"

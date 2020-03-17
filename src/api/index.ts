@@ -1,6 +1,12 @@
 import {Alert} from 'react-native';
-const BASE_URL = 'https://www.vanlansh.wang/api';
-// const BASE_URL = 'http://loacalhost:3000/api';
+import {_retrieveData} from '../assets/utils';
+interface Params {
+  keyword: string;
+  page?: number;
+  size?: number;
+}
+// const BASE_URL = 'https://www.vanlansh.wang/api';
+const BASE_URL = 'http://192.168.1.149:3000/api';
 export const saveImg = (path: string) => {
   fetch(`${BASE_URL}/upload?image=true`, {
     method: 'POST',
@@ -13,8 +19,16 @@ export const saveImg = (path: string) => {
   });
 };
 
-export const request = (path: string) =>
-  fetch(`${BASE_URL}/${path}`).then(res => res.json());
+export const getData = async (path: string, params: any) => {
+  const access_token = await _retrieveData('access_token');
+  let last = [];
+  for (let key in params) {
+    last.push(`${key}=${params[key]}`);
+  }
+  const url = `${BASE_URL}/${path}?token=${access_token}&${last.join('&')}`;
+  console.log('get_path:', url);
+  return fetch(url).then(res => res.json());
+};
 
 export const xhr = (method: any, params: any) => {
   params['method'] = method;
@@ -59,12 +73,15 @@ export const xhr = (method: any, params: any) => {
       });
   });
 };
-export function postData(path: string, data: any) {
+export const postData = (path: string, data: any) => {
   return fetch(`${BASE_URL}/${path}`, {
     method: 'POST',
+    headers: {
+      'content-type': 'application/json',
+    },
     body: JSON.stringify(data),
   }).then(response => response.json());
-}
+};
 export const suggest = (keyword: string) => {
   return fetch(
     `http://suggestion.baidu.com/su?wd=${keyword}&p=3&cb=window.bdsug.sug`,

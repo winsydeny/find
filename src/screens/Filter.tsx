@@ -57,7 +57,7 @@ export default class Filter extends Component<Prop> {
   };
   render() {
     return (
-      <View style={{}}>
+      <View style={{ paddingTop: global.statusBarHeight.paddingTop }}>
         <View style={{ flexDirection: "row", height: 30, alignItems: "center", paddingLeft: 16, paddingRight: 16 }}>
           <CIon name="ios-arrow-back" style={{ fontSize: 20 }} onPress={() => this.back()}></CIon>
           <Text style={{ marginLeft: 10 }}>筛选</Text>

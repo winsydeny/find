@@ -14,6 +14,9 @@ const styles = StyleSheet.create({
     // color: '#43c2ee',
     color: '#3bc5f5',
   },
+  statusBarHeight: {
+    paddingTop: 24,
+  },
 });
 export default styles;
 // const colors = {

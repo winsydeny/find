@@ -6,6 +6,7 @@ import styles from '../../style';
 // import { toast, reset } from '../assets/utils';
 import { _storeData, _retrieveData, toast, reset } from '../assets/utils';
 import Loading from '../components/Loading';
+import { postData } from '../api';
 
 interface Prop {
   navigation: any
@@ -61,13 +62,30 @@ export default class Login extends Component<Prop>{
     return false
   }
   login() {
+    console.log('isLogin request')
+    // Alert.alert('sdf')
     if (this.checkData()) {
       // success
+      const data = {
+        email: this.state.email,
+        passcode: this.state.passcode
+      }
+      postData('login', data).then(res => {
+        console.log('res=>', res)
+        if (res.status === 0) {
+          toast("登陆成功");
+          _storeData('isLogin', 'true');
+          console.log(res.access_token)
+          _storeData('access_token', res.access_token)
+          this.props.navigation.navigate('Home');
+        } else if (res.status === 10009) {
+          Alert.alert(res.msg);
+        }
+      })
+        .catch(err => Alert.alert(err.toString))
       // console.log(this)
       // this.props.navigation.pop()
-      toast("登陆成功");
-      _storeData('isLogin', 'true');
-      this.props.navigation.navigate('Home');
+      // 
     }
   }
 

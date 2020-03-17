@@ -9,6 +9,7 @@ import {
 import { View, ActivityIndicator, Alert } from 'react-native'
 import styles from '../../style.js'
 import { toast } from '../assets/utils';
+import { postData } from '../api/index';
 export default class Registerd extends Component {
   state = {
     email: '',
@@ -26,15 +27,32 @@ export default class Registerd extends Component {
     const pattern = /^[A-Za-z0-9\u4e00-\u9fa5]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/;
     if (pattern.test(this.state.email)) {
       this.setState({ emailError: '', loading: true })
-      setTimeout(() => {
-        this.setState({
-          loading: false,
-          sendCode: true,
-          btnInfo: '注册'
+      const data = {
+        email: this.state.email
+      }
+      postData('register/send', data)
+        .then(res => {
+          if (res.status === 0) {
+            this.setState({
+              loading: false,
+              sendCode: true,
+              btnInfo: '注册'
+            })
+          } else if (res.status === 20000) {
+            this.setState({
+              loading: false,
+            })
+            Alert.alert(res.msg);
+          }
         })
-        // this.showAlert()
-
-      }, 200)
+      // setTimeout(() => {
+      //   this.setState({
+      //     loading: false,
+      //     sendCode: true,
+      //     btnInfo: '注册'
+      //   })
+      //   // this.showAlert()
+      // }, 200)
       // registerd success
     } else {
       this.setState({
@@ -46,8 +64,19 @@ export default class Registerd extends Component {
   registerd() {
     if (this.state.code !== '') {
       // vaild code
-      toast("请先完善个人信息");
-      this.props.navigation.navigate("RegisterPersonal");
+      const data = {
+        code: this.state.code,
+        email: this.state.email
+      }
+      postData('register', data)
+        .then(res => {
+          if (res.status === 0) {
+            // toast("请先完善个人信息");
+            this.props.navigation.navigate("RegisterPersonal");
+          } else if (res.status === 20001) {
+            Alert.alert(res.msg)
+          }
+        })
     } else {
       toast("验证码不能为空")
     }

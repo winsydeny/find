@@ -10,7 +10,7 @@ import React, { Component } from 'react';
 import nav from './src/navigator/index';
 import Start from './src/screens/Start'
 import { toast, _retrieveData, reset } from './src/assets/utils';
-import { AppState, Alert } from 'react-native';
+import { AppState, Alert, StatusBar, View } from 'react-native';
 import Login from './src/screens/Login'
 import { createAppContainer } from 'react-navigation';
 class App extends Component {
@@ -65,10 +65,15 @@ class App extends Component {
     }
     return (
       <>
-        <AppContainer
-          onNavigationStateChange={function (prevState, currentState) {
-            // console.log(this)
-          }} />
+        <StatusBar translucent={true} backgroundColor={'transparent'} barStyle="dark-content"></StatusBar>
+        <View
+          style={{ flex: 1, backgroundColor: "#FFFFFF" }}
+        >
+          <AppContainer
+            onNavigationStateChange={function (prevState, currentState) {
+              // console.log(this)
+            }} />
+        </View>
       </>
 
     )

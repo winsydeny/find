@@ -113,7 +113,7 @@ export default class Forum extends Component<Prop> {
   render() {
     const { list, showDialog, dialogContent, tab } = this.state;
     return (
-      <View>
+      <View style={{ paddingTop: 0 }}>
         {/* <StatusBar backgroundColor={global.bg2.backgroundColor} barStyle="light-content"></StatusBar>
           <View style={{ height: 30, backgroundColor: global.bg2.backgroundColor }}>
 
@@ -132,7 +132,7 @@ export default class Forum extends Component<Prop> {
         </View>
 
         <ScrollView style={[tab === 1 ? null : styles.hidden]}>
-          <View style={{ marginBottom: 10 }}>
+          {/* <View style={{ marginBottom: 10 }}>
             <ListItem navigate={this.props.navigation}></ListItem>
           </View>
           <View style={{ marginBottom: 10 }}>
@@ -158,7 +158,7 @@ export default class Forum extends Component<Prop> {
           </View>
           <View style={{ marginBottom: 10 }}>
             <ListItem navigate={this.props.navigation}></ListItem>
-          </View>
+          </View> */}
         </ScrollView>
         <View style={[tab === 2 ? null : styles.hidden]}>
 
@@ -177,7 +177,7 @@ export default class Forum extends Component<Prop> {
                       <Text style={styles.title}>{item.title}{item.uid}</Text>
                       <Text style={{ position: 'absolute', right: 26, fontSize: 12, color: 'gray' }}>2019年12月12</Text>
                     </View>
-                    <TouchableWithoutFeedback onPress={() => this.props.navigation.navigate("ForumDetail")}>
+                    <TouchableWithoutFeedback onPress={() => this.props.navigation.navigate("ForumDetail", { detail: item.msg })}>
                       <Text numberOfLines={2} style={styles.text}>{item.msg}</Text>
                     </TouchableWithoutFeedback>
                     <View style={{ flexDirection: 'row', alignItems: 'center' }}>
@@ -204,7 +204,7 @@ export default class Forum extends Component<Prop> {
             showDialog={showDialog}
             dissmiss={() => { this.setState({ showDialog: false }) }}
           ></BottomDialog>
-          <TouchableWithoutFeedback onPress={() => Alert.alert("success")}>
+          <TouchableWithoutFeedback onPress={() => this.props.navigation.navigate('ForumPublish')}>
             <View style={{ position: "absolute", width: 40, height: 40, bottom: 120, right: 38, backgroundColor: "#FFFFFF", borderRadius: 50 }}>
               <Micon name="add-circle" style={{ fontSize: 40, color: global.bg2.backgroundColor }}></Micon>
             </View>

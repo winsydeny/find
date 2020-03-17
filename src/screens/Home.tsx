@@ -106,10 +106,12 @@ export default class Home extends Component<Props> {
     return (
       <View
         style={{
-          paddingBottom: 58,
-          marginTop: 8,
+          paddingBottom: 44,
+          marginTop: global.statusBarHeight.paddingTop,
         }}>
-        <StatusBar backgroundColor="#FFFFFF" barStyle="dark-content"></StatusBar>
+        {/* <StatusBar translucent={true} backgroundColor={'transparent'} barStyle="dark-content"></StatusBar> */}
+
+        {/* <StatusBar backgroundColor="#FFFFFF" barStyle="dark-content"></StatusBar> */}
         {/* <Modal
           animationType="slide"
           transparent={false}
@@ -132,7 +134,7 @@ export default class Home extends Component<Props> {
           value={search}
         /> */}
           <TouchableWithoutFeedback
-            onPress={() => this.props.navigation.navigate('Search')}>
+            onPress={() => this.props.navigation.push('Search', { transition: "forHorizontal" })}>
             <View style={styles.searchBar}>
               <Icon
                 name="search1"
@@ -184,15 +186,17 @@ export default class Home extends Component<Props> {
               <Text style={{ fontSize: 20, fontWeight: 'bold', paddingLeft: 12 }}>为你推荐</Text>
               <Text style={{ fontSize: 14, paddingRight: 12, position: "absolute", right: 0, color: global.bg2.backgroundColor }}>查看更多</Text>
             </View>
-            <View style={{ marginBottom: 10 }}>
-              <ListItem navigate={this.props.navigation}></ListItem>
+            {/* <View style={{ marginBottom: 10 }}>
+              <ListItem
+                navigate={this.props.navigation}
+                data={{ key: 'sdf' }}></ListItem>
             </View>
             <View style={{ marginBottom: 10 }}>
               <ListItem navigate={this.props.navigation}></ListItem>
             </View>
             <View style={{ marginBottom: 10 }}>
               <ListItem navigate={this.props.navigation}></ListItem>
-            </View>
+            </View> */}
           </View>
 
         </ScrollView>

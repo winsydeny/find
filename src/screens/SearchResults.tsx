@@ -4,13 +4,25 @@ import EnIcon from 'react-native-vector-icons/Entypo'
 import AIcon from 'react-native-vector-icons/FontAwesome'
 import AntIcon from 'react-native-vector-icons/AntDesign'
 import global from '../../style';
-import { View, Text, StyleSheet, FlatList, TouchableWithoutFeedback, Button, Alert, Image, ListView, DeviceEventEmitter } from 'react-native';
+import { View, Text, StyleSheet, FlatList, TouchableWithoutFeedback, Button, Alert, Image, ListView, DeviceEventEmitter, StatusBar } from 'react-native';
 import { Avatar } from 'react-native-elements';
 import ListItem from '../components/ListItem';
 import Loading from '../components/Loading';
 import { toast } from '../assets/utils'
+import { getData } from '../api';
 interface Prop {
   navigation: any
+}
+interface JobList {
+  position: string,
+  company: string,
+  location: string,
+  created: number,
+  type: string,
+  preview: string,
+  salary: number,
+  description: string,
+  experience: string
 }
 export default class SearchResults extends Component<Prop> {
   state = {
@@ -21,7 +33,7 @@ export default class SearchResults extends Component<Prop> {
   listener: any;
   componentDidMount() {
     // Loading.show()
-    const job = [{ key: 'a' }, { key: 'a' }, { key: 'a' }, { key: 'a' }, { key: 'a' }, { key: 'a' }]
+    const job = [{ key: 'a' }, { key: 'b' }, { key: 'c' }, { key: 'd' }, { key: 'a' }, { key: 'a' }]
     // const job = []
     this.getList(job)
     this.listener = DeviceEventEmitter.addListener('@search_filter', (filter) => {
@@ -51,14 +63,13 @@ export default class SearchResults extends Component<Prop> {
   componentWillUnmount() {
     this.listener.remove();
   };
-  getList(job: any) {
+  async getList(job: any) {
     this.show();
-    setTimeout(() => {
-      this.close();
-      this.setState({
-        jobList: job,
-      })
-    }, 1000);
+    const { data } = await getData('search', { keyword: this.props.navigation.state.params.keyWord })
+    this.setState({
+      jobList: data,
+    })
+    this.close();
     // this.setState({ showLoading: false });
     // return this.state.jobList;
   };
@@ -74,7 +85,9 @@ export default class SearchResults extends Component<Prop> {
   render() {
     const keyword = this.props.navigation.state.params.keyWord;
     return (
-      <View style={{ backgroundColor: '#f4f5f5', flex: 1 }}>
+      <View style={{ backgroundColor: '#f4f5f5', flex: 1, marginTop: global.statusBarHeight.paddingTop }}>
+        <StatusBar translucent={true} backgroundColor={'transparent'} barStyle="dark-content"></StatusBar>
+
         <View style={{ height: 50, paddingLeft: 10, paddingRight: 10, backgroundColor: "#FFFFFF", flexDirection: "row" }}>
           <TouchableWithoutFeedback
             onPress={() => this.props.navigation.pop()}>
@@ -93,17 +106,19 @@ export default class SearchResults extends Component<Prop> {
           </TouchableWithoutFeedback>
         </View>
         {
-          this.state.jobList.length === 0 && this.state.done ? <Text>无数据</Text> : null
+          this.state.jobList.length === 0 && this.state.done ? <Text style={{ textAlign: "center", marginTop: 60 }}>啊哦！无数据了</Text> : null
         }
         <FlatList
           keyExtractor={(item, index) => index.toString()}
           onEndReached={() => this.getMore()}
           data={this.state.jobList}
           onEndReachedThreshold={0.1}
-          renderItem={() => {
+          renderItem={(item: any) => {
             return (
               <View style={{ marginTop: 12 }}>
-                <ListItem></ListItem>
+                <ListItem
+                  navigate={this.props.navigation}
+                  data={item}></ListItem>
               </View>
             )
           }}></FlatList>

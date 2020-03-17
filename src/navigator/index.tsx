@@ -17,6 +17,9 @@ import ResumePersonal from '../screens/ResumePersonal';
 import ResumeAdvantage from '../screens/ResumeAdvantage';
 import RegisterPersonal from '../screens/RegisterPersonal';
 import Message from '../screens/Message';
+import ForumPublish from '../screens/ForumPublish';
+import Collection from '../screens/Collection';
+import MessageDetail from '../screens/MessageDetail';
 
 
 /**
@@ -141,6 +144,24 @@ const App = (isLogined: boolean) => {
 		},
 		Message: {
 			screen: Message,
+			navigationOptions: {
+				header: null
+			},
+		},
+		MessageDetail: {
+			screen: MessageDetail,
+			navigationOptions: {
+				header: null
+			},
+		},
+		ForumPublish: {
+			screen: ForumPublish,
+			navigationOptions: {
+				header: null
+			},
+		},
+		Collection: {
+			screen: Collection,
 			navigationOptions: {
 				header: null
 			},
