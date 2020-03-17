@@ -22,9 +22,10 @@ import global from '../../style';
 import ListItem from "../components/ListItem";
 import { ScrollView } from "react-native-gesture-handler";
 import { toast } from "../assets/utils";
-import ScrollableTabView from 'react-native-scrollable-tab-view';
+import ScrollableTabView, { DefaultTabBar } from 'react-native-scrollable-tab-view';
 import Login from "./Login";
 import Registerd from "./Registerd";
+import ViewPager from "@react-native-community/viewpager";
 // https://github.com/ptomasroos/react-native-scrollable-tab-view => 
 
 interface ItemList {
@@ -43,6 +44,8 @@ export default class Forum extends Component<Prop> {
     showDialog: false,
     dialogContent: ''
   };
+  Tab() {
+  }
   componentDidMount() {
     const list: any = [];
     for (let i = 0; i < 6; i++) {
@@ -95,218 +98,268 @@ export default class Forum extends Component<Prop> {
   componentWillUnmount() {
     // toast("exit finds")
   };
-  // render() {
-  //   return (
-  //     <ScrollableTabView renderTabBar={() => this.Tab()}>
-  //       <Text>sdf</Text>
-  //       <Text>sdf</Text>
-  //       <Text>sdf</Text>
-  //     </ScrollableTabView>
-  //   )
-  // }
-
-
-
-
-
-
   render() {
     const { list, showDialog, dialogContent, tab } = this.state;
     return (
-      <View style={{ paddingTop: 0 }}>
-        {/* <StatusBar backgroundColor={global.bg2.backgroundColor} barStyle="light-content"></StatusBar>
-          <View style={{ height: 30, backgroundColor: global.bg2.backgroundColor }}>
+      <View style={{ flex: 1, backgroundColor: "", paddingTop: global.statusBarHeight.paddingTop }}>
+        <ScrollableTabView
+          tabBarUnderlineStyle={{ backgroundColor: global.bg2.backgroundColor, height: 2.7 }}
+          tabBarActiveTextColor={global.bg2.backgroundColor}
+          renderTabBar={() => <DefaultTabBar />}>
+          <View tabLabel="最新发布">
+            <Text style={{ textAlign: "center" }}>Noting。。。</Text>
+          </View>
+          <View tabLabel="最新动态">
+            <FlatList
+              data={list}
+              keyExtractor={this._keyExtractor}
+              renderItem={({ item }) => (
+                <TouchableWithoutFeedback>
+                  <View style={styles.itemList}>
+                    <Image
+                      style={{ width: 50, height: 50, borderRadius: 50, marginLeft: 20, marginRight: 10 }}
+                      source={{ uri: 'https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg' }}
+                    ></Image>
+                    <View style={{}}>
+                      <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                        <Text style={styles.title}>{item.title}{item.uid}</Text>
+                        <Text style={{ position: 'absolute', right: 26, fontSize: 12, color: 'gray' }}>2019年12月12</Text>
+                      </View>
+                      <TouchableWithoutFeedback onPress={() => this.props.navigation.navigate("ForumDetail", { detail: item.msg })}>
+                        <Text numberOfLines={2} style={styles.text}>{item.msg}</Text>
+                      </TouchableWithoutFeedback>
+                      <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                        <Icon
+                          name="thumb-up"
+                          style={[styles.icon, { color: item.thumb ? global.fontColor.color : 'gray', }]}
+                          onPress={this.thumbHandle.bind(this, item)}>
+                        </Icon>
+                        <Text style={styles.iconText}>{item.thumb_num}</Text>
+                        <Icon
+                          name="message-processing"
+                          style={[styles.icon]}
+                          onPress={this.commentsHandle.bind(this, item)}>
+                        </Icon>
+                        <Text style={styles.iconText}>{item.comment_num}</Text>
 
-            <AntIcon onPress={() => this.props.navigation.pop()} name="arrowleft" style={styles.arrow}></AntIcon>
-          </View> */}
-        <View style={{ flexDirection: "row", alignItems: "center", borderBottomWidth: 0.2, borderBottomColor: '#b5b4b494' }}>
-          <Text
-            onPress={() => this.setState({ tab: 1 })}
-            style={[styles.tab, this.state.tab === 1 ? styles.tabChose : null]}>最新发布</Text>
-          <Text
-            onPress={() => this.setState({ tab: 2 })}
-            style={[styles.tab, this.state.tab === 2 ? styles.tabChose : null]}>最新消息</Text>
-          <Text
-            onPress={() => this.setState({ tab: 3 })}
-            style={[styles.tab, this.state.tab === 3 ? styles.tabChose : null]}>其他</Text>
-        </View>
-
-        <ScrollView style={[tab === 1 ? null : styles.hidden]}>
-          {/* <View style={{ marginBottom: 10 }}>
-            <ListItem navigate={this.props.navigation}></ListItem>
-          </View>
-          <View style={{ marginBottom: 10 }}>
-            <ListItem navigate={this.props.navigation}></ListItem>
-          </View>
-          <View style={{ marginBottom: 10 }}>
-            <ListItem navigate={this.props.navigation}></ListItem>
-          </View>
-          <View style={{ marginBottom: 10 }}>
-            <ListItem navigate={this.props.navigation}></ListItem>
-          </View>
-          <View style={{ marginBottom: 10 }}>
-            <ListItem navigate={this.props.navigation}></ListItem>
-          </View>
-          <View style={{ marginBottom: 10 }}>
-            <ListItem navigate={this.props.navigation}></ListItem>
-          </View>
-          <View style={{ marginBottom: 10 }}>
-            <ListItem navigate={this.props.navigation}></ListItem>
-          </View>
-          <View style={{ marginBottom: 10 }}>
-            <ListItem navigate={this.props.navigation}></ListItem>
-          </View>
-          <View style={{ marginBottom: 10 }}>
-            <ListItem navigate={this.props.navigation}></ListItem>
-          </View> */}
-        </ScrollView>
-        <View style={[tab === 2 ? null : styles.hidden]}>
-
-          <FlatList
-            data={list}
-            keyExtractor={this._keyExtractor}
-            renderItem={({ item }) => (
-              <TouchableWithoutFeedback>
-                <View style={styles.itemList}>
-                  <Image
-                    style={{ width: 50, height: 50, borderRadius: 50, marginLeft: 20, marginRight: 10 }}
-                    source={{ uri: 'https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg' }}
-                  ></Image>
-                  <View style={{}}>
-                    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                      <Text style={styles.title}>{item.title}{item.uid}</Text>
-                      <Text style={{ position: 'absolute', right: 26, fontSize: 12, color: 'gray' }}>2019年12月12</Text>
-                    </View>
-                    <TouchableWithoutFeedback onPress={() => this.props.navigation.navigate("ForumDetail", { detail: item.msg })}>
-                      <Text numberOfLines={2} style={styles.text}>{item.msg}</Text>
-                    </TouchableWithoutFeedback>
-                    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                      <Icon
-                        name="thumb-up"
-                        style={[styles.icon, { color: item.thumb ? global.fontColor.color : 'gray', }]}
-                        onPress={this.thumbHandle.bind(this, item)}>
-                      </Icon>
-                      <Text style={styles.iconText}>{item.thumb_num}</Text>
-                      <Icon
-                        name="message-processing"
-                        style={[styles.icon]}
-                        onPress={this.commentsHandle.bind(this, item)}>
-                      </Icon>
-                      <Text style={styles.iconText}>{item.comment_num}</Text>
-
+                      </View>
                     </View>
                   </View>
-                </View>
-              </TouchableWithoutFeedback>
-            )}></FlatList>
-          <BottomDialog
-            content={dialogContent}
-            showDialog={showDialog}
-            dissmiss={() => { this.setState({ showDialog: false }) }}
-          ></BottomDialog>
-          <TouchableWithoutFeedback onPress={() => this.props.navigation.navigate('ForumPublish')}>
-            <View style={{ position: "absolute", width: 40, height: 40, bottom: 120, right: 38, backgroundColor: "#FFFFFF", borderRadius: 50 }}>
-              <Micon name="add-circle" style={{ fontSize: 40, color: global.bg2.backgroundColor }}></Micon>
-            </View>
-          </TouchableWithoutFeedback>
-
-        </View>
-
+                </TouchableWithoutFeedback>
+              )}></FlatList>
+            <BottomDialog
+              content={dialogContent}
+              showDialog={showDialog}
+              dissmiss={() => { this.setState({ showDialog: false }) }}
+            ></BottomDialog>
+            <TouchableWithoutFeedback onPress={() => this.props.navigation.navigate('ForumPublish')}>
+              <View style={{ position: "absolute", width: 40, height: 40, bottom: 10, right: 10, backgroundColor: "#FFFFFF", borderRadius: 50 }}>
+                <Micon name="add-circle" style={{ fontSize: 40, color: global.bg2.backgroundColor }}></Micon>
+              </View>
+            </TouchableWithoutFeedback>
+          </View>
+          <View tabLabel="其他">
+            <Text style={{ textAlign: "center" }}>Noting。。。</Text>
+          </View>
+        </ScrollableTabView>
       </View>
+
     )
-
-    // } else if (tab === 2) {
-    //   return (
-    //     <View>
-    //       {/* <StatusBar backgroundColor={global.bg2.backgroundColor} barStyle="light-content"></StatusBar>
-    //       <View style={{ height: 30, backgroundColor: global.bg2.backgroundColor }}>
-
-    //         <AntIcon onPress={() => this.props.navigation.pop()} name="arrowleft" style={styles.arrow}></AntIcon>
-    //       </View> */}
-    //       <View style={{ flexDirection: "row", alignItems: "center", borderBottomWidth: 0.2, borderBottomColor: '#b5b4b494' }}>
-    //         <Text
-    //           onPress={() => this.setState({ tab: 1 })}
-    //           style={[styles.tab, this.state.tab === 1 ? styles.tabChose : null]}>最新发布</Text>
-    //         <Text
-    //           onPress={() => this.setState({ tab: 2 })}
-    //           style={[styles.tab, this.state.tab === 2 ? styles.tabChose : null]}>最新消息</Text>
-    //         <Text
-    //           onPress={() => this.setState({ tab: 3 })}
-    //           style={[styles.tab, this.state.tab === 3 ? styles.tabChose : null]}>其他</Text>
-    //       </View>
-    //       <FlatList
-    //         data={list}
-    //         keyExtractor={this._keyExtractor}
-    //         renderItem={({ item }) => (
-    //           <TouchableWithoutFeedback>
-    //             <View style={styles.itemList}>
-    //               <Image
-    //                 style={{ width: 50, height: 50, borderRadius: 50, marginLeft: 20, marginRight: 10 }}
-    //                 source={{ uri: 'https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg' }}
-    //               ></Image>
-    //               <View style={{}}>
-    //                 <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-    //                   <Text style={styles.title}>{item.title}{item.uid}</Text>
-    //                   <Text style={{ position: 'absolute', right: 26, fontSize: 12, color: 'gray' }}>2019年12月12</Text>
-    //                 </View>
-    //                 <TouchableWithoutFeedback o nPress={() => this.props.navigation.navigate("ForumDetail")}>
-    //                   <Text numberOfLines={2} style={styles.text}>{item.msg}</Text>
-    //                 </TouchableWithoutFeedback>
-    //                 <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-    //                   <Icon
-    //                     name="thumb-up"
-    //                     style={[styles.icon, { color: item.thumb ? global.fontColor.color : 'gray', }]}
-    //                     onPress={this.thumbHandle.bind(this, item)}>
-    //                   </Icon>
-    //                   <Text style={styles.iconText}>{item.thumb_num}</Text>
-    //                   <Icon
-    //                     name="message-processing"
-    //                     style={[styles.icon]}
-    //                     onPress={this.commentsHandle.bind(this, item)}>
-    //                   </Icon>
-    //                   <Text style={styles.iconText}>{item.comment_num}</Text>
-
-    //                 </View>
-    //               </View>
-    //             </View>
-    //           </TouchableWithoutFeedback>
-    //         )}></FlatList>
-    //       <BottomDialog
-    //         content={dialogContent}
-    //         showDialog={showDialog}
-    //         dissmiss={() => { this.setState({ showDialog: false }) }}
-    //       ></BottomDialog>
-    //     </View>
-    //   )
-    // } else {
-    //   return (
-    //     <View>
-    //       {/* <StatusBar backgroundColor={global.bg2.backgroundColor} barStyle="light-content"></StatusBar>
-    //       <View style={{ height: 30, backgroundColor: global.bg2.backgroundColor }}>
-
-    //         <AntIcon onPress={() => this.props.navigation.pop()} name="arrowleft" style={styles.arrow}></AntIcon>
-    //       </View> */}
-    //       <View style={{ flexDirection: "row", alignItems: "center", borderBottomWidth: 0.2, borderBottomColor: '#b5b4b494' }}>
-    //         <Text
-    //           onPress={() => this.setState({ tab: 1 })}
-    //           style={[styles.tab, this.state.tab === 1 ? styles.tabChose : null]}>最新发布</Text>
-    //         <Text
-    //           onPress={() => this.setState({ tab: 2 })}
-    //           style={[styles.tab, this.state.tab === 2 ? styles.tabChose : null]}>最新消息</Text>
-    //         <Text
-    //           onPress={() => this.setState({ tab: 3 })}
-    //           style={[styles.tab, this.state.tab === 3 ? styles.tabChose : null]}>其他</Text>
-    //       </View>
-
-    //       <BottomDialog
-    //         content={dialogContent}
-    //         showDialog={showDialog}
-    //         dissmiss={() => { this.setState({ showDialog: false }) }}
-    //       ></BottomDialog>
-    //     </View>
-    //   )
-    // }
   }
+
+
+
+
+
+
+  // render() {
+  //   const { list, showDialog, dialogContent, tab } = this.state;
+  //   return (
+  //     <View style={{ paddingTop: 0 }}>
+  //       {/* <StatusBar backgroundColor={global.bg2.backgroundColor} barStyle="light-content"></StatusBar>
+  //         <View style={{ height: 30, backgroundColor: global.bg2.backgroundColor }}>
+
+  //           <AntIcon onPress={() => this.props.navigation.pop()} name="arrowleft" style={styles.arrow}></AntIcon>
+  //         </View> */}
+  //       <View style={{ flexDirection: "row", alignItems: "center", borderBottomWidth: 0.2, borderBottomColor: '#b5b4b494' }}>
+  //         <Text
+  //           onPress={() => this.setState({ tab: 1 })}
+  //           style={[styles.tab, this.state.tab === 1 ? styles.tabChose : null]}>最新发布</Text>
+  //         <Text
+  //           onPress={() => this.setState({ tab: 2 })}
+  //           style={[styles.tab, this.state.tab === 2 ? styles.tabChose : null]}>最新消息</Text>
+  //         <Text
+  //           onPress={() => this.setState({ tab: 3 })}
+  //           style={[styles.tab, this.state.tab === 3 ? styles.tabChose : null]}>其他</Text>
+  //       </View>
+
+  //       <ScrollView style={[tab === 1 ? null : styles.hidden]}>
+  //         {/* <View style={{ marginBottom: 10 }}>
+  //           <ListItem navigate={this.props.navigation}></ListItem>
+  //         </View>
+  //         <View style={{ marginBottom: 10 }}>
+  //           <ListItem navigate={this.props.navigation}></ListItem>
+  //         </View>
+  //         <View style={{ marginBottom: 10 }}>
+  //           <ListItem navigate={this.props.navigation}></ListItem>
+  //         </View>
+  //         <View style={{ marginBottom: 10 }}>
+  //           <ListItem navigate={this.props.navigation}></ListItem>
+  //         </View>
+  //         <View style={{ marginBottom: 10 }}>
+  //           <ListItem navigate={this.props.navigation}></ListItem>
+  //         </View>
+  //         <View style={{ marginBottom: 10 }}>
+  //           <ListItem navigate={this.props.navigation}></ListItem>
+  //         </View>
+  //         <View style={{ marginBottom: 10 }}>
+  //           <ListItem navigate={this.props.navigation}></ListItem>
+  //         </View>
+  //         <View style={{ marginBottom: 10 }}>
+  //           <ListItem navigate={this.props.navigation}></ListItem>
+  //         </View>
+  //         <View style={{ marginBottom: 10 }}>
+  //           <ListItem navigate={this.props.navigation}></ListItem>
+  //         </View> */}
+  //       </ScrollView>
+  //       <View style={[tab === 2 ? null : styles.hidden]}>
+
+  //         <FlatList
+  //           data={list}
+  //           keyExtractor={this._keyExtractor}
+  //           renderItem={({ item }) => (
+  //             <TouchableWithoutFeedback>
+  //               <View style={styles.itemList}>
+  //                 <Image
+  //                   style={{ width: 50, height: 50, borderRadius: 50, marginLeft: 20, marginRight: 10 }}
+  //                   source={{ uri: 'https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg' }}
+  //                 ></Image>
+  //                 <View style={{}}>
+  //                   <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+  //                     <Text style={styles.title}>{item.title}{item.uid}</Text>
+  //                     <Text style={{ position: 'absolute', right: 26, fontSize: 12, color: 'gray' }}>2019年12月12</Text>
+  //                   </View>
+  //                   <TouchableWithoutFeedback onPress={() => this.props.navigation.navigate("ForumDetail", { detail: item.msg })}>
+  //                     <Text numberOfLines={2} style={styles.text}>{item.msg}</Text>
+  //                   </TouchableWithoutFeedback>
+  //                   <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+  //                     <Icon
+  //                       name="thumb-up"
+  //                       style={[styles.icon, { color: item.thumb ? global.fontColor.color : 'gray', }]}
+  //                       onPress={this.thumbHandle.bind(this, item)}>
+  //                     </Icon>
+  //                     <Text style={styles.iconText}>{item.thumb_num}</Text>
+  //                     <Icon
+  //                       name="message-processing"
+  //                       style={[styles.icon]}
+  //                       onPress={this.commentsHandle.bind(this, item)}>
+  //                     </Icon>
+  //                     <Text style={styles.iconText}>{item.comment_num}</Text>
+
+  //                   </View>
+  //                 </View>
+  //               </View>
+  //             </TouchableWithoutFeedback>
+  //           )}></FlatList>
+  //      
+
+  //       </View>
+
+  //     </View>
+  //   )
+
+  //   // } else if (tab === 2) {
+  //   //   return (
+  //   //     <View>
+  //   //       {/* <StatusBar backgroundColor={global.bg2.backgroundColor} barStyle="light-content"></StatusBar>
+  //   //       <View style={{ height: 30, backgroundColor: global.bg2.backgroundColor }}>
+
+  //   //         <AntIcon onPress={() => this.props.navigation.pop()} name="arrowleft" style={styles.arrow}></AntIcon>
+  //   //       </View> */}
+  //   //       <View style={{ flexDirection: "row", alignItems: "center", borderBottomWidth: 0.2, borderBottomColor: '#b5b4b494' }}>
+  //   //         <Text
+  //   //           onPress={() => this.setState({ tab: 1 })}
+  //   //           style={[styles.tab, this.state.tab === 1 ? styles.tabChose : null]}>最新发布</Text>
+  //   //         <Text
+  //   //           onPress={() => this.setState({ tab: 2 })}
+  //   //           style={[styles.tab, this.state.tab === 2 ? styles.tabChose : null]}>最新消息</Text>
+  //   //         <Text
+  //   //           onPress={() => this.setState({ tab: 3 })}
+  //   //           style={[styles.tab, this.state.tab === 3 ? styles.tabChose : null]}>其他</Text>
+  //   //       </View>
+  //   //       <FlatList
+  //   //         data={list}
+  //   //         keyExtractor={this._keyExtractor}
+  //   //         renderItem={({ item }) => (
+  //   //           <TouchableWithoutFeedback>
+  //   //             <View style={styles.itemList}>
+  //   //               <Image
+  //   //                 style={{ width: 50, height: 50, borderRadius: 50, marginLeft: 20, marginRight: 10 }}
+  //   //                 source={{ uri: 'https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg' }}
+  //   //               ></Image>
+  //   //               <View style={{}}>
+  //   //                 <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+  //   //                   <Text style={styles.title}>{item.title}{item.uid}</Text>
+  //   //                   <Text style={{ position: 'absolute', right: 26, fontSize: 12, color: 'gray' }}>2019年12月12</Text>
+  //   //                 </View>
+  //   //                 <TouchableWithoutFeedback o nPress={() => this.props.navigation.navigate("ForumDetail")}>
+  //   //                   <Text numberOfLines={2} style={styles.text}>{item.msg}</Text>
+  //   //                 </TouchableWithoutFeedback>
+  //   //                 <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+  //   //                   <Icon
+  //   //                     name="thumb-up"
+  //   //                     style={[styles.icon, { color: item.thumb ? global.fontColor.color : 'gray', }]}
+  //   //                     onPress={this.thumbHandle.bind(this, item)}>
+  //   //                   </Icon>
+  //   //                   <Text style={styles.iconText}>{item.thumb_num}</Text>
+  //   //                   <Icon
+  //   //                     name="message-processing"
+  //   //                     style={[styles.icon]}
+  //   //                     onPress={this.commentsHandle.bind(this, item)}>
+  //   //                   </Icon>
+  //   //                   <Text style={styles.iconText}>{item.comment_num}</Text>
+
+  //   //                 </View>
+  //   //               </View>
+  //   //             </View>
+  //   //           </TouchableWithoutFeedback>
+  //   //         )}></FlatList>
+  //   //       <BottomDialog
+  //   //         content={dialogContent}
+  //   //         showDialog={showDialog}
+  //   //         dissmiss={() => { this.setState({ showDialog: false }) }}
+  //   //       ></BottomDialog>
+  //   //     </View>
+  //   //   )
+  //   // } else {
+  //   //   return (
+  //   //     <View>
+  //   //       {/* <StatusBar backgroundColor={global.bg2.backgroundColor} barStyle="light-content"></StatusBar>
+  //   //       <View style={{ height: 30, backgroundColor: global.bg2.backgroundColor }}>
+
+  //   //         <AntIcon onPress={() => this.props.navigation.pop()} name="arrowleft" style={styles.arrow}></AntIcon>
+  //   //       </View> */}
+  //   //       <View style={{ flexDirection: "row", alignItems: "center", borderBottomWidth: 0.2, borderBottomColor: '#b5b4b494' }}>
+  //   //         <Text
+  //   //           onPress={() => this.setState({ tab: 1 })}
+  //   //           style={[styles.tab, this.state.tab === 1 ? styles.tabChose : null]}>最新发布</Text>
+  //   //         <Text
+  //   //           onPress={() => this.setState({ tab: 2 })}
+  //   //           style={[styles.tab, this.state.tab === 2 ? styles.tabChose : null]}>最新消息</Text>
+  //   //         <Text
+  //   //           onPress={() => this.setState({ tab: 3 })}
+  //   //           style={[styles.tab, this.state.tab === 3 ? styles.tabChose : null]}>其他</Text>
+  //   //       </View>
+
+  //   //       <BottomDialog
+  //   //         content={dialogContent}
+  //   //         showDialog={showDialog}
+  //   //         dissmiss={() => { this.setState({ showDialog: false }) }}
+  //   //       ></BottomDialog>
+  //   //     </View>
+  //   //   )
+  //   // }
+  // }
 }
 
 const styles = StyleSheet.create({

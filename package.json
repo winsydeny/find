@@ -50,6 +50,9 @@
     "react-test-renderer": "16.9.0",
     "typescript": "^3.7.4"
   },
+  "resolutions": {
+    "@react-native-community/viewpager": "^2.0.1"
+  },
   "jest": {
     "preset": "react-native"
   }

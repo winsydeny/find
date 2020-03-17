@@ -10,6 +10,7 @@ import CIon from 'react-native-vector-icons/Ionicons'
 import AntIcon from 'react-native-vector-icons/AntDesign'
 import { toast } from '../assets/utils';
 import { saveImg } from '../api';
+import global from '../../style'
 interface Prop {
   navigation: any
 }
@@ -34,7 +35,7 @@ export default class ForumPublish extends Component<Prop> {
   };
   render() {
     return (
-      <View>
+      <View style={{ paddingTop: global.statusBarHeight.paddingTop }}>
         <View style={{ height: 40, alignItems: "center", flexDirection: "row" }}>
           <CIon name="ios-arrow-back" style={{ fontSize: 24, marginLeft: 18 }} onPress={() => this.props.navigation.pop()}></CIon>
           <View style={{ alignItems: "center", flex: 1 }}>
