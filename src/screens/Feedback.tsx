@@ -14,7 +14,7 @@ import global from '../../style'
 interface Prop {
   navigation: any
 }
-export default class ForumPublish extends Component<Prop> {
+export default class Feedback extends Component<Prop> {
   state = {
     num: 0,
     value: '',
@@ -39,7 +39,7 @@ export default class ForumPublish extends Component<Prop> {
         <View style={{ height: 40, alignItems: "center", flexDirection: "row" }}>
           <CIon name="ios-arrow-back" style={{ fontSize: 24, marginLeft: 18 }} onPress={() => this.props.navigation.pop()}></CIon>
           <View style={{ alignItems: "center", flex: 1 }}>
-            <Text style={{ fontSize: 16, fontWeight: "bold" }}>发动态</Text>
+            <Text style={{ fontSize: 16, fontWeight: "bold" }}>意见反馈</Text>
           </View>
           <AntIcon name="check" style={{ paddingRight: 18, fontSize: 24 }} onPress={() => this.save()}></AntIcon>
         </View>

@@ -20,6 +20,7 @@ import Message from '../screens/Message';
 import ForumPublish from '../screens/ForumPublish';
 import Collection from '../screens/Collection';
 import MessageDetail from '../screens/MessageDetail';
+import Feedback from '../screens/Feedback';
 
 
 /**
@@ -165,6 +166,12 @@ const App = (isLogined: boolean) => {
 			navigationOptions: {
 				header: null
 			},
+		},
+		Feedback: {
+			screen: Feedback,
+			navigationOptions: {
+				header: null
+			}
 		}
 
 	}, {

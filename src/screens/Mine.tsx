@@ -96,7 +96,7 @@ export default class Mine extends Component<Props> {
       },
       {
         title: "意见反馈",
-        name: 'ForumPublish'
+        name: 'Feedback'
       },
       // {
       //   title: "我的投递",
