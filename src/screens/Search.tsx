@@ -1,21 +1,23 @@
-import React, {Component} from 'react';
-import {View, Text, StyleSheet, FlatList, TouchableWithoutFeedback} from 'react-native';
-import {SearchBar,Button} from 'react-native-elements';
+import React, { Component } from 'react';
+import { View, Text, StyleSheet, FlatList, TouchableWithoutFeedback, StatusBar } from 'react-native';
+import { SearchBar, Button } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/Feather';
 import global from '../../style';
+import { suggest } from '../api';
 interface Props {
   navigation: any;
 }
-export class Search extends Component<Props> {
+export default class Search extends Component<Props> {
   state = {
     search: '',
     isShow: true,
     users: [],
+    keyWord: ''
   };
   updateSearch(search: string) {
-      this.setState({
-          isShow:true
-      })
+    this.setState({
+      isShow: true
+    })
     if (search === '') {
       this.setState({
         users: [],
@@ -30,25 +32,29 @@ export class Search extends Component<Props> {
     });
   }
   getSearchList() {
+
+    // console.log(list)
     return [
-      {info: 'test', key: '0'},
-      {info: 'test', key: '1'},
-      {info: 'test', key: '2'},
-      {info: 'test', key: '3'},
-      {info: 'test', key: '4'},
+      { info: 'java', key: '0' },
+      { info: '前端', key: '1' },
+      { info: 'jack', key: '2' },
+      { info: 'tom', key: '3' },
+      { info: 'hello', key: '4' },
     ];
   };
-  searchInfo(item:any){
-      this.setState({search:item.info,isShow:false})
+  searchInfo(item: any) {
+    this.setState({ search: item.info, isShow: false, keyWord: item.info })
+    this.props.navigation.navigate('SearchResults', { transition: 'forHorizontal', keyWord: item.info });
     // Alert.alert(item.info)
   }
   render() {
-    const {search, users, isShow} = this.state;
-    const display = isShow?'flex':'none';
-    const btn = isShow?'none':'flex';
+    const { search, users, isShow, keyWord } = this.state;
+    const display = isShow ? 'flex' : 'none';
+    const btn = isShow ? 'none' : 'flex';
     return (
-      <View>
-        <View style={{flexDirection: 'row', alignItems: 'center'}}>
+      <View style={{ paddingTop: global.statusBarHeight.paddingTop }}>
+        <StatusBar translucent={true} backgroundColor={'transparent'} barStyle="dark-content"></StatusBar>
+        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
           <SearchBar
             clearIcon={true}
             placeholder="Type here ...."
@@ -60,7 +66,7 @@ export class Search extends Component<Props> {
             autoFocus={true}
           />
           <Text
-            style={{marginRight: 12}}
+            style={{ marginRight: 12 }}
             onPress={() => this.props.navigation.pop()}>
             取消
           </Text>
@@ -68,38 +74,38 @@ export class Search extends Component<Props> {
 
         <FlatList
           keyboardShouldPersistTaps="handled"
-          style={{paddingLeft: 12, paddingRight: 12,display:display}}
+          style={{ paddingLeft: 12, paddingRight: 12, display: display }}
           data={users}
-          renderItem={({item}) => {
+          renderItem={({ item }) => {
             return (
-                <TouchableWithoutFeedback onPress={this.searchInfo.bind(this,item)}>
+              <TouchableWithoutFeedback onPress={this.searchInfo.bind(this, item)}>
                 <View style={styles.result}>
-                <Text 
-                    style={{lineHeight: 40, paddingLeft: 12}}>
-                  {item.info}
-                </Text>
-                <Icon
-                  name="arrow-up-left"
-                  style={{
-                    fontSize: 18,
-                    color: 'gray',
-                    position: 'absolute',
-                    right: 0,
-                  }}></Icon>
-              </View>
-                </TouchableWithoutFeedback>
-                
+                  <Text
+                    style={{ lineHeight: 40, paddingLeft: 12 }}>
+                    {item.info}
+                  </Text>
+                  <Icon
+                    name="arrow-up-left"
+                    style={{
+                      fontSize: 18,
+                      color: 'gray',
+                      position: 'absolute',
+                      right: 0,
+                    }}></Icon>
+                </View>
+              </TouchableWithoutFeedback>
+
             );
           }}></FlatList>
-        <View style={{display:btn}}>
-        <Button  title={this.state.search} onPress={()=>{}}></Button>
+        <View style={{ display: btn }}>
+          {/* serach-results-list */}
         </View>
       </View>
     );
   }
 }
 
-const {color} = global.fontColor;
+const { color } = global.fontColor;
 const styles = StyleSheet.create({
   inputContainer: {
     height: 50,

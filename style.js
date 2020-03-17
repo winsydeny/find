@@ -1,10 +1,21 @@
-import {StyleSheet} from 'react-native';
+import { StyleSheet } from 'react-native';
 const styles = StyleSheet.create({
   bg: {
-    backgroundColor: '#FFA500',
+    backgroundColor: '#43c2ee',
   },
   fontColor: {
-    color: '#FFA500',
+    color: '#43c2ee',
+    // color: '#FFA500',
+  },
+  bg2: {
+    backgroundColor: '#43c2ee',
+  },
+  font: {
+    // color: '#43c2ee',
+    color: '#3bc5f5',
+  },
+  statusBarHeight: {
+    paddingTop: 24,
   },
 });
 export default styles;

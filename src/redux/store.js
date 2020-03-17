@@ -2,17 +2,15 @@
  * store.js
  */
 
-import { createStore } from "redux";
-import reducers from "./reducers";
+import createStore from 'redux';
+import reducers from './reducers';
 
 // 定义初始值
 const initialState = {
   userInfo: {
-    name: "小光",
-    gender: "男"
-  }
+    name: '小光',
+    gender: '男',
+  },
 };
 
-const store = createStore(reducers, initialState);
-
-export default store;
+export const store: any = createStore(reducers, initialState);
