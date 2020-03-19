@@ -6,19 +6,33 @@ import {
   Button,
   TouchableWithoutFeedback,
   StyleSheet,
-  Picker
+  Picker,
+  DeviceEventEmitter
 } from 'react-native';
 import CIon from 'react-native-vector-icons/Ionicons'
 import AntIcon from 'react-native-vector-icons/AntDesign'
-export default class ResumePersonal extends Component {
+import global from '../../style';
+import { Prop } from '../@typs/index'
+export default class ResumePersonal extends Component<Prop> {
   state = {
     num: '0',
     gender: null,
-    identity: null
+    identity: null,
+    name: null,
+    cellphone: null
+  }
+  componentDidMount() {
+    DeviceEventEmitter.addListener("@personal_name", (value) => {
+      this.setState({ name: value })
+    });
+    DeviceEventEmitter.addListener("@personal_cellphone", (value) => {
+      this.setState({ cellphone: value })
+    });
   }
   render() {
+    const { navigate } = this.props.navigation
     return (
-      <View>
+      <View style={{ paddingTop: global.statusBarHeight.paddingTop }}>
         <View style={{ height: 40, alignItems: "center", flexDirection: "row" }}>
           <CIon name="ios-arrow-back" style={{ fontSize: 24, marginLeft: 18 }} onPress={() => this.props.navigation.pop()}></CIon>
           <View style={{ alignItems: "center", flex: 1, marginLeft: -20 }}>
@@ -26,11 +40,11 @@ export default class ResumePersonal extends Component {
           </View>
         </View>
         <View style={{ paddingLeft: 16, paddingRight: 16 }}>
-          <TouchableWithoutFeedback>
+          <TouchableWithoutFeedback onPress={() => navigate('Name', { name: this.state.name })}>
             <View style={styles.box}>
               <Text style={styles.text}>姓名</Text>
               <View style={{ flexDirection: "row", alignItems: "center", }}>
-                <Text style={styles.h1}>席佳</Text>
+                <Text style={styles.h1}>{this.state.name === null ? '' : this.state.name}</Text>
                 <AntIcon name="right" style={{ position: "absolute", right: 18 }}></AntIcon>
               </View>
             </View>
@@ -63,11 +77,11 @@ export default class ResumePersonal extends Component {
               </Picker>
             </View>
           </TouchableWithoutFeedback>
-          <TouchableWithoutFeedback>
+          <TouchableWithoutFeedback onPress={() => this.props.navigation.push('CellPhone', { cellphone: this.state.cellphone })}>
             <View style={styles.box}>
               <Text style={styles.text}>电话号</Text>
               <View style={{ flexDirection: "row", alignItems: "center", }}>
-                <Text style={styles.h1}>18809481946</Text>
+                <Text style={styles.h1}>{this.state.cellphone === null ? '' : this.state.cellphone}</Text>
                 <AntIcon name="right" style={{ position: "absolute", right: 18 }}></AntIcon>
               </View>
             </View>

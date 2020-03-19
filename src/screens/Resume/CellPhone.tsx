@@ -4,24 +4,24 @@ import {
   Text,
   View,
   Button,
-  TextInput
+  TextInput,
+  DeviceEventEmitter
 } from 'react-native';
 import CIon from 'react-native-vector-icons/Ionicons'
 import AntIcon from 'react-native-vector-icons/AntDesign'
-import { toast } from '../assets/utils';
-import { saveImg, postData } from '../api';
-import global from '../../style'
+import { toast } from '../../assets/utils';
+import { saveImg } from '../../api';
+import global from '../../../style';
 interface Prop {
   navigation: any
 }
-export default class Feedback extends Component<Prop> {
+export default class CellPhone extends Component<Prop> {
   state = {
     num: 0,
-    value: '',
+    value: this.props.navigation.state.params.cellphone,
 
   };
   onChangeText(text: string) {
-
     if (text.length > 240) {
       toast("字数限制为240字");
       return false;
@@ -29,17 +29,13 @@ export default class Feedback extends Component<Prop> {
     this.setState({ value: text, num: text.length })
   };
   save() {
-    // request api and save my advantage in the futrue
     if (this.state.value === '') {
-      toast("亲，意见为空时不能提交的哦！")
+      toast("未输入任何字符")
       return false;
     }
-    postData('feedback', { content: this.state.value })
-      .then(res => {
-        if (res.status === 0) {
-          toast("非常感谢，反馈成功");
-        }
-      })
+    // request api and save my advantage in the futrue
+    DeviceEventEmitter.emit("@personal_cellphone", this.state.value);
+    toast("电话号码修改成功");
     this.props.navigation.goBack();
   };
   render() {
@@ -48,7 +44,7 @@ export default class Feedback extends Component<Prop> {
         <View style={{ height: 40, alignItems: "center", flexDirection: "row" }}>
           <CIon name="ios-arrow-back" style={{ fontSize: 24, marginLeft: 18 }} onPress={() => this.props.navigation.pop()}></CIon>
           <View style={{ alignItems: "center", flex: 1 }}>
-            <Text style={{ fontSize: 16, fontWeight: "bold" }}>意见反馈</Text>
+            <Text style={{ fontSize: 16, fontWeight: "bold" }}>电话号码</Text>
           </View>
           <AntIcon name="check" style={{ paddingRight: 18, fontSize: 24 }} onPress={() => this.save()}></AntIcon>
         </View>
@@ -56,15 +52,18 @@ export default class Feedback extends Component<Prop> {
           style={{ height: 160 }}
         >
           <TextInput
-            placeholder="请输入您的意见"
             autoFocus={true}
-            style={{ paddingLeft: 18, paddingRight: 18, fontSize: 14 }}
-            multiline={true}
+            placeholder="请输入您的电话号码"
+            numberOfLines={1}
+            maxLength={11}
+            textContentType="telephoneNumber"
+            keyboardType="numeric"
+            style={{ paddingLeft: 18, paddingRight: 18, fontSize: 18 }}
             onChangeText={text => this.onChangeText(text)}
             value={this.state.value}
           ></TextInput>
         </View>
-        <Text style={{ textAlign: "right", paddingRight: 18 }}>{this.state.num}/240</Text>
+        {/* <Text style={{ textAlign: "right", paddingRight: 18 }}>{this.state.num}/240</Text> */}
       </View>
     );
   }

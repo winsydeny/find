@@ -6,7 +6,7 @@ import styles from '../../style';
 // import { toast, reset } from '../assets/utils';
 import { _storeData, _retrieveData, toast, reset } from '../assets/utils';
 import Loading from '../components/Loading';
-import { postData } from '../api';
+import { postData, getData } from '../api';
 
 interface Prop {
   navigation: any
@@ -74,7 +74,8 @@ export default class Login extends Component<Prop>{
         console.log('res=>', res)
         if (res.status === 0) {
           toast("登陆成功");
-          _storeData('isLogin', 'true');
+          _storeData('user_info', data.email);
+          _storeData('user_name', res.data[0].user);
           console.log(res.access_token)
           _storeData('access_token', res.access_token)
           this.props.navigation.navigate('Home');
@@ -95,7 +96,15 @@ export default class Login extends Component<Prop>{
   async componentDidMount() {
     try {
       const isLogin = await _retrieveData("isLogin");
-      if (isLogin) {
+      console.log('componentDidMount-login')
+      const timeout = setTimeout(() => {
+        this.setState({ loading: false });
+        toast("连接超时")
+      }, 6000);
+      const response = await getData('search', { keyword: 'java' });
+      clearTimeout(timeout);
+      console.log('sdfds', response)
+      if (response.status >= 0) {
         // 如果已经登陆并且token还未过期，则直接重置导航器，不显示登陆页面
         this.setState({ loading: false })
         reset(this.props.navigation, 'BottomTabNavigator');

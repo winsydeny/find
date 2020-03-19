@@ -8,25 +8,44 @@ import {
   TouchableNativeFeedbackBase,
   Picker,
   Alert,
+  Dimensions,
+  DeviceEventEmitter
   // DeviceEventEmitter
 } from 'react-native';
-import CIon from 'react-native-vector-icons/Ionicons'
+import CIon from 'react-native-vector-icons/Ionicons';
 import { TouchableWithoutFeedback, TouchableNativeFeedback } from 'react-native-gesture-handler';
-// import styles from '../../style';
+import global from '../../style';
 interface Prop {
   navigation: any
 }
 export default class Resume extends Component<Prop> {
   state = {
     num: '0',
+    name: 'sydenny@126.com',
+    cellphone: null,
     advantage: null,
     position: null,
     resume: null,
-    eduction: null
-  }
+    eduction: null,
+    screenWidth: Math.round(Dimensions.get('window').width),
+    screenHeight: Math.round(Dimensions.get('window').height)
+  };
+  componentDidMount() {
+    DeviceEventEmitter.addListener("@resume_advantage", value => this.setState({ advantage: value }));
+    DeviceEventEmitter.addListener("@personal_name", value => this.setState({ name: value }));
+    DeviceEventEmitter.addListener("@personal_cellphone", value => this.setState({ cellphone: value }));
+  };
+  // setListern(events:Array){
+  //   events.map((item:string)=>{
+  //     DeviceEventEmitter.addListener(item, value => this.setState({}))
+  //   })
+  // };
+  componentWillUnmount() {
+    this.setState = (state, callback) => false;
+  };
   render() {
     return (
-      <View style={{}}>
+      <View style={{ paddingTop: global.statusBarHeight.paddingTop }}>
         <View style={{ height: 40, alignItems: "center", flexDirection: "row" }}>
           <CIon name="ios-arrow-back" style={{ fontSize: 24, marginLeft: 18 }} onPress={() => this.props.navigation.pop()}></CIon>
           <View style={{ alignItems: "center", flex: 1, marginLeft: -20 }}>
@@ -36,8 +55,8 @@ export default class Resume extends Component<Prop> {
         <View style={{ paddingLeft: 18, paddingRight: 18 }}>
           <TouchableWithoutFeedback onPress={() => this.props.navigation.navigate('ResumePersonal', { transition: 'forHorizontal' })}>
             <View style={styles.box}>
-              <Text style={styles.h1}>席佳</Text>
-              <Text style={styles.text}>一年内经验·24·本科</Text>
+              <Text style={styles.h1}>{this.state.name}</Text>
+              <Text style={styles.text}>{this.state.cellphone}</Text>
               {/* <View style={{ height: 1, backgroundColor: "#2e2e2e" }}></View> */}
             </View>
           </TouchableWithoutFeedback>
@@ -53,7 +72,6 @@ export default class Resume extends Component<Prop> {
               <Text style={styles.text}>{this.state.position === null ? '点击填写' : this.state.position}</Text>
             </View>
           </TouchableWithoutFeedback>
-
           <TouchableWithoutFeedback>
             <View style={styles.box}>
               <Text style={styles.h1}>教育经历</Text>
@@ -76,6 +94,8 @@ export default class Resume extends Component<Prop> {
           <Picker.Item label="Java" value="java" />
           <Picker.Item label="JavaScript" value="js" />
         </Picker> */}
+        {/* <View style={{ position: "absolute", backgroundColor: "rgba(0,0,0,0.4)", height: this.state.screenHeight, width: this.state.screenWidth }}>
+        </View> */}
       </View >
     );
   }

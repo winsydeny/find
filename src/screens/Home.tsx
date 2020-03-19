@@ -21,7 +21,7 @@ import {
   BackHandler,
 } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
-import { getData } from '../api';
+import { getData } from '../api/index';
 interface Props {
   navigation: any;
 }
@@ -77,9 +77,19 @@ export default class Home extends Component<Props> {
   exitApp() {
   };
   async getRecommend() {
-    const { data } = await getData('search', { keyword: 'java' });
-    console.log(data)
-    this.setState({ recommendList: data })
+    try {
+      const response = await getData('search', { keyword: 'java' });
+      // this.setState({ recommendList: data })
+      console.log(response)
+      if (response.status < 0 || response.data === undefined) {
+        // this.props.navigation.navigate("Login");
+        toast("request fail")
+        return false;
+      }
+      this.setState({ recommendList: response.data })
+      console.log('sdf', response)
+    } catch (e) {
+    }
   }
   componentDidMount() {
     // console.log(this.props)
@@ -175,12 +185,12 @@ export default class Home extends Component<Props> {
             </Text>
           <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} style={{ paddingLeft: 12 }}>
             <View style={styles.cardBox}>
-              <TouchableWithoutFeedback onPress={() => navigate('Forum')}>
+              <TouchableWithoutFeedback onPress={() => navigate('CompanyDetail')}>
                 <View style={[styles.card, styles.bg1]}>
                   <Text style={{ color: "#FFFFFF", fontWeight: "bold" }}>FaceBook</Text>
                 </View>
               </TouchableWithoutFeedback>
-              <TouchableWithoutFeedback onPress={() => navigate('ListDetail')}>
+              <TouchableWithoutFeedback onPress={() => navigate('CompanyDetail')}>
                 <View style={[styles.card, styles.bg2]}>
                   <Text style={{ color: "#FFFFFF", fontWeight: "bold" }}>Apple</Text>
                 </View>

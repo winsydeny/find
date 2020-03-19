@@ -6,7 +6,9 @@ import global from '../../style';
 import { View, Text, StyleSheet, FlatList, TouchableWithoutFeedback, Button, Alert, Image } from 'react-native';
 interface Props {
   navigate?: any,
-  data?: any
+  data?: any,
+  marginHorizontal?: any,
+  radius?: any
 }
 interface JobList {
   position: string,
@@ -31,9 +33,11 @@ export default class ListItem extends Component<Props> {
   render() {
     const nav = this.props.navigate;
     const data: JobList = this.props.data;
+    const marginHorizontal = this.props.marginHorizontal;
+    const radius = this.props.radius;
     // const data:JobList = job.item;
     return (
-      <View style={styles.listCard}>
+      <View style={[styles.listCard, { marginHorizontal: marginHorizontal, borderRadius: radius }]}>
         <TouchableWithoutFeedback onPress={() => nav.navigate('ListDetail', { transition: 'forHorizontal', jobdetail: data })}>
           <Image
             style={styles.img}
@@ -92,13 +96,13 @@ const styles = StyleSheet.create({
     marginRight: 14
   },
   listCard: {
-    marginLeft: 13,
-    marginRight: 13,
+    // marginLeft: 13,
+    // marginRight: 13,
     backgroundColor: '#FFFFFF',
     // height: 100,
     // marginTop: 12,
     // marginBottom: 12,
-    borderRadius: 6,
+    // borderRadius: 6,
     paddingLeft: 14,
     paddingRight: 14,
     paddingTop: 14,

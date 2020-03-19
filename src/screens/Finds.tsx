@@ -10,9 +10,10 @@ import {
   StatusBar,
   Alert,
   Platform,
-  BackHandler
+  BackHandler,
+  RefreshControl
 } from 'react-native'
-import { } from 'react-native-elements'
+import { colors } from 'react-native-elements'
 import { Dialog } from 'react-native-ui-lib'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import Micon from 'react-native-vector-icons/MaterialIcons'
@@ -26,6 +27,7 @@ import ScrollableTabView, { DefaultTabBar } from 'react-native-scrollable-tab-vi
 import Login from "./Login";
 import Registerd from "./Registerd";
 import ViewPager from "@react-native-community/viewpager";
+import { getData, postData } from "../api";
 // https://github.com/ptomasroos/react-native-scrollable-tab-view => 
 
 interface ItemList {
@@ -40,31 +42,11 @@ export default class Forum extends Component<Prop> {
   state = {
     // thumb:false,
     tab: 1,
-    list: [],
+    dynamicList: [],
     showDialog: false,
-    dialogContent: ''
-  };
-  Tab() {
-  }
-  componentDidMount() {
-    const list: any = [];
-    for (let i = 0; i < 6; i++) {
-      list.push({
-        title: 'xijia',
-        uid: i + 1,
-        thumb: false,
-        thumb_num: 0,
-        comments: [],
-        comment_num: 0,
-        msg: '据国家卫健委最新消息：截至1月22日24时，我委收到国内25个省（区、市）累计报告新型冠状病毒感染的肺炎确诊病例571例，其中重症95例，死亡17例（均来自湖北省）'
-      })
-    }
-    this.setState({ list });
-    // if (Platform.OS === 'android') {
-    //   BackHandler.addEventListener('hardwareBackPress', () => {
-    //     BackHandler.exitApp();
-    //   });
-    // }
+    dialogContent: '',
+    recommendList: [],
+    refress: false
   };
   thumbHandle(item: any) {
     const { list } = this.state
@@ -79,42 +61,122 @@ export default class Forum extends Component<Prop> {
         }
       }
     });
-
     this.setState({ list: temp })
   };
   commentsHandle(item: any) {
-    // console.log(this.refs.Dialog)
-    // this.child.show()
-    // console.log(this.child)
     this.setState({ showDialog: true, dialogContent: item.uid })
   };
-  // componentWillMount() {
-  //   if (Platform.OS === 'android') {
-  //     BackHandler.addEventListener('hardwareBackPress', () => {
-  //       BackHandler.exitApp();
-  //     });
-  //   }
-  // };
+  async getRecommend() {
+    try {
+      const response = await getData('search', { keyword: '' });
+      // this.setState({ recommendList: data })
+      console.log(response)
+      if (response.status < 0 || response.data === undefined) {
+        // this.props.navigation.navigate("Login");
+        toast("request fail")
+        return false;
+      }
+      this.setState({ recommendList: response.data })
+      console.log('sdf', response)
+    } catch (e) {
+    }
+  };
+  async getDynamicList() {
+    const dynamicList = await getData('forum', {});
+
+  };
+  publishDynamic() {
+    postData('forum/publish', {})
+      .then(res => {
+        if (res.status === 0) {
+          toast("发布成功");
+        }
+      })
+  };
+  topRefresh() {
+    console.log('refress');
+    console.log(this.state.tab)
+    this.setState({ refress: true });
+    // switch (this.state.tab) {
+    //   case 0: this.getRecommend(); break;
+    //   case 1: this.getRecommend(); break;
+    //   default; break;
+    // }
+    setTimeout(() => {
+      this.setState({ refress: false });
+    }, 1000);
+  };
+  componentDidMount() {
+    const dynamicList: any = [];
+    for (let i = 0; i < 6; i++) {
+      dynamicList.push({
+        title: 'xiji123a',
+        uid: i + 1,
+        thumb: false,
+        thumb_num: 0,
+        comments: [],
+        comment_num: 0,
+        msg: '据国家卫健委最新消息：截至1月22日24时，我委收到国内25个省（区、市）累计报告新型冠状病毒感染的肺炎确诊病例571例，其中重症95例，死亡17例（均来自湖北省）'
+      })
+    }
+    this.setState({ dynamicList });
+    this.getRecommend();
+    // if (Platform.OS === 'android') {
+    //   BackHandler.addEventListener('hardwareBackPress', () => {
+    //     BackHandler.exitApp();
+    //   });
+    // }
+  };
   componentWillUnmount() {
     // toast("exit finds")
   };
   render() {
-    const { list, showDialog, dialogContent, tab } = this.state;
+    const { dynamicList, showDialog, dialogContent, tab } = this.state;
     return (
       <View style={{ flex: 1, backgroundColor: "", paddingTop: global.statusBarHeight.paddingTop }}>
         <ScrollableTabView
+          initialPage={this.state.tab}
+          tabBarBackgroundColor="#FFFFFF"
+          onChangeTab={({ i }) => this.setState({ tab: i })}
           tabBarUnderlineStyle={{ backgroundColor: global.bg2.backgroundColor, height: 2.7 }}
           tabBarActiveTextColor={global.bg2.backgroundColor}
           renderTabBar={() => <DefaultTabBar />}>
-          <View tabLabel="最新发布">
-            <Text style={{ textAlign: "center" }}>Noting。。。</Text>
-          </View>
+          <FlatList
+            refreshControl={
+              <RefreshControl
+                refreshing={this.state.refress}
+                onRefresh={() => this.topRefresh()}
+                tintColor="red"
+                colors={[global.bg2.backgroundColor, '#4284f3',]}></RefreshControl>
+            }
+            style={{ backgroundColor: "#f1f1f1" }}
+            tabLabel="最新发布"
+            keyExtractor={(item, index) => index.toString()}
+            data={this.state.recommendList}
+            renderItem={({ item }) => (
+              <View style={{ marginBottom: 5 }}>
+                <ListItem
+                  marginHorizontal={0}
+                  navigate={this.props.navigation}
+                  data={item}></ListItem>
+              </View>
+            )}>
+          </FlatList>
           <View tabLabel="最新动态">
             <FlatList
-              data={list}
-              keyExtractor={this._keyExtractor}
-              renderItem={({ item }) => (
-                <TouchableWithoutFeedback>
+              // refreshing={this.state.refress}
+              // onRefresh={() => this.topRefresh()}
+              refreshControl={
+                <RefreshControl
+                  refreshing={this.state.refress}
+                  onRefresh={() => this.topRefresh()}
+                  tintColor="red"
+                  colors={[global.bg2.backgroundColor, '#4284f3',]}></RefreshControl>
+              }
+              data={dynamicList}
+              keyExtractor={(item, index) => index.toString()}
+              renderItem={({ item, index }) => (
+                <TouchableWithoutFeedback key={index}>
                   <View style={styles.itemList}>
                     <Image
                       style={{ width: 50, height: 50, borderRadius: 50, marginLeft: 20, marginRight: 10 }}

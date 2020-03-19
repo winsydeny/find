@@ -8,7 +8,7 @@ import {
 } from 'react-native-elements'
 import { View, ActivityIndicator, Alert } from 'react-native'
 import styles from '../../style.js'
-import { toast } from '../assets/utils';
+import { toast, _storeData } from '../assets/utils';
 import { postData } from '../api/index';
 export default class Registerd extends Component {
   state = {
@@ -17,7 +17,8 @@ export default class Registerd extends Component {
     loading: false,
     btnInfo: '发送验证码',
     sendCode: false,
-    code: ''
+    code: '',
+    passcode: ''
   }
   showAlert() {
     Alert.alert("", "已发送至邮箱,请查看并填写相关信息", [{ text: '我知道了' }])
@@ -30,6 +31,7 @@ export default class Registerd extends Component {
       const data = {
         email: this.state.email
       }
+      _storeData('user_info', data.email);
       postData('register/send', data)
         .then(res => {
           if (res.status === 0) {
@@ -66,7 +68,8 @@ export default class Registerd extends Component {
       // vaild code
       const data = {
         code: this.state.code,
-        email: this.state.email
+        email: this.state.email,
+        passcode: this.state.passcode
       }
       postData('register', data)
         .then(res => {
@@ -102,9 +105,18 @@ export default class Registerd extends Component {
                     errorMessage={this.state.emailError}
                     onChangeText={email => this.setState({ email: email })}></Input> */}
         {
-          this.state.sendCode ? <Input
-            placeholder="验证码"
-            onChangeText={code => this.setState({ code: code })}></Input> : null
+          this.state.sendCode ?
+            <>
+              <Input
+                secureTextEntry
+                textContentType="password"
+                placeholder="密码"
+                onChangeText={code => this.setState({ passcode: code })}></Input>
+              <Input
+                placeholder="验证码"
+                onChangeText={code => this.setState({ code: code })}></Input>
+            </>
+            : null
         }
         <View style={{ width: '94%', marginTop: 12 }}>
           <Button
@@ -115,7 +127,7 @@ export default class Registerd extends Component {
           {/* <ActivityIndicator size="large" color="#0000ff" /> */}
 
         </View>
-      </View>
+      </View >
     )
   }
 }

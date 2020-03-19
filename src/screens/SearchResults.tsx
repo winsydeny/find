@@ -65,16 +65,22 @@ export default class SearchResults extends Component<Prop> {
   };
   async getList(job: any) {
     this.show();
-    const { data } = await getData('search', { keyword: this.props.navigation.state.params.keyWord })
-    this.setState({
-      jobList: data,
-    })
+    try {
+      const { data } = await getData('search', { keyword: this.props.navigation.state.params.keyWord });
+      console.log(data)
+      this.setState({
+        jobList: data,
+      })
+    } catch (e) {
+      toast("fail")
+    }
     this.close();
+
     // this.setState({ showLoading: false });
     // return this.state.jobList;
   };
   getMore() {
-    toast("加载更多")
+    // toast("加载更多")
     // if (this..length <= 16) {
     // this.setState({
     //   jobList: this.state.jobList.concat([{ key: 'a' }, { key: 'a' }, { key: 'a' }, { key: 'a' }])
@@ -117,6 +123,8 @@ export default class SearchResults extends Component<Prop> {
             return (
               <View style={{ marginTop: 12 }}>
                 <ListItem
+                  marginHorizontal={13}
+                  radius={6}
                   navigate={this.props.navigation}
                   data={item}></ListItem>
               </View>

@@ -21,6 +21,9 @@ import ForumPublish from '../screens/ForumPublish';
 import Collection from '../screens/Collection';
 import MessageDetail from '../screens/MessageDetail';
 import Feedback from '../screens/Feedback';
+import CompanyDetail from '../screens/CompanyDetail';
+import Name from '../screens/Resume/Name';
+import CellPhone from '../screens/Resume/CellPhone';
 
 
 /**
@@ -37,7 +40,7 @@ const TransitionConfiguration = () => ({
 		const params = route.params || {};
 		// 否有 transition 参数，有则使用，否则使用缺省值 forHorizontal
 		// forHorizontal 表示从右向左滑出
-		const transition = params.transition || 'forVertical';
+		const transition = params.transition || 'forHorizontal';
 		return StackViewStyleInterpolator[transition](sceneProps);
 	},
 });
@@ -97,8 +100,7 @@ const App = (isLogined: boolean) => {
 		ForumDetail: {
 			screen: ForumDetail,
 			navigationOptions: {
-				// header: null
-				title: "详情",
+				header: null
 			}
 		},
 		Identity: {
@@ -172,8 +174,25 @@ const App = (isLogined: boolean) => {
 			navigationOptions: {
 				header: null
 			}
-		}
-
+		},
+		CompanyDetail: {
+			screen: CompanyDetail,
+			navigationOptions: {
+				header: null
+			}
+		},
+		Name: {
+			screen: Name,
+			navigationOptions: {
+				header: null
+			}
+		},
+		CellPhone: {
+			screen: CellPhone,
+			navigationOptions: {
+				header: null
+			}
+		},
 	}, {
 		initialRouteName: false ? 'BottomTabNavigator' : 'Login',
 		defaultNavigationOptions: {

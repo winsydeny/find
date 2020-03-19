@@ -47,6 +47,7 @@ export default class ForumPublish extends Component<Prop> {
           style={{ height: 160 }}
         >
           <TextInput
+            placeholder="要说点啥昵！"
             autoFocus={true}
             style={{ paddingLeft: 18, paddingRight: 18, fontSize: 14 }}
             multiline={true}

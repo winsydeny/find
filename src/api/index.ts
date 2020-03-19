@@ -29,6 +29,17 @@ export const getData = async (path: string, params: any) => {
   console.log('get_path:', url);
   return fetch(url).then(res => res.json());
 };
+export const postData = async (path: string, data: any) => {
+  const access_token = await _retrieveData('access_token');
+  data['token'] = access_token;
+  return fetch(`${BASE_URL}/${path}`, {
+    method: 'POST',
+    headers: {
+      'content-type': 'application/json',
+    },
+    body: JSON.stringify(data),
+  }).then(response => response.json());
+};
 
 export const xhr = (method: any, params: any) => {
   params['method'] = method;
@@ -72,15 +83,6 @@ export const xhr = (method: any, params: any) => {
         console.error(error);
       });
   });
-};
-export const postData = (path: string, data: any) => {
-  return fetch(`${BASE_URL}/${path}`, {
-    method: 'POST',
-    headers: {
-      'content-type': 'application/json',
-    },
-    body: JSON.stringify(data),
-  }).then(response => response.json());
 };
 export const suggest = (keyword: string) => {
   return fetch(

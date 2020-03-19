@@ -7,7 +7,7 @@ import { ListItem, Avatar } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/AntDesign';
 import global from '../../style'
 import Geolocation from '@react-native-community/geolocation';
-import { toast, _remove, _getAllKey } from '../assets/utils';
+import { toast, _remove, _getAllKey, _retrieveData } from '../assets/utils';
 import { saveImg, getData } from '../api/index'
 import ImagePicker from 'react-native-image-picker';
 interface Props {
@@ -15,11 +15,13 @@ interface Props {
 }
 export default class Mine extends Component<Props> {
   state = {
+    user: '',
     avatarSource: 'https://www.vanlansh.wang/boy.png'
   }
-  componentDidMount() {
+  async componentDidMount() {
+    const user = await _retrieveData("user_name");
+    this.setState({ user: user })
     this.requestCarmeraPermission()
-
   };
   async requestCarmeraPermission() {
     try {
@@ -91,10 +93,6 @@ export default class Mine extends Component<Props> {
         name: 'Collection'
       },
       {
-        title: "投递记录",
-        name: 'ForumPublish'
-      },
-      {
         title: "意见反馈",
         name: 'Feedback'
       },
@@ -138,7 +136,7 @@ export default class Mine extends Component<Props> {
           // source={{ uri: "https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg" }}
           ></Avatar>
           <View style={{ marginLeft: 22 }}>
-            <Text style={styles.info}>席佳</Text>
+            <Text style={styles.info} onPress={() => this.props.navigation.push("Resume")}>{this.state.user}</Text>
             <Text>Front End Develop</Text>
           </View>
         </View>
@@ -157,7 +155,7 @@ export default class Mine extends Component<Props> {
           <View>
           </View>
           <Button title="查看缓存" onPress={() => _getAllKey()}></Button>
-          <Button title="清除缓存" onPress={() => _remove("isLogin")}></Button>
+          <Button title="清除缓存" onPress={() => _remove("access_token")}></Button>
           <Button title="Request" onPress={() => this.get()}></Button>
         </View>
       </View >

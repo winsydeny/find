@@ -12,10 +12,29 @@ import global from "../../style";
 import EnIcon from 'react-native-vector-icons/Entypo';
 import Icon from 'react-native-vector-icons/AntDesign';
 import { ScrollView } from "react-native-gesture-handler";
+import { postData } from "../api";
+import { _retrieveData, toast } from "../assets/utils";
 interface Prop {
   navigation: any
 }
 export default class ListDetail extends Component<Prop> {
+  async applyJob(info: any) {
+    const email = await _retrieveData('user_info');
+    const user = await _retrieveData('user_name');
+    postData('apply', {
+      uuid: info.uuid,
+      email: email,
+      user: user
+    })
+      .then(res => {
+        if (res.status === 0) {
+          toast("申请成功");
+        } else if (res.status === 10004) {
+          toast("您已经申请过了")
+        }
+      })
+      .catch(err => toast("申请失败"))
+  };
   render() {
     // console.log(this.props.navigation.state.params)
     const { jobdetail } = this.props.navigation.state.params;
@@ -79,7 +98,7 @@ export default class ListDetail extends Component<Prop> {
             </Text>
             <Button
               buttonStyle={{ borderRadius: 30, backgroundColor: global.bg2.backgroundColor }}
-              onPress={() => Alert.alert("Already Apply")}
+              onPress={() => this.applyJob(jobdetail)}
               title="申请此职位"></Button>
           </View>
         </ScrollView>
