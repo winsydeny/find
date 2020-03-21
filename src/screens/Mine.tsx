@@ -10,6 +10,7 @@ import Geolocation from '@react-native-community/geolocation';
 import { toast, _remove, _getAllKey, _retrieveData } from '../assets/utils';
 import { saveImg, getData } from '../api/index'
 import ImagePicker from 'react-native-image-picker';
+import { Switch } from 'react-native-gesture-handler';
 interface Props {
   navigation: any
 }
@@ -77,6 +78,9 @@ export default class Mine extends Component<Props> {
     const { data } = await getData('search', { keyword: 'java' });
     console.log(data.length)
   }
+  changeIdentity() {
+    toast("qiehua")
+  }
   render() {
     const list = [
       {
@@ -96,22 +100,6 @@ export default class Mine extends Component<Props> {
         title: "意见反馈",
         name: 'Feedback'
       },
-      // {
-      //   title: "我的投递",
-      //   name: 'ForumPublish'
-      // },
-      // {
-      //   title: "关于",
-      //   name: 'Resume'
-      // },
-      // {
-      //   title: "设置",
-      //   name: 'Resume'
-      // },
-      // {
-      //   title: '退出登陆',
-      //   name: 'Login'
-      // }
     ]
     // const value = identity<string>('Mine')
     // const navigation = this.props.navigation
@@ -139,6 +127,9 @@ export default class Mine extends Component<Props> {
             <Text style={styles.info} onPress={() => this.props.navigation.push("Resume")}>{this.state.user}</Text>
             <Text>Front End Develop</Text>
           </View>
+          <Text
+            onPress={() => this.changeIdentity()}
+            style={{ position: "absolute", right: 16, top: 28, color: global.bg2.backgroundColor, fontWeight: "bold" }}>切换身份</Text>
         </View>
         <View>
           {

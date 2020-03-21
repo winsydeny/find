@@ -1076,6 +1076,13 @@
   resolved "https://registry.npm.taobao.org/@types/prop-types/download/@types/prop-types-15.7.3.tgz#2ab0d5da2e5815f94b0b9d4b95d1e5f243ab2ca7"
   integrity sha1-KrDV2i5YFflLC51LldHl8kOrLKc=
 
+"@types/react-native-actionsheet@^2.4.1":
+  version "2.4.1"
+  resolved "https://registry.npm.taobao.org/@types/react-native-actionsheet/download/@types/react-native-actionsheet-2.4.1.tgz#bc00d7a7a8cdec27f37c83505c17ffd0c7603d98"
+  integrity sha1-vADXp6jN7CfzfINQXBf/0MdgPZg=
+  dependencies:
+    "@types/react" "*"
+
 "@types/react-native-scrollable-tab-view@^0.10.1":
   version "0.10.1"
   resolved "https://registry.npm.taobao.org/@types/react-native-scrollable-tab-view/download/@types/react-native-scrollable-tab-view-0.10.1.tgz#086c7021c24337ca60b4ce659486611c1669963d"
@@ -5369,6 +5376,11 @@ react-lifecycles-compat@^3.0.4:
   version "3.0.4"
   resolved "https://registry.npm.taobao.org/react-lifecycles-compat/download/react-lifecycles-compat-3.0.4.tgz#4f1a273afdfc8f3488a8c516bfda78f872352362"
   integrity sha1-TxonOv38jzSIqMUWv9p4+HI1I2I=
+
+react-native-actionsheet@^2.4.2:
+  version "2.4.2"
+  resolved "https://registry.npm.taobao.org/react-native-actionsheet/download/react-native-actionsheet-2.4.2.tgz#6a00dd51a75ef2c8974312130e405af73191500f"
+  integrity sha1-agDdUade8siXQxITDkBa9zGRUA8=
 
 react-native-animatable@^1.1.0:
   version "1.3.3"

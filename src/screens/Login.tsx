@@ -62,16 +62,18 @@ export default class Login extends Component<Prop>{
     return false
   }
   login() {
-    console.log('isLogin request')
+    // console.log('isLogin request')
     // Alert.alert('sdf')
     if (this.checkData()) {
       // success
+      this.setState({ loading: true });
       const data = {
         email: this.state.email,
         passcode: this.state.passcode
       }
       postData('login', data).then(res => {
         console.log('res=>', res)
+        this.setState({ loading: false });
         if (res.status === 0) {
           toast("登陆成功");
           _storeData('user_info', data.email);

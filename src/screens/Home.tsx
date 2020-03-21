@@ -80,14 +80,14 @@ export default class Home extends Component<Props> {
     try {
       const response = await getData('search', { keyword: 'java' });
       // this.setState({ recommendList: data })
-      console.log(response)
+      // console.log(response)
       if (response.status < 0 || response.data === undefined) {
         // this.props.navigation.navigate("Login");
         toast("request fail")
         return false;
       }
       this.setState({ recommendList: response.data })
-      console.log('sdf', response)
+      // console.log('sdf', response)
     } catch (e) {
     }
   }

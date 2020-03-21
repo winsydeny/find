@@ -9,8 +9,8 @@ import {
 } from 'react-native';
 import CIon from 'react-native-vector-icons/Ionicons'
 import AntIcon from 'react-native-vector-icons/AntDesign'
-import { toast } from '../../assets/utils';
-import { saveImg } from '../../api';
+import { toast, _storeData } from '../../assets/utils';
+import { saveImg, postData } from '../../api';
 import global from '../../../style';
 interface Prop {
   navigation: any
@@ -28,19 +28,24 @@ export default class Name extends Component<Prop> {
     }
     this.setState({ value: text, num: text.length })
   };
-  save() {
+  async save() {
     if (this.state.value === '') {
       toast("未输入任何字符")
       return false;
     }
+    const data = {
+      user: this.state.value
+    }
     // request api and save my advantage in the futrue
     DeviceEventEmitter.emit("@personal_name", this.state.value);
+    const rs = await postData('resume?v=user&type=1', data);
+    await _storeData('user_name', this.state.value)
     toast("姓名修改成功");
     this.props.navigation.goBack();
   };
   componentWillUnmount() {
     this.setState = (state, callback) => {
-      return;
+      return false;
     };
   }
   render() {

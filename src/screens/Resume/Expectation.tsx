@@ -9,9 +9,9 @@ import {
 } from 'react-native';
 import CIon from 'react-native-vector-icons/Ionicons'
 import AntIcon from 'react-native-vector-icons/AntDesign'
-import { toast } from '../assets/utils';
-import { saveImg, postData } from '../api';
-import global from '../../style'
+import { toast } from '../../assets/utils';
+import { saveImg, postData } from '../../api';
+import global from '../../../style'
 interface Prop {
   navigation: any
 }
@@ -38,8 +38,8 @@ export default class ResumeAdvantage extends Component<Prop> {
      * edu => education 
      * rum => resume
      */
-    DeviceEventEmitter.emit("@resume_advantage", this.state.value);
-    const rs = await postData('resume?v=advantage', { advantage: this.state.value });
+    DeviceEventEmitter.emit("@resume_expectation", this.state.value);
+    const rs = await postData('resume?v=expectation', { expectation: this.state.value });
     toast("保存成功");
     this.props.navigation.goBack();
   };
@@ -49,7 +49,7 @@ export default class ResumeAdvantage extends Component<Prop> {
         <View style={{ height: 40, alignItems: "center", flexDirection: "row" }}>
           <CIon name="ios-arrow-back" style={{ fontSize: 24, marginLeft: 18 }} onPress={() => this.props.navigation.pop()}></CIon>
           <View style={{ alignItems: "center", flex: 1 }}>
-            <Text style={{ fontSize: 16, fontWeight: "bold" }}>我的优势</Text>
+            <Text style={{ fontSize: 16, fontWeight: "bold" }}>求职期望</Text>
           </View>
           <AntIcon name="check" style={{ paddingRight: 18, fontSize: 24 }} onPress={() => this.save()}></AntIcon>
         </View>
@@ -57,14 +57,15 @@ export default class ResumeAdvantage extends Component<Prop> {
           style={{ height: 160 }}
         >
           <TextInput
+            placeholder="请填写"
             autoFocus={true}
             style={{ paddingLeft: 18, paddingRight: 18, fontSize: 14 }}
-            multiline={true}
+            numberOfLines={1}
             onChangeText={text => this.onChangeText(text)}
             value={this.state.value}
           ></TextInput>
         </View>
-        <Text style={{ textAlign: "right", paddingRight: 18 }}>{this.state.num}/120</Text>
+        {/* <Text style={{ textAlign: "right", paddingRight: 18 }}>{this.state.num}/120</Text> */}
       </View>
     );
   }

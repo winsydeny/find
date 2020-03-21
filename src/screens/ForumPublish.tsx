@@ -8,8 +8,8 @@ import {
 } from 'react-native';
 import CIon from 'react-native-vector-icons/Ionicons'
 import AntIcon from 'react-native-vector-icons/AntDesign'
-import { toast } from '../assets/utils';
-import { saveImg } from '../api';
+import { toast, _retrieveData } from '../assets/utils';
+import { saveImg, postData } from '../api';
 import global from '../../style'
 interface Prop {
   navigation: any
@@ -28,7 +28,29 @@ export default class ForumPublish extends Component<Prop> {
     }
     this.setState({ value: text, num: text.length })
   };
-  save() {
+  async save() {
+    // email, user, avatar, content, thumb , comment, created
+    if (this.state.value === '') {
+      toast("输入的内容不能为空")
+      return false;
+    }
+    const forum = {
+      email: await _retrieveData('user_info'),
+      user: await _retrieveData('user_name'),
+      avatar: 'https://www.vanlansh.wang/boy.png',
+      content: this.state.value,
+      thumb: 0,
+      comment: 0,
+      created: new Date().getTime()
+    }
+    try {
+      const data = await postData('forum', forum);
+      console.log(data)
+      toast('发布成功')
+    } catch (e) {
+      console.log(e)
+    }
+
     // request api and save my advantage in the futrue
     toast("发布成功");
     this.props.navigation.goBack();

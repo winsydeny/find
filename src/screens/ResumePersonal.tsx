@@ -28,9 +28,15 @@ export default class ResumePersonal extends Component<Prop> {
     DeviceEventEmitter.addListener("@personal_cellphone", (value) => {
       this.setState({ cellphone: value })
     });
+    const PERSONINFO = this.props.navigation.state.params;
+    console.log(PERSONINFO);
+
+    this.setState({ name: PERSONINFO.name, cellphone: PERSONINFO.cellphone })
   }
   render() {
     const { navigate } = this.props.navigation
+    // const PERSONINFO = this.props.navigation.state;
+    // this.setState({ name: PERSONINFO.name, cellphone: PERSONINFO.cellphone })
     return (
       <View style={{ paddingTop: global.statusBarHeight.paddingTop }}>
         <View style={{ height: 40, alignItems: "center", flexDirection: "row" }}>

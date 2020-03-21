@@ -24,6 +24,8 @@ import Feedback from '../screens/Feedback';
 import CompanyDetail from '../screens/CompanyDetail';
 import Name from '../screens/Resume/Name';
 import CellPhone from '../screens/Resume/CellPhone';
+import Expectation from '../screens/Resume/Expectation';
+import Education from '../screens/Resume/Education';
 
 
 /**
@@ -189,6 +191,18 @@ const App = (isLogined: boolean) => {
 		},
 		CellPhone: {
 			screen: CellPhone,
+			navigationOptions: {
+				header: null
+			}
+		},
+		Expectation: {
+			screen: Expectation,
+			navigationOptions: {
+				header: null
+			}
+		},
+		Education: {
+			screen: Education,
 			navigationOptions: {
 				header: null
 			}

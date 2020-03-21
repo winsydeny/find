@@ -49,19 +49,20 @@ export default class Forum extends Component<Prop> {
     refress: false
   };
   thumbHandle(item: any) {
-    const { list } = this.state
-    const temp = Object.assign([], list);
-    temp.forEach((el: any) => {
-      if (Object.is(el.uid, item.uid)) {
-        el.thumb = !el.thumb;
-        if (el.thumb) {
-          el.thumb_num = el.thumb_num + 1;
-        } else {
-          el.thumb_num = el.thumb_num - 1;
-        }
-      }
-    });
-    this.setState({ list: temp })
+    Alert.alert(item.f_id)
+    // const { list } = this.state
+    // const temp = Object.assign([], list);
+    // temp.forEach((el: any) => {
+    //   if (Object.is(el.uid, item.uid)) {
+    //     el.thumb = !el.thumb;
+    //     if (el.thumb) {
+    //       el.thumb_num = el.thumb_num + 1;
+    //     } else {
+    //       el.thumb_num = el.thumb_num - 1;
+    //     }
+    //   }
+    // });
+    // this.setState({ list: temp })
   };
   commentsHandle(item: any) {
     this.setState({ showDialog: true, dialogContent: item.uid })
@@ -82,7 +83,10 @@ export default class Forum extends Component<Prop> {
     }
   };
   async getDynamicList() {
-    const dynamicList = await getData('forum', {});
+    const list = await getData('forum/list', {});
+    list.data.reverse();
+    this.setState({ dynamicList: list.data, refress: false });
+
 
   };
   publishDynamic() {
@@ -97,6 +101,7 @@ export default class Forum extends Component<Prop> {
     console.log('refress');
     console.log(this.state.tab)
     this.setState({ refress: true });
+    this.getDynamicList()
     // switch (this.state.tab) {
     //   case 0: this.getRecommend(); break;
     //   case 1: this.getRecommend(); break;
@@ -106,20 +111,23 @@ export default class Forum extends Component<Prop> {
       this.setState({ refress: false });
     }, 1000);
   };
+
   componentDidMount() {
+    this.setState({ refress: true })
+    this.getDynamicList()
     const dynamicList: any = [];
-    for (let i = 0; i < 6; i++) {
-      dynamicList.push({
-        title: 'xiji123a',
-        uid: i + 1,
-        thumb: false,
-        thumb_num: 0,
-        comments: [],
-        comment_num: 0,
-        msg: '据国家卫健委最新消息：截至1月22日24时，我委收到国内25个省（区、市）累计报告新型冠状病毒感染的肺炎确诊病例571例，其中重症95例，死亡17例（均来自湖北省）'
-      })
-    }
-    this.setState({ dynamicList });
+    // for (let i = 0; i < 6; i++) {
+    //   dynamicList.push({
+    //     title: 'xiji123a',
+    //     uid: i + 1,
+    //     thumb: false,
+    //     thumb_num: 0,
+    //     comments: [],
+    //     comment_num: 0,
+    //     msg: '据国家卫健委最新消息：截至1月22日24时，我委收到国内25个省（区、市）累计报告新型冠状病毒感染的肺炎确诊病例571例，其中重症95例，死亡17例（均来自湖北省）'
+    //   })
+    // }
+    // this.setState({ dynamicList });
     this.getRecommend();
     // if (Platform.OS === 'android') {
     //   BackHandler.addEventListener('hardwareBackPress', () => {
@@ -162,10 +170,11 @@ export default class Forum extends Component<Prop> {
               </View>
             )}>
           </FlatList>
-          <View tabLabel="最新动态">
+          <View tabLabel="最新动态" style={{ flex: 1 }}>
             <FlatList
               // refreshing={this.state.refress}
               // onRefresh={() => this.topRefresh()}
+              style={{}}
               refreshControl={
                 <RefreshControl
                   refreshing={this.state.refress}
@@ -184,25 +193,25 @@ export default class Forum extends Component<Prop> {
                     ></Image>
                     <View style={{}}>
                       <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                        <Text style={styles.title}>{item.title}{item.uid}</Text>
-                        <Text style={{ position: 'absolute', right: 26, fontSize: 12, color: 'gray' }}>2019年12月12</Text>
+                        <Text style={styles.title}>{item.user}</Text>
+                        <Text style={{ position: 'absolute', right: 26, fontSize: 12, color: 'gray' }}>{item.created}</Text>
                       </View>
-                      <TouchableWithoutFeedback onPress={() => this.props.navigation.navigate("ForumDetail", { detail: item.msg })}>
-                        <Text numberOfLines={2} style={styles.text}>{item.msg}</Text>
+                      <TouchableWithoutFeedback onPress={() => this.props.navigation.navigate("ForumDetail", { detail: item.content })}>
+                        <Text numberOfLines={2} style={styles.text}>{item.content}</Text>
                       </TouchableWithoutFeedback>
                       <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                         <Icon
                           name="thumb-up"
                           style={[styles.icon, { color: item.thumb ? global.fontColor.color : 'gray', }]}
-                          onPress={this.thumbHandle.bind(this, item)}>
+                          onPress={this.thumbHandle.bind(this, item.f_id)}>
                         </Icon>
-                        <Text style={styles.iconText}>{item.thumb_num}</Text>
+                        <Text style={styles.iconText}>{item.thumb}</Text>
                         <Icon
                           name="message-processing"
                           style={[styles.icon]}
                           onPress={this.commentsHandle.bind(this, item)}>
                         </Icon>
-                        <Text style={styles.iconText}>{item.comment_num}</Text>
+                        <Text style={styles.iconText}>{item.comment}</Text>
 
                       </View>
                     </View>

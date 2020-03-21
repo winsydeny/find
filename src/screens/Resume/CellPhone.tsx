@@ -38,6 +38,11 @@ export default class CellPhone extends Component<Prop> {
     toast("电话号码修改成功");
     this.props.navigation.goBack();
   };
+  componentWillUnmount() {
+    this.setState(() => {
+      return false;
+    })
+  }
   render() {
     return (
       <View style={{ paddingTop: global.statusBarHeight.paddingTop }}>
