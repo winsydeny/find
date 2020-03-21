@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 // import Geolocation from '@react-native-community/g'
 // import { Text, View } from 'react-native';
-import { Text, View, Button, TouchableWithoutFeedback, StyleSheet, StatusBar, Alert, PermissionsAndroid, ActivityIndicator, AsyncStorage } from 'react-native';
+import { Text, View, Button, TouchableWithoutFeedback, StyleSheet, StatusBar, Alert, PermissionsAndroid, ActivityIndicator, AsyncStorage, DeviceEventEmitter } from 'react-native';
 import { ListItem, Avatar } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/AntDesign';
 import global from '../../style'
@@ -20,6 +20,7 @@ export default class Mine extends Component<Props> {
     avatarSource: 'https://www.vanlansh.wang/boy.png'
   }
   async componentDidMount() {
+    DeviceEventEmitter.addListener("@personal_name", value => this.setState({ user: value }));
     const user = await _retrieveData("user_name");
     this.setState({ user: user })
     this.requestCarmeraPermission()

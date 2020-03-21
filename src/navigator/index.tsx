@@ -26,6 +26,7 @@ import Name from '../screens/Resume/Name';
 import CellPhone from '../screens/Resume/CellPhone';
 import Expectation from '../screens/Resume/Expectation';
 import Education from '../screens/Resume/Education';
+import Preview from '../screens/Resume/Preview';
 
 
 /**
@@ -47,7 +48,7 @@ const TransitionConfiguration = () => ({
 	},
 });
 // import Views from 'react-navigation-stack/lib/commonjs/views/StackView/StackViewStyleInterpolator.js'
-const App = (isLogined: boolean) => {
+const App: any = (isLogined: boolean) => {
 	return createStackNavigator({
 		BottomTabNavigator: {
 			screen: TabBar,
@@ -203,6 +204,12 @@ const App = (isLogined: boolean) => {
 		},
 		Education: {
 			screen: Education,
+			navigationOptions: {
+				header: null
+			}
+		},
+		Preview: {
+			screen: Preview,
 			navigationOptions: {
 				header: null
 			}

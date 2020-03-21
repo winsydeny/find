@@ -10,7 +10,7 @@ import {
 import CIon from 'react-native-vector-icons/Ionicons'
 import AntIcon from 'react-native-vector-icons/AntDesign'
 import { toast } from '../../assets/utils';
-import { saveImg } from '../../api';
+import { saveImg, postData } from '../../api';
 import global from '../../../style';
 interface Prop {
   navigation: any
@@ -28,15 +28,24 @@ export default class CellPhone extends Component<Prop> {
     }
     this.setState({ value: text, num: text.length })
   };
-  save() {
+  async save() {
     if (this.state.value === '') {
-      toast("未输入任何字符")
+      toast("未输入任何字符");
       return false;
     }
-    // request api and save my advantage in the futrue
-    DeviceEventEmitter.emit("@personal_cellphone", this.state.value);
-    toast("电话号码修改成功");
-    this.props.navigation.goBack();
+    if (!(/^1[3456789]\d{9}$/.test(this.state.value))) {
+      toast("请输入正确的电话号码");
+      return false;
+    }
+    try {
+      const rs = await postData('resume?v=cellphone&type=1', { cellphone: this.state.value });
+      DeviceEventEmitter.emit("@personal_cellphone", this.state.value);
+      toast("电话号码修改成功");
+      this.props.navigation.goBack();
+    } catch (e) {
+      toast("修改失败")
+    }
+
   };
   componentWillUnmount() {
     this.setState(() => {

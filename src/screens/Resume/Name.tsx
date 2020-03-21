@@ -39,6 +39,7 @@ export default class Name extends Component<Prop> {
     // request api and save my advantage in the futrue
     DeviceEventEmitter.emit("@personal_name", this.state.value);
     const rs = await postData('resume?v=user&type=1', data);
+
     await _storeData('user_name', this.state.value)
     toast("姓名修改成功");
     this.props.navigation.goBack();

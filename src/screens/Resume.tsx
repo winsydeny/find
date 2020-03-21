@@ -103,7 +103,7 @@ export default class Resume extends Component<Prop> {
               <Text style={styles.text}>{this.state.education === null ? '点击填写教育经历' : this.state.education}</Text>
             </View>
           </TouchableWithoutFeedback>
-          <TouchableWithoutFeedback onPress={() => Alert.alert("success")}>
+          <TouchableWithoutFeedback onPress={() => this.props.navigation.push('Preview')}>
             <View style={styles.box}>
               <Text style={styles.h1}>简历附件</Text>
               <Text style={styles.text}>{this.state.resume === null ? '点击上传' : this.state.resume}</Text>
