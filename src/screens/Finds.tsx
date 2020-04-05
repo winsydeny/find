@@ -172,8 +172,6 @@ export default class Forum extends Component<Prop> {
           </FlatList>
           <View tabLabel="最新动态" style={{ flex: 1 }}>
             <FlatList
-              // refreshing={this.state.refress}
-              // onRefresh={() => this.topRefresh()}
               style={{}}
               refreshControl={
                 <RefreshControl
@@ -212,7 +210,6 @@ export default class Forum extends Component<Prop> {
                           onPress={this.commentsHandle.bind(this, item)}>
                         </Icon>
                         <Text style={styles.iconText}>{item.comment}</Text>
-
                       </View>
                     </View>
                   </View>

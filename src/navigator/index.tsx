@@ -38,17 +38,14 @@ import Preview from '../screens/Resume/Preview';
 const TransitionConfiguration = () => ({
 	screenInterpolator: (sceneProps: any) => {
 		const { scene } = sceneProps;
-		const { route } = scene;
-		// 获取屏幕切换时新屏幕的参数
-		const params = route.params || {};
-		// 否有 transition 参数，有则使用，否则使用缺省值 forHorizontal
-		// forHorizontal 表示从右向左滑出
-		const transition = params.transition || 'forHorizontal';
+		const { route } = scene;// 获取屏幕切换时新屏幕的参数
+		const params = route.params || {};// 否有 transition 参数，有则使用，否则使用缺省值 forHorizontal
+		const transition = params.transition || 'forHorizontal';//forHorizontal 表示从右向左滑出
 		return StackViewStyleInterpolator[transition](sceneProps);
 	},
 });
 // import Views from 'react-navigation-stack/lib/commonjs/views/StackView/StackViewStyleInterpolator.js'
-const App: any = (isLogined: boolean) => {
+const App: any = () => {
 	return createStackNavigator({
 		BottomTabNavigator: {
 			screen: TabBar,

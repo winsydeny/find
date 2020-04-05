@@ -31,6 +31,7 @@ export default class Resume extends Component<Prop> {
     resume: null,
     education: null,
     expectation: null,
+    pdf: '',
     screenWidth: Math.round(Dimensions.get('window').width),
     screenHeight: Math.round(Dimensions.get('window').height)
   };
@@ -47,7 +48,8 @@ export default class Resume extends Component<Prop> {
       advantage: info.data.advantage,
       position: info.data.expectation,
       expectation: info.data.expectation,
-      education: info.data.education
+      education: info.data.education,
+      pdf: info.data.online_resume
     })
   }
   componentDidMount() {
@@ -103,10 +105,23 @@ export default class Resume extends Component<Prop> {
               <Text style={styles.text}>{this.state.education === null ? '点击填写教育经历' : this.state.education}</Text>
             </View>
           </TouchableWithoutFeedback>
-          <TouchableWithoutFeedback onPress={() => this.props.navigation.push('Preview')}>
+          <TouchableWithoutFeedback onPress={() => {
+            if (this.state.pdf !== '') {
+              this.props.navigation.push('Preview', { uri: this.state.pdf });
+              return false;
+            }
+            getData('resume/attach', {})
+              .then(res => {
+                if (res.status === 0) {
+                  Alert.alert("发送成功，请前往您的邮箱上传PDF格式的简历");
+                } else {
+                  Alert.alert("failed")
+                }
+              }).catch(e => Alert.alert("发送失败"))
+          }}>
             <View style={styles.box}>
               <Text style={styles.h1}>简历附件</Text>
-              <Text style={styles.text}>{this.state.resume === null ? '点击上传' : this.state.resume}</Text>
+              <Text style={styles.text}>{this.state.pdf === '' ? '点击上传' : this.state.pdf}</Text>
             </View>
           </TouchableWithoutFeedback>
         </View>

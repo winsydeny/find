@@ -136,32 +136,20 @@ export default class Login extends Component<Prop>{
           placeholder="邮箱"
           onChangeText={email => this.onChangeEmail(email)}
           errorMessage={this.state.emailErrorMessage}
-        // leftIcon={
-        //   <Icon
-        //     name='envelope'
-        //     size={18}
-        //     color={styles.fontColor.color}
-        //   />
-        // }
         ></Input>
         <Input
           secureTextEntry
           placeholder="密码"
           onChangeText={passcode => this.onChangePass(passcode)}
           errorMessage={this.state.passcodeErrorMessage}
-        // leftIcon={
-        //   <Icon
-        //     name='key'
-        //     size={18}
-        //     color={styles.fontColor.color}></Icon>
-        // }
         ></Input>
         <View style={{ width: '94%', marginTop: 12 }}>
           <Button title="登陆" onPress={this.login.bind(this)} buttonStyle={styles.bg}></Button>
           <View style={{ flexDirection: "row", justifyContent: "center", marginTop: 10 }}>
             <Text style={{ color: "gray" }} onPress={() => Alert.alert("此功能暂无")}>忘记密码</Text>
             <Text style={{ paddingLeft: 4, paddingRight: 4 }}>|</Text>
-            <Text style={{ color: "#4827b6", fontWeight: "bold" }} onPress={() => this.props.navigation.navigate("Registerd")}>点击注册</Text>
+            <Text style={{ color: "#4827b6", fontWeight: "bold" }}
+              onPress={() => this.props.navigation.navigate("Registerd")}>点击注册</Text>
           </View>
 
         </View>

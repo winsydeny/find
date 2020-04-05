@@ -76,9 +76,9 @@ navigationOptions: {
 | /            | methods | request              | response | description  |
 | ------------ | ------- | -------------------- | -------- | ------------ |
 | login        | post    | email & passcode     |          | 登录         |
-| registered   | post    | email & pascode      |          | 注册         |
+| registered   | post    | email & passcode     |          | 注册         |
 | home         | get     |                      |          | 首页信息     |
-| search       | post    | city & key           |          | 搜索         |
+| search       | post    | city & keyword...    | list     | 搜索         |
 | job/detail   | get     |                      |          | 职位详情     |
 | job/submit   | post    | uid & hr_id & email  |          | 详情页中投递 |
 | Find         | get     |                      |          | 最新职位等   |

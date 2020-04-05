@@ -52,7 +52,7 @@ export default class Mine extends Component<Props> {
     };
 
     ImagePicker.showImagePicker(options, (response: any) => {
-      console.log('Response = ', response);
+      // console.log('Response = ', response);
 
       if (response.didCancel) {
         console.log('User cancelled image picker');
@@ -62,16 +62,17 @@ export default class Mine extends Component<Props> {
         console.log('User tapped custom button: ', response.customButton);
       } else {
         toast(response.uri)
+        // console.log(response)
         this.setState({
           avatarSource: response.uri
         })
-        // const msg = saveImg(response.path);
-        // toast(msg);
-        // const source = { uri: response.uri };
-        // this.setState({
-        //   avatarSource: source,
-        // });
-        // console.warn(this.state.avatarSource.uri);
+        saveImg(response.uri)
+          .then(res => {
+            console.log(res)
+            if (res.status === 0) {
+              this.setState({ avatarSource: res.url })
+            }
+          })
       }
     });
   };
@@ -146,9 +147,9 @@ export default class Mine extends Component<Props> {
           }
           <View>
           </View>
-          <Button title="查看缓存" onPress={() => _getAllKey()}></Button>
+          {/* <Button title="查看缓存1" onPress={() => _getAllKey()}></Button>
           <Button title="清除缓存" onPress={() => _remove("access_token")}></Button>
-          <Button title="Request" onPress={() => this.get()}></Button>
+          <Button title="Request" onPress={() => this.get()}></Button> */}
         </View>
       </View >
     );
