@@ -7,7 +7,7 @@ import { ListItem, Avatar } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/AntDesign';
 import global from '../../style'
 import Geolocation from '@react-native-community/geolocation';
-import { toast, _remove, _getAllKey, _retrieveData } from '../assets/utils';
+import { toast, _remove, _getAllKey, _retrieveData, reset } from '../assets/utils';
 import { saveImg, getData } from '../api/index'
 import ImagePicker from 'react-native-image-picker';
 import { Switch } from 'react-native-gesture-handler';
@@ -82,6 +82,9 @@ export default class Mine extends Component<Props> {
   }
   changeIdentity() {
     toast("qiehua")
+    // this.props.navigation.navigate('Agent');
+    reset(this.props.navigation, 'Agent');
+
   }
   render() {
     const list = [

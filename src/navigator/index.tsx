@@ -27,7 +27,8 @@ import CellPhone from '../screens/Resume/CellPhone';
 import Expectation from '../screens/Resume/Expectation';
 import Education from '../screens/Resume/Education';
 import Preview from '../screens/Resume/Preview';
-
+import Agent from '../agentScreens/Agent';
+import Add from '../agentScreens/Add'
 
 /**
 * 1、从右向左：forHorizontal
@@ -207,6 +208,18 @@ const App: any = () => {
 		},
 		Preview: {
 			screen: Preview,
+			navigationOptions: {
+				header: null
+			}
+		},
+		Agent: {
+			screen: Agent,
+			navigationOptions: {
+				header: null
+			}
+		},
+		Add: {
+			screen: Add,
 			navigationOptions: {
 				header: null
 			}

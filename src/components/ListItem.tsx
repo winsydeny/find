@@ -39,9 +39,10 @@ export default class ListItem extends Component<Props> {
     return (
       <View style={[styles.listCard, { marginHorizontal: marginHorizontal, borderRadius: radius }]}>
         <TouchableWithoutFeedback onPress={() => nav.navigate('ListDetail', { transition: 'forHorizontal', jobdetail: data })}>
+          {/* source={{ uri: "https://facebook.github.io/react-native/img/tiny_logo.png" }}> */}
           <Image
             style={styles.img}
-            source={{ uri: "https://facebook.github.io/react-native/img/tiny_logo.png" }}>
+            source={{ uri: data.preview }}>
           </Image>
         </TouchableWithoutFeedback>
 

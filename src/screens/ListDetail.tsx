@@ -48,11 +48,14 @@ export default class ListDetail extends Component<Prop> {
             <Image style={{ width: 60, height: 60, marginTop: 40 }} source={{ uri: 'https://facebook.github.io/react-native/img/tiny_logo.png' }}></Image>
           </View>
         </View> */}
+        <View style={{ height: 48, backgroundColor: global.bg2.backgroundColor }}>
+          <Icon onPress={() => this.props.navigation.pop()} name="arrowleft" style={styles.arrow}></Icon>
+        </View>
         <ScrollView>
           <View style={styles.header}>
-            <Icon onPress={() => this.props.navigation.pop()} name="arrowleft" style={styles.arrow}></Icon>
+            {/* <Icon onPress={() => this.props.navigation.pop()} name="arrowleft" style={styles.arrow}></Icon> */}
             <View style={{ alignItems: 'center' }}>
-              <Image style={{ width: 60, height: 60, marginTop: 40 }} source={{ uri: 'https://facebook.github.io/react-native/img/tiny_logo.png' }}></Image>
+              <Image style={{ width: 60, height: 60, }} source={{ uri: jobdetail.preview }}></Image>
             </View>
           </View>
           <View style={{ paddingLeft: 18, paddingRight: 18 }}>
@@ -96,12 +99,16 @@ export default class ListDetail extends Component<Prop> {
               4.Written in: JavaScript\n{"\n"}
               Stable release: 2.6.11 / December 13, 2019; 2 months ago{"\n"} */}
             </Text>
-            <Button
-              buttonStyle={{ borderRadius: 30, backgroundColor: global.bg2.backgroundColor }}
-              onPress={() => this.applyJob(jobdetail)}
-              title="申请此职位"></Button>
+
           </View>
         </ScrollView>
+        <View style={{ paddingVertical: 8, paddingHorizontal: 16 }}>
+          <Button
+            buttonStyle={{ borderRadius: 30, backgroundColor: global.bg2.backgroundColor }}
+            onPress={() => this.applyJob(jobdetail)}
+            title="申请此职位"></Button>
+        </View>
+
       </View >
     )
   }
@@ -111,7 +118,7 @@ const fontGray = '#b0b4be';
 const fontGray2 = '#98a0b0';
 const styles = StyleSheet.create({
   header: {
-    height: 80,
+    height: 30,
     backgroundColor: global.bg2.backgroundColor,
     marginBottom: 28
   },
@@ -120,8 +127,8 @@ const styles = StyleSheet.create({
     color: "#FFFFFF",
     // color: "#000",
     fontSize: 25,
-    top: 28,
-    left: 25,
+    top: 22,
+    left: 16,
     position: "absolute"
   },
   information: {

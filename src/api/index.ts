@@ -1,5 +1,6 @@
 import {Alert} from 'react-native';
 import {_retrieveData} from '../assets/utils';
+import fetchJsonp from 'fetch-jsonp';
 interface Params {
   keyword: string;
   page?: number;
@@ -91,7 +92,7 @@ export const xhr = (method: any, params: any) => {
   });
 };
 export const suggest = (keyword: string) => {
-  return fetch(
+  return fetchJsonp(
     `http://suggestion.baidu.com/su?wd=${keyword}&p=3&cb=window.bdsug.sug`,
   ).then(response => response.json());
 };
