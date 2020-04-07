@@ -100,19 +100,19 @@ export default class Registerd extends Component {
           placeholder="请输入邮箱"
           errorMessage={this.state.emailError}
           onChangeText={email => this.setState({ email: email })}></Input>
-        this.state.sendCode ?
-            <>
-          <Input
-            secureTextEntry
-            textContentType="password"
-            placeholder="密码"
-            onChangeText={code => this.setState({ passcode: code })}></Input>
-          <Input
-            placeholder="验证码"
-            onChangeText={code => this.setState({ code: code })}></Input>
-        </>
-        : null
-    }
+        {this.state.sendCode ?
+          <>
+            <Input
+              secureTextEntry
+              textContentType="password"
+              placeholder="密码"
+              onChangeText={code => this.setState({ passcode: code })}></Input>
+            <Input
+              placeholder="验证码"
+              onChangeText={code => this.setState({ code: code })}></Input>
+          </>
+          : null
+        }
         <View style={{ width: '94%', marginTop: 12 }}>
           <Button
             buttonStyle={styles.bg}

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, StyleSheet, Text, Alert } from 'react-native';
+import { View, StyleSheet, Text, Alert, Image } from 'react-native';
 import { Button, Input, Avatar } from 'react-native-elements'
 import Icon from 'react-native-vector-icons/FontAwesome';
 import styles from '../../style';
@@ -127,15 +127,20 @@ export default class Login extends Component<Prop>{
           name='pied-piper'
           size={100}
           color="#FFA500"></Icon> */}
-        <Avatar
+        {/* <Avatar
           rounded
           size={120}
-          source={{ uri: 'https://www.vanlansh.wang/avatar/boy.png' }}></Avatar>
+          source={{ uri: 'https://www.vanlansh.wang/avatar/boy.png' }}></Avatar> */}
+        <Image
+          style={{ height: 140, width: 240 }}
+          source={require('../assets/pic/login.png')}></Image>
         {/* <Text style={{ fontSize: 15, fontWeight: "bold" }}></Text> */}
         <Input
           placeholder="邮箱"
           onChangeText={email => this.onChangeEmail(email)}
           errorMessage={this.state.emailErrorMessage}
+          labelStyle={{ fontSize: 16 }}
+        // style={{ fontSize: 12 }}
         ></Input>
         <Input
           secureTextEntry

@@ -7,7 +7,8 @@ import {
   StatusBar,
   StyleSheet,
   TouchableNativeFeedbackComponent,
-  TouchableHighlightBase
+  TouchableHighlightBase,
+  Alert
 } from 'react-native';
 import global from '../../style'
 import { reset } from '../assets/utils';
@@ -50,7 +51,9 @@ export default class Agent extends Component<Props> {
           </TouchableNativeFeedback>
           <TouchableNativeFeedback style={[styles.card, {
             borderBottomWidth: 1
-          }]}>
+          }]}
+            onPress={() => Alert.alert("此功能未开通")}
+          >
             <Image style={styles.icons} source={require('../assets/pic/FASTDELIVERY.png')}></Image>
             <Text style={styles.title}>Invitation</Text>
           </TouchableNativeFeedback>

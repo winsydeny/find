@@ -28,7 +28,9 @@ import Expectation from '../screens/Resume/Expectation';
 import Education from '../screens/Resume/Education';
 import Preview from '../screens/Resume/Preview';
 import Agent from '../agentScreens/Agent';
-import Add from '../agentScreens/Add'
+import Add from '../agentScreens/Add';
+import JobDesc from '../agentScreens/JobDesc';
+import JobDetail from '../agentScreens/JobDetail';
 
 /**
 * 1、从右向左：forHorizontal
@@ -220,6 +222,18 @@ const App: any = () => {
 		},
 		Add: {
 			screen: Add,
+			navigationOptions: {
+				header: null
+			}
+		},
+		JobDesc: {
+			screen: JobDesc,
+			navigationOptions: {
+				header: null
+			}
+		},
+		JobDetail: {
+			screen: JobDetail,
 			navigationOptions: {
 				header: null
 			}
