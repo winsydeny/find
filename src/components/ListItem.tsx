@@ -87,7 +87,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     backgroundColor: '#f1f1f1',
-    marginBottom: 8
+    marginBottom: 8,
+
     // justifyContent: "center"
   },
   img: {
@@ -97,6 +98,8 @@ const styles = StyleSheet.create({
     marginRight: 14
   },
   listCard: {
+
+
     // marginLeft: 13,
     // marginRight: 13,
     backgroundColor: '#FFFFFF',

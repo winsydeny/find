@@ -11,7 +11,7 @@ import { Button } from 'react-native-elements'
 import global from "../../style";
 import EnIcon from 'react-native-vector-icons/Entypo';
 import Icon from 'react-native-vector-icons/AntDesign';
-import { ScrollView } from "react-native-gesture-handler";
+import { ScrollView, TouchableWithoutFeedback } from "react-native-gesture-handler";
 import { postData } from "../api";
 import { _retrieveData, toast } from "../assets/utils";
 interface Prop {
@@ -54,9 +54,11 @@ export default class ListDetail extends Component<Prop> {
         <ScrollView>
           <View style={styles.header}>
             {/* <Icon onPress={() => this.props.navigation.pop()} name="arrowleft" style={styles.arrow}></Icon> */}
-            <View style={{ alignItems: 'center' }}>
-              <Image style={{ width: 60, height: 60, }} source={{ uri: jobdetail.preview }}></Image>
-            </View>
+            <TouchableWithoutFeedback onPress={() => this.props.navigation.push('CompanyDetail')} style={{ alignItems: 'center' }}>
+              <Image
+                style={{ width: 60, height: 60, }}
+                source={{ uri: jobdetail.preview }}></Image>
+            </TouchableWithoutFeedback>
           </View>
           <View style={{ paddingLeft: 18, paddingRight: 18 }}>
             <Text style={{ fontSize: 18, textAlign: "center" }}>{jobdetail.company}</Text>
@@ -152,7 +154,7 @@ const styles = StyleSheet.create({
   },
   content: {
     color: fontGray2,
-    fontSize: 16,
-    marginBottom: 7
+    fontSize: 14,
+    marginBottom: 7,
   }
 });

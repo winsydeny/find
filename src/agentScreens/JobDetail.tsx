@@ -13,6 +13,8 @@ import AntIcon from 'react-native-vector-icons/AntDesign'
 import { toast } from '../assets/utils';
 import { saveImg, postData } from '../api';
 import global from '../../style'
+import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
+import ActionSheet from 'react-native-actionsheet';
 interface Prop {
   navigation: any
 }
@@ -20,8 +22,12 @@ export default class JobDetail extends Component<Prop> {
   state = {
     position: '',
     experience: '',
-    salary: ''
+    salary: '',
+    type: '',
+    location: '',
+    options: ['全职', '兼职', 'cancel']
   };
+  ActionSheet: ActionSheet | null;
   onChangeText(text: string) {
 
     if (text.length > 240) {
@@ -55,6 +61,9 @@ export default class JobDetail extends Component<Prop> {
     this.setState(() => {
       return false;
     })
+  };
+  showActionSheet = () => {
+    this.ActionSheet.show()
   };
   render() {
 
@@ -93,6 +102,24 @@ export default class JobDetail extends Component<Prop> {
               onChangeText={(sal) => this.setState({ salary: sal })}
               style={styles.input}></TextInput>
           </View>
+          <TouchableWithoutFeedback
+            style={{ flexDirection: 'row', alignItems: "center", paddingVertical: 15, borderBottomWidth: 0.5, borderColor: 'gray' }}
+            onPress={() => this.showActionSheet()}
+          >
+            <Text style={{ flex: 1 }}>工作类型</Text>
+            <Text style={{ position: "absolute", right: 20, color: 'gray' }}>{this.state.location}</Text>
+            <Text style={{ color: 'gray' }}>{this.state.type === '' ? '点击选择' : this.state.type}</Text>
+            {/* <Icon name="right" style={{ color: 'gray', fontSize: 16 }}></Icon> */}
+          </TouchableWithoutFeedback>
+          <TouchableWithoutFeedback
+            style={{ flexDirection: 'row', alignItems: "center", paddingVertical: 15, borderBottomWidth: 0.5, borderColor: 'gray' }}
+            onPress={() => { }}
+          >
+            <Text style={{ flex: 1 }}>工作地点</Text>
+            <Text style={{ position: "absolute", right: 20, color: 'gray' }}>{this.state.location}</Text>
+            <Text style={{ color: 'gray' }}>点击选择</Text>
+            {/* <Icon name="right" style={{ color: 'gray', fontSize: 16 }}></Icon> */}
+          </TouchableWithoutFeedback>
         </View>
         {/* <View
           style={{ height: 160 }}
@@ -107,6 +134,28 @@ export default class JobDetail extends Component<Prop> {
           ></TextInput>
         </View>
         <Text style={{ textAlign: "right", paddingRight: 18 }}>{this.state.num}/240</Text> */}
+        <ActionSheet
+          ref={o => this.ActionSheet = o}
+          title={'Select Working Type'}
+          options={this.state.options}
+          cancelButtonIndex={2}
+          destructiveButtonIndex={2}
+          onPress={(index) => {
+            if (index === 2) return false;
+            this.setState({ type: this.state.options[index] });
+          }}
+        />
+        {/* <ActionSheet
+          ref={o => this.ActionSheet = o}
+          title={'Select Working Type'}
+          options={this.state.options}
+          cancelButtonIndex={2}
+          destructiveButtonIndex={2}
+          onPress={(index) => {
+            if (index === 2) return false;
+            this.setState({ type: this.state.options[index] });
+          }}
+        /> */}
       </View>
     );
   }
