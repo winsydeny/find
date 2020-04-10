@@ -31,6 +31,7 @@ import Agent from '../agentScreens/Agent';
 import Add from '../agentScreens/Add';
 import JobDesc from '../agentScreens/JobDesc';
 import JobDetail from '../agentScreens/JobDetail';
+import Applicant from '../agentScreens/Applicant';
 
 /**
 * 1、从右向左：forHorizontal
@@ -234,6 +235,13 @@ const App: any = () => {
 		},
 		JobDetail: {
 			screen: JobDetail,
+			navigationOptions: {
+				header: null
+			}
+		},
+
+		Applicant: {
+			screen: Applicant,
 			navigationOptions: {
 				header: null
 			}

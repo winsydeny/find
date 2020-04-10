@@ -40,8 +40,12 @@ export default class Add extends Component<Props> {
     salary: '',
     description: '',
     experience: '',
-    position: ''
+    position: '',
+    location: '',
+    type: ''
   };
+  emiter1: any;
+  emiter2: any;
   async publish() {
     try {
       const result = await postData('add', this.state);
@@ -95,7 +99,7 @@ export default class Add extends Component<Props> {
     });
   };
   componentDidMount() {
-    DeviceEventEmitter.addListener('@agent_detail', state => {
+    this.emiter1 = DeviceEventEmitter.addListener('@agent_detail', state => {
       let percent: any = 0;
       for (let item in state) {
         if (state[item] !== '') {
@@ -106,16 +110,22 @@ export default class Add extends Component<Props> {
         position: state.position,
         experience: state.experience,
         salary: state.salary,
-        detailPercent: (percent / 3).toFixed(2) * 100
+        location: state.location,
+        type: state.type,
+        detailPercent: (percent / 5).toFixed(2) * 100
       });
     })
-    DeviceEventEmitter.addListener('@agent_jd', value => {
+    this.emiter2 = DeviceEventEmitter.addListener('@agent_jd', value => {
       let tips = '未填写';
       if (value !== '') {
         tips = '已填写';
       }
       this.setState({ description: value, tips: tips });
     })
+  };
+  componentWillUnmount() {
+    this.emiter1.remove();
+    this.emiter2.remove();
   };
   render() {
     return (
@@ -157,7 +167,9 @@ export default class Add extends Component<Props> {
                 {
                   position: this.state.position,
                   experience: this.state.experience,
-                  salary: this.state.salary
+                  salary: this.state.salary,
+                  location: this.state.location,
+                  type: this.state.type
                 })}
           >
             <Text style={{ flex: 1 }}>详细信息</Text>

@@ -45,7 +45,9 @@ export default class JobDetail extends Component<Prop> {
     DeviceEventEmitter.emit('@agent_detail', {
       position: this.state.position,
       experience: this.state.experience,
-      salary: this.state.salary
+      salary: this.state.salary,
+      location: this.state.location,
+      type: this.state.type
     })
     this.props.navigation.goBack();
   };
@@ -55,12 +57,11 @@ export default class JobDetail extends Component<Prop> {
       position: params.position,
       experience: params.experience,
       salary: params.salary,
+      location: params.location,
+      type: params.type
     })
   };
   componentWillUnmount() {
-    this.setState(() => {
-      return false;
-    })
   };
   showActionSheet = () => {
     this.ActionSheet.show()
@@ -102,24 +103,31 @@ export default class JobDetail extends Component<Prop> {
               onChangeText={(sal) => this.setState({ salary: sal })}
               style={styles.input}></TextInput>
           </View>
+          <View style={{ flexDirection: 'row', alignItems: "center" }}>
+            <Text style={{ position: "absolute" }}>工作地点</Text>
+            <TextInput
+              value={this.state.location}
+              placeholder="Type here"
+              onChangeText={(sal) => this.setState({ location: sal })}
+              style={styles.input}></TextInput>
+          </View>
           <TouchableWithoutFeedback
             style={{ flexDirection: 'row', alignItems: "center", paddingVertical: 15, borderBottomWidth: 0.5, borderColor: 'gray' }}
             onPress={() => this.showActionSheet()}
           >
             <Text style={{ flex: 1 }}>工作类型</Text>
-            <Text style={{ position: "absolute", right: 20, color: 'gray' }}>{this.state.location}</Text>
+            {/* <Text style={{ position: "absolute", right: 20, color: 'gray' }}>{this.state.location}</Text> */}
             <Text style={{ color: 'gray' }}>{this.state.type === '' ? '点击选择' : this.state.type}</Text>
             {/* <Icon name="right" style={{ color: 'gray', fontSize: 16 }}></Icon> */}
           </TouchableWithoutFeedback>
-          <TouchableWithoutFeedback
+          {/* <TouchableWithoutFeedback
             style={{ flexDirection: 'row', alignItems: "center", paddingVertical: 15, borderBottomWidth: 0.5, borderColor: 'gray' }}
             onPress={() => { }}
           >
             <Text style={{ flex: 1 }}>工作地点</Text>
             <Text style={{ position: "absolute", right: 20, color: 'gray' }}>{this.state.location}</Text>
             <Text style={{ color: 'gray' }}>点击选择</Text>
-            {/* <Icon name="right" style={{ color: 'gray', fontSize: 16 }}></Icon> */}
-          </TouchableWithoutFeedback>
+          </TouchableWithoutFeedback> */}
         </View>
         {/* <View
           style={{ height: 160 }}

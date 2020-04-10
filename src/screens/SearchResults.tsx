@@ -36,11 +36,11 @@ export default class SearchResults extends Component<Prop> {
     // Loading.show()
     const job = [{ key: 'a' }, { key: 'b' }, { key: 'c' }, { key: 'd' }, { key: 'a' }, { key: 'a' }]
     // const job = []
-    this.getList(job)
+    this.getList()
     this.listener = DeviceEventEmitter.addListener('@search_filter', (filter) => {
       // this.getMore();
-      this.getList(job)
-      console.log('searchResult', filter)
+      this.getList()
+      // console.log('searchResult', filter)
     })
     // if (this.props.keyword !== '') {
     //     // Alert.alert();
@@ -71,7 +71,7 @@ export default class SearchResults extends Component<Prop> {
       const { data } = await getData('search', {
         keyword: this.props.navigation.state.params.keyWord,
         page: this.state.page,
-        size: 8,
+        size: 2,
       });
       // console.log(data)
       if (data.length === 0) {
@@ -89,9 +89,12 @@ export default class SearchResults extends Component<Prop> {
     // return this.state.jobList;
   };
   getMore() {
-    // toast("加载更多");
-    this.setState({ page: this.state.page + 1 });
-    this.getList();
+    toast("加载更多");
+    // this.setState({ page: this.state.page + 1 });
+    console.log(this.state.page);
+
+    // this.getList(); 
+    console.log('loading.....');
     // if (this..length <= 16) {
     // this.setState({
     //   jobList: this.state.jobList.concat([{ key: 'a' }, { key: 'a' }, { key: 'a' }, { key: 'a' }])
@@ -131,10 +134,11 @@ export default class SearchResults extends Component<Prop> {
               <Text style={{ textAlign: "center", marginTop: 10, color: global.bg2.backgroundColor }}>啊哦！无数据了</Text>
             </View>
             : <FlatList
+              style={{}}
               keyExtractor={(item, index) => index.toString()}
               onEndReached={() => this.getMore()}
               data={this.state.jobList}
-              onEndReachedThreshold={0.1}
+              onEndReachedThreshold={2}
               renderItem={({ item }) => {
                 return (
                   <View style={{ marginTop: 12 }}>

@@ -89,7 +89,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#f1f1f1',
     marginBottom: 8,
 
-    // justifyContent: "center"
   },
   img: {
     width: 40,

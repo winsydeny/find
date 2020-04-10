@@ -63,10 +63,12 @@ export default class Agent extends Component<Props> {
             <Image style={styles.icons} source={require('../assets/pic/SEARCH.png')}></Image>
             <Text style={styles.title}>Search</Text>
           </View>
-          <View style={styles.card}>
+          <TouchableNativeFeedback
+            onPress={() => this.props.navigation.push('Applicant')}
+            style={styles.card}>
             <Image style={styles.icons} source={require('../assets/pic/PROFILE.png')}></Image>
-            <Text style={styles.title}>Profile</Text>
-          </View>
+            <Text style={styles.title}>Applicant</Text>
+          </TouchableNativeFeedback>
         </View>
       </View>
     );
