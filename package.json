@@ -20,6 +20,7 @@
     "react": "16.9.0",
     "react-native": "0.61.5",
     "react-native-actionsheet": "^2.4.2",
+    "react-native-agora": "^2.9.1-alpha.3",
     "react-native-elements": "^1.2.7",
     "react-native-gesture-handler": "^1.5.3",
     "react-native-image-picker": "^2.3.1",

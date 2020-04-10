@@ -32,6 +32,7 @@ import Add from '../agentScreens/Add';
 import JobDesc from '../agentScreens/JobDesc';
 import JobDetail from '../agentScreens/JobDetail';
 import Applicant from '../agentScreens/Applicant';
+import Video from '../components/Video';
 
 /**
 * 1、从右向左：forHorizontal
@@ -246,6 +247,12 @@ const App: any = () => {
 				header: null
 			}
 		},
+		Video: {
+			screen: Video,
+			navigationOptions: {
+				header: null
+			}
+		}
 	}, {
 		initialRouteName: false ? 'BottomTabNavigator' : 'Login',
 		defaultNavigationOptions: {

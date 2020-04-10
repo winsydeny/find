@@ -106,12 +106,13 @@ export default class Message extends Component<Prop> {
                   return (
                     <TouchableWithoutFeedback
                       key={index}
-                      onPress={() => { }}>
+                      onPress={() => { this.props.navigation.push('Video', { channel: 'channel-x' }) }}>
                       <View style={styles.card} key={index} >
                         <View style={{ flexDirection: "row", paddingLeft: 16, paddingRight: 16 }}>
                           <View style={{ flex: 1, }}>
                             <Text style={{ fontWeight: "bold", lineHeight: 25 }}>阿里巴巴·前端工程师</Text>
                             <Text>北京 12月17日</Text>
+                            <Text style={{ color: global.bg2.backgroundColor, lineHeight: 30 }}>点击进入</Text>
                           </View>
                           <Avatar rounded></Avatar>
                         </View>
@@ -179,7 +180,10 @@ const styles = StyleSheet.create({
   card: {
     marginTop: 14,
     borderRadius: 6,
-    marginLeft: 16, marginRight: 16, paddingTop: 18, paddingBottom: 18, backgroundColor: "#FFFFFF"
+    marginHorizontal: 16,
+    paddingTop: 18,
+    paddingBottom: 0,
+    backgroundColor: "#FFFFFF"
   },
   tab: {
     color: "#FFFFFF",

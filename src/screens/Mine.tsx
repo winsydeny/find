@@ -153,6 +153,8 @@ export default class Mine extends Component<Props> {
           <Button title="查看缓存1" onPress={() => _getAllKey()}></Button>
           <Button title="清除缓存" onPress={() => _remove("access_token")}></Button>
           <Button title="Request" onPress={() => this.get()}></Button>
+          <Button title="video" onPress={() => this.props.navigation.push('Video')}></Button>
+
         </View>
       </View >
     );
