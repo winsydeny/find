@@ -10,6 +10,7 @@ import ListItem from '../components/ListItem';
 import Loading from '../components/Loading';
 import { toast } from '../utils/utils'
 import { getData } from '../api';
+import { LoadingUtil } from '../utils/LoadingUtils';
 interface Prop {
   navigation: any
 }
@@ -60,6 +61,7 @@ export default class SearchResults extends Component<Prop> {
       showLoading: false,
       done: true
     })
+    LoadingUtil.hideLoading();
   }
   componentWillUnmount() {
     this.listener.remove();
@@ -75,7 +77,7 @@ export default class SearchResults extends Component<Prop> {
       });
       // console.log(data)
       if (data.length === 0) {
-        toast('无更多数据');
+        // toast('无更多数据');
       }
       this.setState({
         jobList: this.state.jobList.concat(data),

@@ -19,9 +19,11 @@ import {
   DeviceEventEmitter,
   Platform,
   BackHandler,
+  ActivityIndicator,
 } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
 import { getData } from '../api/index';
+import { LoadingUtil } from '../utils/LoadingUtils';
 interface Props {
   navigation: any;
 }
@@ -86,6 +88,7 @@ export default class Home extends Component<Props> {
         toast("request fail")
         return false;
       }
+      LoadingUtil.hideLoading();
       this.setState({ recommendList: response.data })
       // console.log('sdf', response)
     } catch (e) {
@@ -205,6 +208,7 @@ export default class Home extends Component<Props> {
             <Text style={{ fontSize: 14, paddingRight: 12, position: "absolute", right: 0, color: global.bg2.backgroundColor }}>查看更多</Text>
           </View>
           {
+            // <ActivityIndicator size="large" color="#FFF" />
             this.state.recommendList.map((item, index) => (
               <View style={{ marginBottom: 12 }} key={index}>
                 <ListItem

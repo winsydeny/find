@@ -22,8 +22,9 @@ export default class Mine extends Component<Props> {
   async componentDidMount() {
     DeviceEventEmitter.addListener("@personal_name", value => this.setState({ user: value }));
     const user = await _retrieveData("user_name");
-    this.setState({ user: user })
-    this.requestCarmeraPermission()
+    this.setState({ user: user });
+    this.requestCarmeraPermission();
+    this.get();
   };
   async requestCarmeraPermission() {
     try {
@@ -70,14 +71,15 @@ export default class Mine extends Component<Props> {
           .then(res => {
             console.log(res)
             if (res.status === 0) {
-              this.setState({ avatarSource: res.url })
+              this.setState({ avatarSource: 'https://www.vanlansh.wang' + res.url })
             }
           })
       }
     });
   };
   async get() {
-    const { data } = await getData('search', { keyword: 'java' });
+    const { data } = await getData('mine', {}, false);
+    this.setState({ avatarSource: data.avatar });
     // console.log(data.length)
   }
   async changeIdentity() {

@@ -32,7 +32,7 @@ export default class Registerd extends Component {
         email: this.state.email
       }
       _storeData('user_info', data.email);
-      postData('register/send', data)
+      postData('register/send', data, false)
         .then(res => {
           if (res.status === 0) {
             this.setState({
@@ -71,7 +71,7 @@ export default class Registerd extends Component {
         email: this.state.email,
         passcode: this.state.passcode
       }
-      postData('register', data)
+      postData('register', data, false)
         .then(res => {
           if (res.status === 0) {
             // toast("请先完善个人信息");

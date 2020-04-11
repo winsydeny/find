@@ -1,6 +1,7 @@
 import {Alert} from 'react-native';
 import {_retrieveData} from '../utils/utils';
 import fetchJsonp from 'fetch-jsonp';
+import {LoadingUtil} from '../utils/LoadingUtils';
 interface Params {
   keyword: string;
   page?: number;
@@ -25,7 +26,10 @@ export const saveImg = async (data: any) => {
   }).then((res: any) => res.json());
 };
 
-export const getData = async (path: string, params: any) => {
+export const getData = async (path: string, params: any, loading = true) => {
+  if (loading) {
+    LoadingUtil.showLoading();
+  }
   const access_token = await _retrieveData('access_token');
   let last = [];
   for (let key in params) {
@@ -36,7 +40,10 @@ export const getData = async (path: string, params: any) => {
   return fetch(url).then(res => res.json());
 };
 
-export const postData = async (path: string, data: any) => {
+export const postData = async (path: string, data: any, loading = true) => {
+  if (loading) {
+    LoadingUtil.showLoading();
+  }
   const access_token = await _retrieveData('access_token');
   data['token'] = access_token;
   return fetch(`${BASE_URL}/${path}`, {

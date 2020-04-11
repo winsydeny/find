@@ -7,6 +7,7 @@ import styles from '../../style';
 import { _storeData, _retrieveData, toast, reset } from '../utils/utils';
 import Loading from '../components/Loading';
 import { postData, getData } from '../api';
+import { LoadingUtil } from '../utils/LoadingUtils';
 
 interface Prop {
   navigation: any
@@ -73,7 +74,7 @@ export default class Login extends Component<Prop>{
       }
       postData('login', data).then(res => {
         console.log('res=>', res)
-        this.setState({ loading: false });
+        // this.setState({ loading: false });
         if (res.status === 0) {
           toast("登陆成功");
           _storeData('user_info', data.email);
@@ -81,9 +82,11 @@ export default class Login extends Component<Prop>{
           console.log(res.access_token)
           _storeData('access_token', res.access_token)
           this.props.navigation.navigate('Home');
+          LoadingUtil.hideLoading();
         } else if (res.status === 10009) {
           Alert.alert(res.msg);
         }
+        LoadingUtil.hideLoading();
       })
         .catch(err => Alert.alert(err.toString))
       // console.log(this)
@@ -97,10 +100,13 @@ export default class Login extends Component<Prop>{
   };
   async componentDidMount() {
     try {
-      const isLogin = await _retrieveData("isLogin");
+      const email = await _retrieveData("user_info");
+      console.log(email)
+      this.setState({ email })
       console.log('componentDidMount-login')
       const timeout = setTimeout(() => {
-        this.setState({ loading: false });
+        // this.setState({ loading: false });
+        LoadingUtil.hideLoading();
         toast("连接超时")
       }, 6000);
       const response = await getData('search', { keyword: 'java' });
@@ -108,11 +114,14 @@ export default class Login extends Component<Prop>{
       // console.log('sdfds', response)
       if (response.status >= 0) {
         // 如果已经登陆并且token还未过期，则直接重置导航器，不显示登陆页面
-        this.setState({ loading: false })
+        // this.setState({ loading: false })
+        // LoadingUtil.hideLoading();
         reset(this.props.navigation, 'BottomTabNavigator');
+        LoadingUtil.hideLoading();
       } else {
-        toast("自动登陆失败，请登录")
-        this.setState({ loading: false })
+        toast("登陆信息过期，请重新登录");
+        LoadingUtil.hideLoading();
+        // this.setState({ loading: false })
       }
     } catch (err) {
       Alert.alert(err.toString())
@@ -137,6 +146,7 @@ export default class Login extends Component<Prop>{
         {/* <Text style={{ fontSize: 15, fontWeight: "bold" }}></Text> */}
         <Input
           placeholder="邮箱"
+          value={this.state.email}
           onChangeText={email => this.onChangeEmail(email)}
           errorMessage={this.state.emailErrorMessage}
           labelStyle={{ fontSize: 16 }}
