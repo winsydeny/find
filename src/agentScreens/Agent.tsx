@@ -11,7 +11,7 @@ import {
   Alert
 } from 'react-native';
 import global from '../../style'
-import { reset } from '../assets/utils';
+import { reset } from '../utils/utils';
 import { TouchableNativeFeedback } from 'react-native-gesture-handler';
 const Name = 'This is my macbook pro'
 interface Props {
@@ -52,7 +52,7 @@ export default class Agent extends Component<Props> {
           <TouchableNativeFeedback style={[styles.card, {
             borderBottomWidth: 1
           }]}
-            onPress={() => Alert.alert("此功能未开通")}
+            onPress={() => this.props.navigation.push('InviteList')}
           >
             <Image style={styles.icons} source={require('../assets/pic/FASTDELIVERY.png')}></Image>
             <Text style={styles.title}>Invitation</Text>

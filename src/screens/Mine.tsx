@@ -7,7 +7,7 @@ import { ListItem, Avatar } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/AntDesign';
 import global from '../../style'
 import Geolocation from '@react-native-community/geolocation';
-import { toast, _remove, _getAllKey, _retrieveData, reset } from '../assets/utils';
+import { toast, _remove, _getAllKey, _retrieveData, reset } from '../utils/utils';
 import { saveImg, getData } from '../api/index'
 import ImagePicker from 'react-native-image-picker';
 import { Switch } from 'react-native-gesture-handler';
@@ -78,13 +78,15 @@ export default class Mine extends Component<Props> {
   };
   async get() {
     const { data } = await getData('search', { keyword: 'java' });
-    console.log(data.length)
+    // console.log(data.length)
   }
-  changeIdentity() {
-    toast("qiehua")
-    // this.props.navigation.navigate('Agent');
-    reset(this.props.navigation, 'Agent');
-
+  async changeIdentity() {
+    const user = await _retrieveData('user_info');
+    if (user === 'sydenny@126.com') {
+      reset(this.props.navigation, 'Agent');
+      return false;
+    }
+    Alert.alert('对不起您没有权限');
   }
   render() {
     const list = [

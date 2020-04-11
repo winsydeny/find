@@ -22,7 +22,7 @@ import BottomDialog from '../components/BottomDialog'
 import global from '../../style';
 import ListItem from "../components/ListItem";
 import { ScrollView } from "react-native-gesture-handler";
-import { toast } from "../assets/utils";
+import { toast } from "../utils/utils";
 import ScrollableTabView, { DefaultTabBar } from 'react-native-scrollable-tab-view';
 import Login from "./Login";
 import Registerd from "./Registerd";

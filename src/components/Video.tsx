@@ -1,7 +1,7 @@
 
 import React, { Component } from 'react';
 import { RtcEngine, AgoraView } from 'react-native-agora';
-import { cameraAndAudioPermission } from '../assets/utils';
+import { cameraAndAudioPermission } from '../utils/utils';
 import {
   Text,
   View,
@@ -11,7 +11,9 @@ import {
   Dimensions,
   Platform,
   TouchableOpacity,
-  BackHandler
+  BackHandler,
+  StatusBar,
+  Image
 } from 'react-native';
 import global from '../../style'
 
@@ -113,6 +115,7 @@ export default class Video extends Component {
       peerIds: [],
       joinSucceed: false,
     });
+    RtcEngine.stopPreview();
     RtcEngine.leaveChannel();
 
   };
@@ -120,56 +123,44 @@ export default class Video extends Component {
   render() {
     return (
       <View style={styles.max}>
+        {/* <StatusBar hidden={true}></StatusBar> */}
         {
           <View style={styles.max}>
 
             {
               !this.state.joinSucceed ?
-                <View />
+                <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+                  <Image style={{ height: 200, width: 280 }} source={require('../assets/pic/video.png')}></Image>
+                </View>
                 :
                 <View style={styles.fullView}>
                   {
-                    this.state.peerIds.length > 3                   //view for four videostreams
+                    this.state.peerIds.length > 2                   //view for three videostreams
                       ? <View style={styles.full}>
-                        <View style={styles.halfViewRow}>
-                          <AgoraView style={styles.half}
+                        <View style={styles.half}>
+                          <AgoraView style={styles.full}
                             remoteUid={this.state.peerIds[0]} mode={1} />
+                        </View>
+                        <View style={styles.halfViewRow}>
                           <AgoraView style={styles.half}
                             remoteUid={this.state.peerIds[1]} mode={1} />
-                        </View>
-                        <View style={styles.halfViewRow}>
                           <AgoraView style={styles.half}
                             remoteUid={this.state.peerIds[2]} mode={1} />
-                          <AgoraView style={styles.half}
-                            remoteUid={this.state.peerIds[3]} mode={1} />
                         </View>
                       </View>
-                      : this.state.peerIds.length > 2                   //view for three videostreams
+                      : this.state.peerIds.length > 1                   //view for two videostreams
                         ? <View style={styles.full}>
-                          <View style={styles.half}>
-                            <AgoraView style={styles.full}
-                              remoteUid={this.state.peerIds[0]} mode={1} />
-                          </View>
-                          <View style={styles.halfViewRow}>
-                            <AgoraView style={styles.half}
-                              remoteUid={this.state.peerIds[1]} mode={1} />
-                            <AgoraView style={styles.half}
-                              remoteUid={this.state.peerIds[2]} mode={1} />
-                          </View>
+                          <AgoraView style={styles.full}
+                            remoteUid={this.state.peerIds[0]} mode={1} />
+                          <AgoraView style={styles.full}
+                            remoteUid={this.state.peerIds[1]} mode={1} />
                         </View>
-                        : this.state.peerIds.length > 1                   //view for two videostreams
-                          ? <View style={styles.full}>
-                            <AgoraView style={styles.full}
-                              remoteUid={this.state.peerIds[0]} mode={1} />
-                            <AgoraView style={styles.full}
-                              remoteUid={this.state.peerIds[1]} mode={1} />
+                        : this.state.peerIds.length > 0                   //view for videostream
+                          ? <AgoraView style={styles.full}
+                            remoteUid={this.state.peerIds[0]} mode={1} />
+                          : <View>
+                            <Text style={styles.noUserText}> No users connected </Text>
                           </View>
-                          : this.state.peerIds.length > 0                   //view for videostream
-                            ? <AgoraView style={styles.full}
-                              remoteUid={this.state.peerIds[0]} mode={1} />
-                            : <View>
-                              <Text style={styles.noUserText}> No users connected </Text>
-                            </View>
                   }
                   <AgoraView style={styles.localVideoStyle}
                     zOrderMediaOverlay={true} showLocalVideo={true} mode={1} />
@@ -179,9 +170,14 @@ export default class Video extends Component {
         }
         <View style={styles.buttonHolder}>
           {
-            !this.state.joinSucceed ? <TouchableOpacity onPress={() => this.startCall()} style={styles.button}>
-              <Text style={styles.buttonText}> Start Call </Text>
-            </TouchableOpacity> : <TouchableOpacity onPress={() => this.endCall()} style={styles.button}>
+            !this.state.joinSucceed ?
+              <View style={{ alignItems: "center", flex: 1 }}>
+                <TouchableOpacity onPress={() => this.startCall()} style={styles.button}>
+                  <Text style={styles.buttonText}> Start Call </Text>
+                </TouchableOpacity>
+              </View>
+              :
+              <TouchableOpacity onPress={() => this.endCall()} style={styles.button}>
                 <Text style={styles.buttonText}> End Call </Text>
               </TouchableOpacity>
           }
@@ -193,19 +189,22 @@ export default class Video extends Component {
 
 
 const styles = StyleSheet.create({
+
+
   max: {
     flex: 1,
-    // paddingTop: global.statusBarHeight.paddingTop
+    paddingTop: 10
   },
   buttonHolder: {
     height: 100,
+    // flex: 1,
     alignItems: 'center',
-    bottom: 0,
+    // bottom: 0,
   },
   button: {
     paddingHorizontal: 20,
     paddingVertical: 10,
-    backgroundColor: '#0093E9',
+    backgroundColor: global.bg2.backgroundColor,
     borderRadius: 25,
   },
   buttonText: {

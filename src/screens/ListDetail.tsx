@@ -13,18 +13,22 @@ import EnIcon from 'react-native-vector-icons/Entypo';
 import Icon from 'react-native-vector-icons/AntDesign';
 import { ScrollView, TouchableWithoutFeedback } from "react-native-gesture-handler";
 import { postData } from "../api";
-import { _retrieveData, toast } from "../assets/utils";
+import { _retrieveData, toast } from "../utils/utils";
 interface Prop {
   navigation: any
 }
 export default class ListDetail extends Component<Prop> {
+  state = {
+    position: ''
+  }
   async applyJob(info: any) {
     const email = await _retrieveData('user_info');
     const user = await _retrieveData('user_name');
     postData('apply', {
       uuid: info.uuid,
       email: email,
-      user: user
+      user: user,
+      position: this.state.position
     })
       .then(res => {
         if (res.status === 0) {
@@ -34,6 +38,11 @@ export default class ListDetail extends Component<Prop> {
         }
       })
       .catch(err => toast("申请失败"))
+  };
+  componentDidMount() {
+    const { jobdetail } = this.props.navigation.state.params;
+    this.setState({ position: jobdetail.position })
+
   };
   render() {
     // console.log(this.props.navigation.state.params)

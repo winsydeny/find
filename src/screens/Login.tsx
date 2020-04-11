@@ -4,7 +4,7 @@ import { Button, Input, Avatar } from 'react-native-elements'
 import Icon from 'react-native-vector-icons/FontAwesome';
 import styles from '../../style';
 // import { toast, reset } from '../assets/utils';
-import { _storeData, _retrieveData, toast, reset } from '../assets/utils';
+import { _storeData, _retrieveData, toast, reset } from '../utils/utils';
 import Loading from '../components/Loading';
 import { postData, getData } from '../api';
 
@@ -105,7 +105,7 @@ export default class Login extends Component<Prop>{
       }, 6000);
       const response = await getData('search', { keyword: 'java' });
       clearTimeout(timeout);
-      console.log('sdfds', response)
+      // console.log('sdfds', response)
       if (response.status >= 0) {
         // 如果已经登陆并且token还未过期，则直接重置导航器，不显示登陆页面
         this.setState({ loading: false })

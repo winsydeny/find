@@ -8,7 +8,7 @@ import {
 } from 'react-native';
 import CIon from 'react-native-vector-icons/Ionicons'
 import AntIcon from 'react-native-vector-icons/AntDesign'
-import { toast, _retrieveData } from '../assets/utils';
+import { toast, _retrieveData } from '../utils/utils';
 import { saveImg, postData } from '../api';
 import global from '../../style'
 interface Prop {

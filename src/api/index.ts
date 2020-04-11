@@ -1,5 +1,5 @@
 import {Alert} from 'react-native';
-import {_retrieveData} from '../assets/utils';
+import {_retrieveData} from '../utils/utils';
 import fetchJsonp from 'fetch-jsonp';
 interface Params {
   keyword: string;

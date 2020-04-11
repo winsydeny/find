@@ -17,7 +17,7 @@ import ImagePicker from 'react-native-image-picker';
 
 import { Avatar, Button } from 'react-native-elements';
 import { TextInput, TouchableNativeFeedback, TouchableWithoutFeedback } from 'react-native-gesture-handler';
-import { toast, reset } from '../assets/utils';
+import { toast, reset } from '../utils/utils';
 import { saveImg, postData } from '../api';
 // import styles from '../../style';
 //     position,

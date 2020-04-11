@@ -16,7 +16,7 @@ import CIon from 'react-native-vector-icons/Ionicons';
 import { TouchableWithoutFeedback, TouchableNativeFeedback } from 'react-native-gesture-handler';
 // import ActionSheet from 'react-native-actionsheet' // yarn remove it 2019-3-21
 import global from '../../style';
-import { _retrieveData } from '../assets/utils';
+import { _retrieveData } from '../utils/utils';
 import { getData } from '../api';
 interface Prop {
   navigation: any

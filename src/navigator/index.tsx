@@ -33,6 +33,8 @@ import JobDesc from '../agentScreens/JobDesc';
 import JobDetail from '../agentScreens/JobDetail';
 import Applicant from '../agentScreens/Applicant';
 import Video from '../components/Video';
+import Invite from '../agentScreens/Invite';
+import InviteList from '../agentScreens/InviteList';
 
 /**
 * 1、从右向左：forHorizontal
@@ -249,6 +251,18 @@ const App: any = () => {
 		},
 		Video: {
 			screen: Video,
+			navigationOptions: {
+				header: null
+			}
+		},
+		Invite: {
+			screen: Invite,
+			navigationOptions: {
+				header: null
+			}
+		},
+		InviteList: {
+			screen: InviteList,
 			navigationOptions: {
 				header: null
 			}

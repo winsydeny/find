@@ -6,7 +6,7 @@ import Login from './Login'
 import { SearchBar, Text, Avatar, Button, Badge } from 'react-native-elements';
 import ListItem from '../components/ListItem';
 import Geolocation from '@react-native-community/geolocation';
-import { _storeData, toast, reset } from '../assets/utils';
+import { _storeData, toast, reset } from '../utils/utils';
 import { StackActions, NavigationActions } from "react-navigation"
 import {
   View,

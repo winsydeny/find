@@ -8,7 +8,7 @@ import { View, Text, StyleSheet, FlatList, TouchableWithoutFeedback, Button, Ale
 import { Avatar } from 'react-native-elements';
 import ListItem from '../components/ListItem';
 import Loading from '../components/Loading';
-import { toast } from '../assets/utils'
+import { toast } from '../utils/utils'
 import { getData } from '../api';
 interface Prop {
   navigation: any

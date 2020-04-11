@@ -6,7 +6,7 @@ import {
   Button,
   StatusBar
 } from 'react-native';
-import { _storeData, _retrieveData, toast } from '../assets/utils';
+import { _storeData, _retrieveData, toast } from '../utils/utils';
 interface Prop {
   navigation: any
 }

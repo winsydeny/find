@@ -14,15 +14,21 @@ interface Prop {
 }
 class Loading extends Component<Prop> {
   state = {
-    show: true,
+    show: false,
   };
+  show() {
+    this.setState({ show: true });
+  };
+  hide() {
+    this.setState({ show: false });
+  }
   componentDidMount() {
     _this = this;
-  }
+  };
   render() {
     const loading = this.props.show;
     const title = this.props.title || '正在加载'
-    if (loading) {
+    if (this.state.show) {
       return (
         <View style={styles.LoadingPage}>
           <View

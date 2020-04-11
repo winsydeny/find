@@ -8,7 +8,7 @@ import {
 } from 'react-native-elements'
 import { View, ActivityIndicator, Alert } from 'react-native'
 import styles from '../../style.js'
-import { toast, _storeData } from '../assets/utils';
+import { toast, _storeData } from '../utils/utils';
 import { postData } from '../api/index';
 export default class Registerd extends Component {
   state = {

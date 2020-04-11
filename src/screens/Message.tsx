@@ -6,14 +6,18 @@ import {
   Button,
   StyleSheet,
   Alert,
-  ViewPagerAndroid
+  ViewPagerAndroid,
+  DeviceEventEmitter
 } from 'react-native';
 import { AirbnbRating } from 'react-native-elements';
 import CIon from 'react-native-vector-icons/Ionicons';
 import { Avatar } from 'react-native-elements';
 import { ScrollView, TouchableWithoutFeedback, TouchableHighlight, TouchableOpacity } from 'react-native-gesture-handler';
 import ScrollableTabView from 'react-native-scrollable-tab-view';
+import Rating from '../components/Rating'
 import global from '../../style'
+import { getData } from '../api';
+import { LoadingUtil } from '../utils/LoadingUtils';
 interface Prop {
   navigation: any
 }
@@ -22,6 +26,8 @@ export default class Message extends Component<Prop> {
     num: '0',
     list: [1, 2, 3, 4, 5, 6],
     tab: 0,
+    startList: [],
+    empty: false,
   };
   viewPager: any;
   tabView: any;
@@ -49,11 +55,30 @@ export default class Message extends Component<Prop> {
     this.tabView.goToPage(e)
   };
   componentDidMount() {
-    // console.log(this.tabView.goToPage(1))
+    LoadingUtil.print();
+
+    this.getList();
   };
+  async getList() {
+    /**
+     * status 0 => 未开始 1 => 待评价
+     * apply 0 => 未成功 1 => 申请成功
+     */
+    // console.log(this)
+    this.setState({ empty: false });
+    LoadingUtil.showLoading();
+    const notStarted = await getData('apply/record', { status: 0, apply: 1 });
+    this.setState({ startList: notStarted.data });
+    LoadingUtil.hideLoading();
+    if (notStarted.data.length <= 0) {
+      this.setState({ empty: true })
+    }
+    // console.log('message =>', notStarted)
+  }
   renderTab() {
     return (
       <View style={{ flexDirection: "row", paddingVertical: 12, paddingLeft: 18, backgroundColor: "#FFFFFF" }}>
+
         <TouchableOpacity onPress={() => this.changeTab(0)} style={{ borderStyle: "solid", borderWidth: 1, borderColor: global.bg2.backgroundColor, borderRadius: 5, marginRight: 18 }}>
           <View style={[this.state.tab === 0 ? { backgroundColor: global.bg2.backgroundColor } : { backgroundColor: "#FFFFFF" }, { borderRadius: 5 }]}>
             <Text style={[this.state.tab === 0 ? styles.tab : { color: global.bg2.backgroundColor }, { padding: 6, paddingHorizontal: 18 }]}>未开始</Text>
@@ -102,36 +127,31 @@ export default class Message extends Component<Prop> {
           >
             <ScrollView >
               {
-                this.state.list.map((item, index) => {
-                  return (
-                    <TouchableWithoutFeedback
-                      key={index}
-                      onPress={() => { this.props.navigation.push('Video', { channel: 'channel-x' }) }}>
-                      <View style={styles.card} key={index} >
-                        <View style={{ flexDirection: "row", paddingLeft: 16, paddingRight: 16 }}>
-                          <View style={{ flex: 1, }}>
-                            <Text style={{ fontWeight: "bold", lineHeight: 25 }}>阿里巴巴·前端工程师</Text>
-                            <Text>北京 12月17日</Text>
-                            <Text style={{ color: global.bg2.backgroundColor, lineHeight: 30 }}>点击进入</Text>
+                !this.state.empty ?
+                  this.state.startList.map((item, index) => {
+                    return (
+                      <TouchableWithoutFeedback
+                        key={index}
+                        onPress={() => { this.props.navigation.push('Video', { channel: item.vid }) }}>
+                        <View style={styles.card} key={index} >
+                          <View style={{ flexDirection: "row", paddingLeft: 16, paddingRight: 16 }}>
+                            <View style={{ flex: 1, }}>
+                              <Text style={{ fontWeight: "bold", lineHeight: 25 }}>{item.company}·{item.position}</Text>
+                              <Text>北京 {item.time}</Text>
+                              <Text style={{ color: global.bg2.backgroundColor, lineHeight: 30 }}>点击进入</Text>
+                            </View>
+                            <Avatar rounded></Avatar>
                           </View>
-                          <Avatar rounded></Avatar>
+                          <View style={{ paddingLeft: 20, paddingRight: 20, paddingTop: 12 }}>
+                          </View>
                         </View>
-                        {/* <View>
-                        <AirbnbRating
-                          count={5}
-                          defaultRating={0}
-                          size={20}
-                          onFinishRating={(key) => this.rate(key)}
-                        ></AirbnbRating>
-                      </View> */}
-                        <View style={{ paddingLeft: 20, paddingRight: 20, paddingTop: 12 }}>
-                        </View>
-                      </View>
-                    </TouchableWithoutFeedback>
-                  )
-                })
+                      </TouchableWithoutFeedback>
+                    )
+                  }) :
+                  <View style={{ justifyContent: 'center', alignItems: 'center', marginTop: 180 }}>
+                    <Text style={{ fontSize: 14, }}>暂时有接受到邀请，请继续努力哦！</Text>
+                  </View>
               }
-
             </ScrollView>
             <ScrollView >
               {
@@ -149,12 +169,13 @@ export default class Message extends Component<Prop> {
                           <Avatar rounded></Avatar>
                         </View>
                         <View>
-                          <AirbnbRating
+                          <Rating></Rating>
+                          {/* <AirbnbRating
                             count={5}
                             defaultRating={0}
                             size={20}
                             onFinishRating={(key) => this.rate(key)}
-                          ></AirbnbRating>
+                          ></AirbnbRating> */}
                         </View>
                         <View style={{ paddingLeft: 20, paddingRight: 20, paddingTop: 12 }}>
                         </View>
