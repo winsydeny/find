@@ -65,6 +65,7 @@ export default class Search extends Component<Props> {
             onChangeText={this.updateSearch.bind(this)}
             containerStyle={styles.inputContainer}
             inputContainerStyle={styles.inputSearchBar}
+            selectionColor={global.bg2.backgroundColor}
             inputStyle={styles.input}
             value={search}
             autoFocus={true}
@@ -126,8 +127,9 @@ const styles = StyleSheet.create({
     height: 40,
   },
   input: {
-    color: color,
-    fontSize: 13,
+    color: '#000000',
+    // fontWeight: "bold",123
+    fontSize: 16,
   },
   result: {
     flexDirection: 'row',

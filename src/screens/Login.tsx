@@ -143,9 +143,9 @@ export default class Login extends Component<Prop>{
         <Image
           style={{ height: 140, width: 240 }}
           source={require('../assets/pic/login.png')}></Image>
-        {/* <Text style={{ fontSize: 15, fontWeight: "bold" }}></Text> */}
         <Input
           placeholder="邮箱"
+          selectionColor={styles.bg2.backgroundColor}
           value={this.state.email}
           onChangeText={email => this.onChangeEmail(email)}
           errorMessage={this.state.emailErrorMessage}
@@ -154,6 +154,7 @@ export default class Login extends Component<Prop>{
         ></Input>
         <Input
           secureTextEntry
+          selectionColor={styles.bg2.backgroundColor}
           placeholder="密码"
           onChangeText={passcode => this.onChangePass(passcode)}
           errorMessage={this.state.passcodeErrorMessage}

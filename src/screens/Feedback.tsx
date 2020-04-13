@@ -58,6 +58,7 @@ export default class Feedback extends Component<Prop> {
           <TextInput
             placeholder="请输入您的意见"
             autoFocus={true}
+            selectionColor={global.bg2.backgroundColor}
             style={{ paddingLeft: 18, paddingRight: 18, fontSize: 14 }}
             multiline={true}
             onChangeText={text => this.onChangeText(text)}

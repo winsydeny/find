@@ -13,7 +13,7 @@ import {
 import global from '../../style'
 import { reset } from '../utils/utils';
 import { TouchableNativeFeedback } from 'react-native-gesture-handler';
-const Name = 'This is my macbook pro'
+import { LoadingUtil } from '../utils/LoadingUtils'
 interface Props {
   navigation: any;
 }

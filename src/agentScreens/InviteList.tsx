@@ -17,6 +17,7 @@ import { saveImg, postData, getData } from '../api';
 import global from '../../style'
 import { PageControl } from 'react-native-ui-lib';
 import { FlatList } from 'react-native-gesture-handler';
+import { LoadingUtil } from '../utils/LoadingUtils';
 interface Prop {
   navigation: any
 }
@@ -33,6 +34,7 @@ export default class InviteList extends Component<Prop> {
     try {
       const result = await getData('apply/record', { status: 0, apply: 1 });
       this.setState({ list: result.data });
+      LoadingUtil.hideLoading();
     }
     catch (e) {
       console.log(e)

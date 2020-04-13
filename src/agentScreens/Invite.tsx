@@ -15,6 +15,7 @@ import AntIcon from 'react-native-vector-icons/AntDesign'
 import { toast } from '../utils/utils';
 import { saveImg, postData, getData } from '../api';
 import global from '../../style'
+import { LoadingUtil } from '../utils/LoadingUtils';
 import { PageControl } from 'react-native-ui-lib';
 interface Prop {
   navigation: any
