@@ -16,8 +16,7 @@ import { AppState, Alert, StatusBar, View, DeviceEventEmitter } from 'react-nati
 import Login from './src/screens/Login'
 import { createAppContainer } from 'react-navigation';
 import Loading from './src/components/Loading';
-import { setGlobal } from './src/utils/LoadingUtils'
-
+import { setGlobal } from './src/utils/LoadingUtils'; // global Loading
 class App extends Component {
   device: any;
   handleNavigationChange() {
@@ -60,7 +59,7 @@ class App extends Component {
 
   render() {
     const AppContainer = createAppContainer(nav(this.state.isLogin))
-    function getCurrentRouteName(navigationState) {
+    function getCurrentRouteName(navigationState: any) {
       if (!navigationState) {
         return null;
       }

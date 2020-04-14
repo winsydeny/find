@@ -20,6 +20,7 @@ import {
   Platform,
   BackHandler,
   ActivityIndicator,
+  Image,
 } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
 import { getData } from '../api/index';
@@ -127,9 +128,10 @@ export default class Home extends Component<Props> {
     return (
       <View
         style={{
-          paddingBottom: 44,
+          // paddingBottom: 44,
           marginTop: global.statusBarHeight.paddingTop,
-          backgroundColor: "#f1f1f1"
+          backgroundColor: "#f1f1f1",
+          flex: 1
         }}>
         {/* <StatusBar translucent={true} backgroundColor={'transparent'} barStyle="dark-content"></StatusBar> */}
 
@@ -146,7 +148,9 @@ export default class Home extends Component<Props> {
           flexDirection: 'row',
           alignItems: 'center',
           paddingHorizontal: 12,
-          backgroundColor: "#FFFFFF"
+          backgroundColor: "#FFFFFF",
+          borderBottomWidth: 0.4,
+          borderBottomColor: '#929292c7sf'
         }}>
           {/* <SearchBar 
           clearIcon={true}
@@ -182,11 +186,11 @@ export default class Home extends Component<Props> {
             badgeStyle={{}}
             containerStyle={{ position: 'absolute', top: 0, right: 2 }}></Badge> */}
         </View>
-        <ScrollView showsVerticalScrollIndicator={false} style={{ backgroundColor: "", }}>
+        <ScrollView showsVerticalScrollIndicator={false} style={{}}>
           <Text style={{ fontSize: 20, fontWeight: 'bold', paddingLeft: 12, paddingTop: 8 }}>
             公司推荐
             </Text>
-          <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} style={{ paddingLeft: 12 }}>
+          <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} style={{}}>
             <View style={styles.cardBox}>
               <TouchableWithoutFeedback onPress={() => navigate('CompanyDetail')}>
                 <View style={[styles.card, styles.bg1]}>
@@ -198,7 +202,7 @@ export default class Home extends Component<Props> {
                   <Text style={{ color: "#FFFFFF", fontWeight: "bold" }}>Apple</Text>
                 </View>
               </TouchableWithoutFeedback>
-              <View style={[styles.card, styles.bg3, { marginRight: 28 }]}>
+              <View style={[styles.card, styles.bg3, {}]}>
                 <Text style={{ color: "#FFFFFF", fontWeight: "bold" }}>Baidu</Text>
               </View>
             </View>
@@ -206,16 +210,74 @@ export default class Home extends Component<Props> {
           <View style={{ height: 60, flexDirection: "row", alignItems: "center" }}>
             <Text style={{ fontSize: 20, fontWeight: 'bold', paddingLeft: 12 }}>为你推荐</Text>
             <Text style={{ fontSize: 14, paddingRight: 12, position: "absolute", right: 0, color: global.bg2.backgroundColor }}>查看更多</Text>
+            {/* <ActivityIndicator size="small" color="#00ff00" /> */}
+            {/* <Image style={{ width: 100, height: 100 }} source={require('../assets/pic/loading.gif')}></Image> */}
           </View>
+
           {
-            // <ActivityIndicator size="large" color="#FFF" />
-            this.state.recommendList.map((item, index) => (
-              <View style={{ marginBottom: 12 }} key={index}>
-                <ListItem
-                  navigate={this.props.navigation}
-                  data={item}></ListItem>
+            this.state.recommendList.length > 0 ?
+              this.state.recommendList.map((item, index) => (
+                <View style={{ marginBottom: 12, }} key={index}>
+                  <ListItem
+                    navigate={this.props.navigation}
+                    data={item}></ListItem>
+                </View>
+              )) :
+              <View>
+                {/* <ActivityIndicator size="large" color="red" />
+                <Text>Loading....</Text> */}
+                <View style={{ backgroundColor: "#FFFFFF", height: 110, marginBottom: 12 }}>
+                  {/* <View
+                    style={{
+                      width: 40,
+                      height: 40,
+                      backgroundColor: '#d6d3d3fa',
+                      borderRadius: 8,
+                      marginTop: 14,
+                      marginLeft: 12
+                    }}></View>
+                  <View style={{
+                    backgroundColor: '#d6d3d3fa',
+                    height: 10,
+
+
+                  }}></View> */}
+                </View>
+                <View style={{ backgroundColor: "#FFFFFF", height: 110, marginBottom: 12 }}>
+                  {/* <View
+                    style={{
+                      width: 40,
+                      height: 40,
+                      backgroundColor: '#d6d3d3fa',
+                      borderRadius: 8,
+                      marginTop: 14,
+                      marginLeft: 12
+                    }}></View>
+                  <View style={{
+                    backgroundColor: '#d6d3d3fa',
+                    height: 10,
+
+
+                  }}></View> */}
+                </View>
+                <View style={{ backgroundColor: "#FFFFFF", height: 110, marginBottom: 12 }}>
+                  {/* <View
+                    style={{
+                      width: 40,
+                      height: 40,
+                      backgroundColor: '#d6d3d3fa',
+                      borderRadius: 8,
+                      marginTop: 14,
+                      marginLeft: 12
+                    }}></View>
+                  <View style={{
+                    backgroundColor: '#d6d3d3fa',
+                    height: 10,
+
+
+                  }}></View> */}
+                </View>
               </View>
-            ))
           }
           {/* <FlatList
             keyExtractor={(item, index) => index.toString()}
@@ -260,8 +322,12 @@ const styles = StyleSheet.create({
   cardBox: {
     flexDirection: 'row',
     alignItems: 'center',
-    // width:516,
-    marginTop: 20,
+    justifyContent: "space-around",
+    // letterSpacing: '',
+    width: 410,
+    height: 178,
+    // marginTop: 20,
+    // backgroundColor: 'red',
   },
   card: {
     width: 120,
@@ -270,7 +336,14 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 12,
-    marginRight: 14,
+    // marginRight: 14,
+
+    elevation: 10,
+    shadowColor: 'gray',
+    shadowOffset: { width: 10, height: 10 },
+    // shadowOpacity: 1,
+    // shadowRadius: 1.5,
+
   },
   defaultCard: {
     height: 80,
@@ -278,7 +351,8 @@ const styles = StyleSheet.create({
     borderRadius: 8,
   },
   bg1: {
-    backgroundColor: '#2e77f3'
+    backgroundColor: '#2e77f3',
+
   },
   bg2: {
     backgroundColor: '#c0c0c0',

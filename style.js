@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, StatusBar } from 'react-native';
 const styles = StyleSheet.create({
   bg: {
     backgroundColor: '#43c2ee',
@@ -15,7 +15,8 @@ const styles = StyleSheet.create({
     color: '#3bc5f5',
   },
   statusBarHeight: {
-    paddingTop: 24,
+    // paddingTop: 24,
+    paddingTop: StatusBar.currentHeight,
   },
 });
 export default styles;

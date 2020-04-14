@@ -55,7 +55,7 @@ export default class InviteList extends Component<Prop> {
               <FlatList
                 keyExtractor={(item, index) => index.toString()}
                 data={this.state.list}
-                renderItem={({ item }) => {
+                renderItem={({ item: any }) => {
                   return (
                     <View>
                       {/* <Text>{item.vid}</Text> */}
