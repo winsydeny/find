@@ -40,6 +40,7 @@ export default class SearchResults extends Component<Prop> {
     this.getList()
     this.listener = DeviceEventEmitter.addListener('@search_filter', (filter) => {
       // this.getMore();
+      this.setState({ jobList: [] });
       this.getList()
       // console.log('searchResult', filter)
     })

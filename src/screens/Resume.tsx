@@ -41,7 +41,7 @@ export default class Resume extends Component<Prop> {
   async getUserInfo() {
     const rs = await _retrieveData('user_name');
     const info = await getData('resume/info', {}, false);
-    // console.log(info)
+    console.log(info)
     this.setState({
       name: rs,
       cellphone: info.data.cellphone,

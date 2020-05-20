@@ -169,13 +169,13 @@ export default class Message extends Component<Prop> {
                           <Avatar rounded></Avatar>
                         </View>
                         <View>
-                          <Rating></Rating>
-                          {/* <AirbnbRating
+                          {/* <Rating></Rating> */}
+                          <AirbnbRating
                             count={5}
                             defaultRating={0}
                             size={20}
                             onFinishRating={(key) => this.rate(key)}
-                          ></AirbnbRating> */}
+                          ></AirbnbRating>
                         </View>
                         <View style={{ paddingLeft: 20, paddingRight: 20, paddingTop: 12 }}>
                         </View>

@@ -43,7 +43,7 @@ export default class Home extends Component<Prop> {
     this.props.navigation.pop();
   }
   render() {
-    const { city } = this.state
+    const city = this.props.navigation.state.params.city;
     return (
       <View style={{ paddingTop: global.statusBarHeight.paddingTop }}>
         <View style={{ flexDirection: "row", height: 40, alignItems: "center" }}>

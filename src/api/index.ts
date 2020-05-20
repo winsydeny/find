@@ -7,8 +7,8 @@ interface Params {
   page?: number;
   size?: number;
 }
-// const BASE_URL = 'https://www.vanlansh.wang/api';
-const BASE_URL = 'http://192.168.1.160:3000/api';
+const BASE_URL = 'https://www.vanlansh.wang/api';
+// const BASE_URL = 'http://10.100.182.19:3000/api';
 export const saveImg = async (data: any) => {
   const access_token = await _retrieveData('access_token');
   const formData = new FormData();
@@ -37,7 +37,10 @@ export const getData = async (path: string, params: any, loading = true) => {
   }
   const url = `${BASE_URL}/${path}?token=${access_token}&${last.join('&')}`;
   console.log('get_path:', url);
-  return fetch(url).then(res => res.json());
+  return fetch(url).then(res => {
+    LoadingUtil.hideLoading();
+    return res.json();
+  });
 };
 
 export const postData = async (path: string, data: any, loading = true) => {
@@ -52,7 +55,10 @@ export const postData = async (path: string, data: any, loading = true) => {
       'content-type': 'application/json',
     },
     body: JSON.stringify(data),
-  }).then(response => response.json());
+  }).then(response => {
+    LoadingUtil.hideLoading();
+    return response.json();
+  });
 };
 
 export const xhr = (method: any, params: any) => {

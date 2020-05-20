@@ -12,6 +12,7 @@ import AntIcon from 'react-native-vector-icons/AntDesign'
 import { toast } from '../utils/utils';
 import { saveImg, postData } from '../api';
 import global from '../../style'
+import { LoadingUtil } from '../utils/LoadingUtils';
 interface Prop {
   navigation: any
 }
@@ -42,6 +43,7 @@ export default class ResumeAdvantage extends Component<Prop> {
     const rs = await postData('resume?v=advantage', { advantage: this.state.value });
     toast("保存成功");
     this.props.navigation.goBack();
+    LoadingUtil.hideLoading();
   };
   render() {
     return (

@@ -170,7 +170,7 @@ export default class Home extends Component<Props> {
               <Text style={{ paddingLeft: 6, color: '#867f7fc9' }}>请输入</Text>
             </View>
           </TouchableWithoutFeedback>
-          <Text style={{ paddingBottom: 10 }} onPress={() => this.props.navigation.push("Location")}>{this.state.current}</Text>
+          <Text style={{ paddingBottom: 10 }} onPress={() => this.props.navigation.push("Location", { city: this.state.current })}>{this.state.current}</Text>
           {/* <Avatar
             rounded
             size={50}
@@ -192,19 +192,43 @@ export default class Home extends Component<Props> {
             </Text>
           <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} style={{}}>
             <View style={styles.cardBox}>
-              <TouchableWithoutFeedback onPress={() => navigate('CompanyDetail')}>
+              <TouchableWithoutFeedback onPress={() => navigate('CompanyDetail',
+                {
+                  com: 'facebook',
+                  url: 'https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2943523138,4161584829&fm=26&gp=0.jpg',
+                  detail: `Facebook（中文译为脸书或者脸谱网 [1]  ）是美国的一个社交网络服务网站 ，创立于2004年2月4日，总部位于美国加利福尼亚州门洛帕克。2012年3月6日发布Windows版桌面聊天软件Facebook Messenger [2]  。主要创始人马克·扎克伯格（Mark Zuckerberg）。
+                  Facebook是世界排名领先的照片分享站点，截至2013年11月每天上传约3.5亿张照片。截至2012年5月，Facebook拥有约9亿用户。Facebook的总部设在硅谷的门洛帕克（Menlo Park）——1 Hacker Way [3-4]  。从2006年9月11日起，任何用户输入有效电子邮件地址和自己的年龄段，即可加入。Facebook自2009年以来一直被中国屏蔽，其被禁的原因有社会和政治等方面的因素，但Facebook也从未间断与中国科技企业界的联系，期望通过投资中国科技企业等方式获得中国政府的开闸。 [5] 
+                  2018年3月17日曝光，剑桥分析公司“窃取”5000万脸书用户的信息。 `
+                })}>
                 <View style={[styles.card, styles.bg1]}>
                   <Text style={{ color: "#FFFFFF", fontWeight: "bold" }}>FaceBook</Text>
                 </View>
               </TouchableWithoutFeedback>
-              <TouchableWithoutFeedback onPress={() => navigate('CompanyDetail')}>
+              <TouchableWithoutFeedback onPress={() => navigate('CompanyDetail',
+                {
+                  com: 'apple',
+                  url: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1589432757653&di=79d47255138a0a9954ef1f39ea309cbf&imgtype=0&src=http%3A%2F%2Fgadgetstouse.com%2Fwp-content%2Fuploads%2F2017%2F02%2FApple-Bengaluru.jpg',
+                  detail: `苹果公司（Apple Inc. ）是美国一家高科技公司。由史蒂夫·乔布斯、斯蒂夫·沃兹尼亚克和罗·韦恩(Ron Wayne)等人于1976年4月1日创立，并命名为美国苹果电脑公司（Apple Computer Inc. ），2007年1月9日更名为苹果公司，总部位于加利福尼亚州的库比蒂诺。
+                  苹果公司1980年12月12日公开招股上市，2012年创下6235亿美元的市值记录，截至2014年6月，苹果公司已经连续三年成为全球市值最大公司。苹果公司在2016年世界500强排行榜中排名第9名。 [1]  2013年9月30日，在宏盟集团的“全球最佳品牌”报告中，苹果公司超过可口可乐成为世界最有价值品牌。2014年，苹果品牌超越谷歌（Google），成为世界最具价值品牌。
+                  2016年9月8日凌晨1点，2016苹果秋季新品发布会在美国旧金山的比尔·格雷厄姆市政礼堂举行 [2]  。`,
+                })}>
                 <View style={[styles.card, styles.bg2]}>
-                  <Text style={{ color: "#FFFFFF", fontWeight: "bold" }}>Apple</Text>
+                  <Text style={{ color: "#FFFFFF", fontWeight: "bold", }}>Apple</Text>
                 </View>
               </TouchableWithoutFeedback>
-              <View style={[styles.card, styles.bg3, {}]}>
-                <Text style={{ color: "#FFFFFF", fontWeight: "bold" }}>Baidu</Text>
-              </View>
+              <TouchableWithoutFeedback onPress={() => navigate('CompanyDetail',
+                {
+                  com: 'baidu',
+                  url: 'http://c.hiphotos.baidu.com/baike/c0%3Dbaike60%2C5%2C5%2C60%2C20%3Bt%3Dgif/sign=d9a4f18db74543a9e116f29e7f7ee1e7/37d12f2eb9389b50257fcf2b8535e5dde6116ec2.jpg',
+                  detail: `百度（纳斯达克：BIDU）是全球最大的中文搜索引擎，中国最大的以信息和知识为核心的互联网综合服务公司，全球领先的人工智能平台型公司。百度愿景是：成为最懂用户，并能帮助人们成长的全球顶级高科技公司。 [1] 
+                  “百度”二字，来自于八百年前南宋词人辛弃疾的一句词：众里寻他千百度。这句话描述了词人对理想的执着追求。1999年底，身在美国硅谷的李彦宏看到了中国互联网及中文搜索引擎服务的巨大发展潜力，抱着技术改变世界的梦想，他毅然辞掉硅谷的高薪工作，携搜索引擎专利技术，于 2000年1月1日在中关村创建了百度公司。
+                  百度拥有数万名研发工程师，这是中国乃至全球都顶尖的技术团队。这支队伍掌握着世界上最为先进的搜索引擎技术，使百度成为中国掌握世界尖端科学核心技术的中国高科技企业，也使中国成为美国、俄罗斯、和韩国之外，全球仅有的4个拥有搜索引擎核心技术的国家之一。 [1]`
+                })}>
+                <View style={[styles.card, styles.bg3, {}]}>
+                  <Text style={{ color: "#FFFFFF", fontWeight: "bold" }}>Baidu</Text>
+                </View>
+              </TouchableWithoutFeedback>
+
             </View>
           </ScrollView>
           <View style={{ height: 60, flexDirection: "row", alignItems: "center" }}>

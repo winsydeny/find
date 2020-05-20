@@ -94,7 +94,9 @@ export default class Forum extends Component {
               <View style={styles.itemList}>
                 <Image
                   style={{ width: 50, height: 50, borderRadius: 50, marginLeft: 20, marginRight: 10 }}
-                  source={{ uri: 'https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg' }}
+                  source={{ uri: 'https://www.vanlansh.wang/boy.png' }}
+
+                // source={{ uri: 'https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg' }}
                 ></Image>
                 <View style={{}}>
                   <View style={{ flexDirection: 'row', alignItems: 'center' }}>

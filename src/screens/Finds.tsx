@@ -47,24 +47,26 @@ export default class Forum extends Component<Prop> {
     showDialog: false,
     dialogContent: '',
     recommendList: [],
-    refress: false
+    refress: false,
   };
   device: any;
   thumbHandle(item: any) {
-    Alert.alert(item.f_id)
-    // const { list } = this.state
-    // const temp = Object.assign([], list);
-    // temp.forEach((el: any) => {
-    //   if (Object.is(el.uid, item.uid)) {
-    //     el.thumb = !el.thumb;
-    //     if (el.thumb) {
-    //       el.thumb_num = el.thumb_num + 1;
-    //     } else {
-    //       el.thumb_num = el.thumb_num - 1;
-    //     }
-    //   }
-    // });
-    // this.setState({ list: temp })
+    // console.log(item);
+    // Alert.alert(item.uid);
+    // this.setState({}); 
+    const { dynamicList } = this.state
+    const temp = Object.assign([], dynamicList);
+    temp.forEach((el: any) => {
+      if (Object.is(el.uid, item.uid)) {
+        // el.thumb = !el.thumb;
+        if (el.thumb < 1) {
+          el.thumb = Number(el.thumb) + 1;
+        } else {
+          el.thumb = Number(el.thumb) - 1;
+        }
+      }
+    });
+    this.setState({ dynamicList: temp })
   };
   commentsHandle(item: any) {
     this.setState({ showDialog: true, dialogContent: item.uid })
@@ -87,6 +89,9 @@ export default class Forum extends Component<Prop> {
   async getDynamicList() {
     const list = await getData('forum/list', {}, false);
     list.data.reverse();
+    list.data.map((el: any) => {
+      el.created = this.handleDate(el.created)
+    })
     this.setState({ dynamicList: list.data, refress: false });
 
 
@@ -113,7 +118,70 @@ export default class Forum extends Component<Prop> {
       this.setState({ refress: false });
     }, 1000);
   };
+  handleDate(dateTimeStamp: any) {
+    var minute = 1000 * 60;
+    var hour = minute * 60;
+    var day = hour * 24;
+    var result = '';
+    var now = new Date().getTime();
+    var diffValue = now - dateTimeStamp;
+    if (diffValue < 0) {
+      console.log("时间不对劲,服务器创建时间与当前时间不同步");
+      return result = "刚刚";
+    }
+    var dayC: any = diffValue / day;
+    var hourC: any = diffValue / hour;
+    var minC: any = diffValue / minute;
+    if (parseInt(dayC) > 30) {
+      return "";
+      // result = "" + this.$format(dateTimeStamp, "yyyy-MM-dd");
+    } else if (parseInt(dayC) > 1) {
+      result = "" + parseInt(dayC) + "天前";
+    } else if (parseInt(dayC) == 1) {
+      result = "昨天";
+    } else if (hourC >= 1) {
+      result = "" + parseInt(hourC) + "小时前";
+    } else if (minC >= 5) {
+      result = "" + parseInt(minC) + "分钟前";
+    } else
+      result = "刚刚";
+    return result;
+  };
 
+  format(date, format) {
+    if (typeof date == 'string') {
+      if (date.indexOf('T') >= 0) {
+        date = date.replace('T', ' ')
+      }
+      date = new Date(Date.parse(date.replace(/-/g, "/")))
+    }
+    var o = {
+      "M+": date.getMonth() + 1,
+      "d+": date.getDate(),
+      "h+": date.getHours(),
+      "m+": date.getMinutes(),
+      "s+": date.getSeconds(),
+      "q+": Math.floor((date.getMonth() + 3) / 3),
+      "S": date.getMilliseconds()
+    };
+    var w = [
+      ['日', '一', '二', '三', '四', '五', '六'],
+      ['周日', '周一', '周二', '周三', '周四', '周五', '周六'],
+      ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六']
+    ];
+    if (/(y+)/.test(format)) {
+      format = format.replace(RegExp.$1, (date.getFullYear() + "").substr(4 - RegExp.$1.length));
+    }
+    if (/(w+)/.test(format)) {
+      format = format.replace(RegExp.$1, w[RegExp.$1.length - 1][date.getDay()]);
+    }
+    for (var k in o) {
+      if (new RegExp("(" + k + ")").test(format)) {
+        format = format.replace(RegExp.$1, RegExp.$1.length == 1 ? o[k] : ("00" + o[k]).substr(("" + o[k]).length));
+      }
+    }
+    return format;
+  };
   componentDidMount() {
     this.device = DeviceEventEmitter.addListener('@dynamic', () => this.topRefresh());
     this.setState({ refress: true })
@@ -173,11 +241,12 @@ export default class Forum extends Component<Prop> {
                   <View style={styles.itemList}>
                     <Image
                       style={{ width: 50, height: 50, borderRadius: 50, marginLeft: 20, marginRight: 10 }}
-                      source={{ uri: 'https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg' }}
+                      source={{ uri: 'https://www.vanlansh.wang/boy.png' }}
                     ></Image>
                     <View style={{}}>
                       <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                         <Text style={styles.title}>{item.user}</Text>
+
                         <Text style={{ position: 'absolute', right: 26, fontSize: 12, color: 'gray' }}>{item.created}</Text>
                       </View>
                       <TouchableWithoutFeedback onPress={() => this.props.navigation.navigate("ForumDetail", { detail: item.content })}>
@@ -186,8 +255,8 @@ export default class Forum extends Component<Prop> {
                       <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                         <Icon
                           name="thumb-up"
-                          style={[styles.icon, { color: item.thumb ? global.fontColor.color : 'gray', }]}
-                          onPress={this.thumbHandle.bind(this, item.f_id)}>
+                          style={[styles.icon, { color: item.thumb > 0 ? global.fontColor.color : 'gray', }]}
+                          onPress={this.thumbHandle.bind(this, item)}>
                         </Icon>
                         <Text style={styles.iconText}>{item.thumb}</Text>
                         <Icon

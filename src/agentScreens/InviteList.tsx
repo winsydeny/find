@@ -55,13 +55,13 @@ export default class InviteList extends Component<Prop> {
               <FlatList
                 keyExtractor={(item, index) => index.toString()}
                 data={this.state.list}
-                renderItem={({ item: any }) => {
+                renderItem={(item: any) => {
                   return (
                     <View>
-                      {/* <Text>{item.vid}</Text> */}
-                      <Text>姓名：{item.user}</Text>
-                      <Text>职位：{item.position}</Text>
-                      <Text>时间：{item.time}</Text>
+                      {/* <Text>{item.item.user}</Text> */}
+                      <Text>姓名：{item.item.user}</Text>
+                      <Text>职位：{item.item.position}</Text>
+                      <Text>时间：{item.item.time}</Text>
                       <Text onPress={() => this.props.navigation.push('Video', { channel: item.vid })}>点击进入</Text>
                       <Text>-----------------------</Text>
                     </View>
