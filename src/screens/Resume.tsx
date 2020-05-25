@@ -53,7 +53,7 @@ export default class Resume extends Component<Prop> {
     })
   }
   componentDidMount() {
-    console.log(this)
+    // console.log(this)
     this.getUserInfo()
     DeviceEventEmitter.addListener("@resume_advantage", value => this.setState({ advantage: value }));
     DeviceEventEmitter.addListener("@personal_name", value => this.setState({ name: value }));
@@ -80,7 +80,9 @@ export default class Resume extends Component<Prop> {
           </View>
         </View>
         <View style={{ paddingLeft: 18, paddingRight: 18 }}>
-          <TouchableWithoutFeedback onPress={() => this.props.navigation.navigate('ResumePersonal', { name: this.state.name, cellphone: this.state.cellphone })}>
+          <TouchableWithoutFeedback onPress={
+            () => this.props.navigation.navigate('ResumePersonal', { name: this.state.name, cellphone: this.state.cellphone })
+          }>
             <View style={styles.box}>
               <Text style={styles.h1}>{this.state.name}</Text>
               <Text style={styles.text}>{this.state.cellphone}</Text>
@@ -106,7 +108,7 @@ export default class Resume extends Component<Prop> {
             </View>
           </TouchableWithoutFeedback>
           <TouchableWithoutFeedback onPress={() => {
-            if (this.state.pdf !== '') {
+            if (this.state.pdf !== null) {
               this.props.navigation.push('Preview', { uri: this.state.pdf });
               return false;
             }
@@ -121,7 +123,7 @@ export default class Resume extends Component<Prop> {
           }}>
             <View style={styles.box}>
               <Text style={styles.h1}>简历附件</Text>
-              <Text style={styles.text}>{this.state.pdf === '' ? '点击上传' : this.state.pdf}</Text>
+              <Text style={styles.text}>{this.state.pdf === null ? '点击上传' : this.state.pdf}</Text>
             </View>
           </TouchableWithoutFeedback>
         </View>

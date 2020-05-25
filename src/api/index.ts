@@ -8,7 +8,7 @@ interface Params {
   size?: number;
 }
 const BASE_URL = 'https://www.vanlansh.wang/api';
-// const BASE_URL = 'http://10.100.182.19:3000/api';
+// const BASE_URL = 'http://10.100.148.127:3000/api';
 export const saveImg = async (data: any) => {
   const access_token = await _retrieveData('access_token');
   const formData = new FormData();

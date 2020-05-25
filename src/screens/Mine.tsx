@@ -109,6 +109,10 @@ export default class Mine extends Component<Props> {
         title: "意见反馈",
         name: 'Feedback'
       },
+      // {
+      //   title: "设置",
+      //   name: 'Feedback'
+      // },
     ]
     // const value = identity<string>('Mine')
     // const navigation = this.props.navigation
@@ -154,10 +158,10 @@ export default class Mine extends Component<Props> {
           }
           <View>
           </View>
-          <Button title="查看缓存1" onPress={() => _getAllKey()}></Button>
-          <Button title="清除缓存" onPress={() => _remove("access_token")}></Button>
-          <Button title="Request" onPress={() => this.get()}></Button>
-          <Button title="video" onPress={() => this.props.navigation.push('Video')}></Button>
+          {/* <Button title="查看缓存1" onPress={() => _getAllKey()}></Button> */}
+          <Button title="注销" onPress={() => _remove("access_token")}></Button>
+          {/* <Button title="Request" onPress={() => this.get()}></Button>
+          <Button title="video" onPress={() => this.props.navigation.push('Video')}></Button> */}
 
         </View>
       </View >

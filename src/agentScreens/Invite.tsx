@@ -30,9 +30,9 @@ export default class Invite extends Component<Prop> {
     this.getList();
   };
   async getList() {
-    // const res = await getData('apply/agent', {});
-    // console.log(res)
-    // this.setState({ list: res.data });
+    const res = await getData('apply/agent', {});
+    console.log(res)
+    this.setState({ list: res.data });
   };
   async invite() {
     try {

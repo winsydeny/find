@@ -68,6 +68,7 @@ export default class Message extends Component<Prop> {
     this.setState({ empty: false });
     LoadingUtil.showLoading();
     const notStarted = await getData('apply/record', { status: 0, apply: 1 });
+    console.log(notStarted)
     this.setState({ startList: notStarted.data });
     LoadingUtil.hideLoading();
     if (notStarted.data.length <= 0) {

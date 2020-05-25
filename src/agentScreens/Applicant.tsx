@@ -28,6 +28,7 @@ export default class Applicant extends Component<Prop> {
   };
   async getList() {
     const res = await getData('apply/agent', {});
+    console.log(res)
     this.setState({ list: res.data });
   };
   componentWillUnmount() {
