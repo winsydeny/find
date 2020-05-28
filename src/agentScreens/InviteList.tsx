@@ -62,7 +62,8 @@ export default class InviteList extends Component<Prop> {
                       <Text>姓名：{item.item.user}</Text>
                       <Text>职位：{item.item.position}</Text>
                       <Text>时间：{item.item.time}</Text>
-                      <Text onPress={() => this.props.navigation.push('Video', { channel: item.vid })}>点击进入</Text>
+                      {/* <Text></Text> */}
+                      <Text onPress={() => this.props.navigation.push('Video', { channel: item.item.vid })}>点击进入</Text>
                       <Text>-----------------------</Text>
                     </View>
                   )

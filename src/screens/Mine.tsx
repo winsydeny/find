@@ -17,7 +17,7 @@ interface Props {
 export default class Mine extends Component<Props> {
   state = {
     user: '',
-    avatarSource: 'https://www.vanlansh.wang/boy.png'
+    avatarSource: 'https://www.vanlansh.wang/body.png'
   }
   async componentDidMount() {
     DeviceEventEmitter.addListener("@personal_name", value => this.setState({ user: value }));
@@ -62,7 +62,7 @@ export default class Mine extends Component<Props> {
       } else if (response.customButton) {
         console.log('User tapped custom button: ', response.customButton);
       } else {
-        toast(response.uri)
+        // toast(response.uri)
         // console.log(response)
         this.setState({
           avatarSource: response.uri
@@ -181,8 +181,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     // backgroundColor: global.bg2.backgroundColor,
     height: 160,
-    // borderBottomLeftRadius:200,
-    // borderBottomRightRadius:200
   },
   info: {
     fontWeight: "bold",

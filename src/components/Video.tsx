@@ -74,6 +74,8 @@ export default class Video extends Component {
   };
 
   componentDidMount() {
+    // console.log(this.props.navigation.state.params.channel)
+    // this.setState({ uid: this.props.navigation.state.params.channel })
     // BackHandler.addEventListener('hardwareBackPress', this.endCall);
     this.RtcEngineListernOn = RtcEngine.on('userJoined', (data) => {
       const { peerIds } = this.state;                   //Get currrent peer IDs
@@ -100,7 +102,7 @@ export default class Video extends Component {
     RtcEngine.destroy();
   }
   startCall() {
-    console.log('开始')
+    console.log('开始', this.state.uid)
     console.log(RtcEngine)
     RtcEngine.joinChannel(this.state.channelName, this.state.uid);  //Join Channel
     RtcEngine.enableAudio();                                        //Enable the audio

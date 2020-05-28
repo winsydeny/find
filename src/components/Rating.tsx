@@ -41,7 +41,7 @@ export default class Rate extends Component {
         max: 5,
         color: '#00b600'
     }
-    bindClick = (index) => {
+    bindClick = (index: any) => {
         const { onPress } = this.props;
         if (!onPress) {
             return;
