@@ -12,7 +12,7 @@ import { Button } from 'react-native-elements'
 import CIon from 'react-native-vector-icons/Ionicons'
 import AntIcon from 'react-native-vector-icons/AntDesign'
 import global from '../../style'
-import { toast, _retrieveData } from '../assets/utils';
+import { toast, _retrieveData } from '../utils/utils';
 import { ScrollView } from 'react-native-gesture-handler';
 import { postData } from '../api';
 export default class RegisterPersonal extends Component {

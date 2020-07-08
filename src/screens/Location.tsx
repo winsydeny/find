@@ -11,7 +11,7 @@ import CitySelector from '../components/CitySelector';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import CIon from 'react-native-vector-icons/Ionicons'
 import global from '../../style';
-import { _storeData, _retrieveData, _getAllKey } from '../assets/utils'
+import { _storeData, _retrieveData, _getAllKey } from '../utils/utils'
 interface Prop {
   navigation: any,
 }

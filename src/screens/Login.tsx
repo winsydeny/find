@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
-import { View, StyleSheet, Text, Alert } from 'react-native';
+import { View, StyleSheet, Text, Alert, Image } from 'react-native';
 import { Button, Input, Avatar } from 'react-native-elements'
 import Icon from 'react-native-vector-icons/FontAwesome';
 import styles from '../../style';
 // import { toast, reset } from '../assets/utils';
-import { _storeData, _retrieveData, toast, reset } from '../assets/utils';
+import { _storeData, _retrieveData, toast, reset } from '../utils/utils';
 import Loading from '../components/Loading';
 import { postData, getData } from '../api';
+import { LoadingUtil } from '../utils/LoadingUtils';
 
 interface Prop {
   navigation: any
@@ -73,7 +74,7 @@ export default class Login extends Component<Prop>{
       }
       postData('login', data).then(res => {
         console.log('res=>', res)
-        this.setState({ loading: false });
+        // this.setState({ loading: false });
         if (res.status === 0) {
           toast("登陆成功");
           _storeData('user_info', data.email);
@@ -81,9 +82,11 @@ export default class Login extends Component<Prop>{
           console.log(res.access_token)
           _storeData('access_token', res.access_token)
           this.props.navigation.navigate('Home');
+          LoadingUtil.hideLoading();
         } else if (res.status === 10009) {
           Alert.alert(res.msg);
         }
+        LoadingUtil.hideLoading();
       })
         .catch(err => Alert.alert(err.toString))
       // console.log(this)
@@ -97,22 +100,28 @@ export default class Login extends Component<Prop>{
   };
   async componentDidMount() {
     try {
-      const isLogin = await _retrieveData("isLogin");
+      const email = await _retrieveData("user_info");
+      console.log(email)
+      this.setState({ email })
       console.log('componentDidMount-login')
       const timeout = setTimeout(() => {
-        this.setState({ loading: false });
+        // this.setState({ loading: false });
+        LoadingUtil.hideLoading();
         toast("连接超时")
       }, 6000);
       const response = await getData('search', { keyword: 'java' });
       clearTimeout(timeout);
-      console.log('sdfds', response)
+      // console.log('sdfds', response)
       if (response.status >= 0) {
         // 如果已经登陆并且token还未过期，则直接重置导航器，不显示登陆页面
-        this.setState({ loading: false })
+        // this.setState({ loading: false })
+        // LoadingUtil.hideLoading();
         reset(this.props.navigation, 'BottomTabNavigator');
+        LoadingUtil.hideLoading();
       } else {
-        toast("自动登陆失败，请登录")
-        this.setState({ loading: false })
+        toast("登陆信息过期，请重新登录");
+        LoadingUtil.hideLoading();
+        // this.setState({ loading: false })
       }
     } catch (err) {
       Alert.alert(err.toString())
@@ -127,41 +136,35 @@ export default class Login extends Component<Prop>{
           name='pied-piper'
           size={100}
           color="#FFA500"></Icon> */}
-        <Avatar
+        {/* <Avatar
           rounded
           size={120}
-          source={{ uri: 'https://www.vanlansh.wang/avatar/boy.png' }}></Avatar>
+          source={{ uri: 'https://www.vanlansh.wang/avatar/boy.png' }}></Avatar> */}
+        <Image
+          style={{ height: 140, width: 240 }}
+          source={require('../assets/pic/login.png')}></Image>
         {/* <Text style={{ fontSize: 15, fontWeight: "bold" }}></Text> */}
         <Input
           placeholder="邮箱"
+          value={this.state.email}
           onChangeText={email => this.onChangeEmail(email)}
           errorMessage={this.state.emailErrorMessage}
-        // leftIcon={
-        //   <Icon
-        //     name='envelope'
-        //     size={18}
-        //     color={styles.fontColor.color}
-        //   />
-        // }
+          labelStyle={{ fontSize: 16 }}
+        // style={{ fontSize: 12 }}
         ></Input>
         <Input
           secureTextEntry
           placeholder="密码"
           onChangeText={passcode => this.onChangePass(passcode)}
           errorMessage={this.state.passcodeErrorMessage}
-        // leftIcon={
-        //   <Icon
-        //     name='key'
-        //     size={18}
-        //     color={styles.fontColor.color}></Icon>
-        // }
         ></Input>
         <View style={{ width: '94%', marginTop: 12 }}>
           <Button title="登陆" onPress={this.login.bind(this)} buttonStyle={styles.bg}></Button>
           <View style={{ flexDirection: "row", justifyContent: "center", marginTop: 10 }}>
             <Text style={{ color: "gray" }} onPress={() => Alert.alert("此功能暂无")}>忘记密码</Text>
             <Text style={{ paddingLeft: 4, paddingRight: 4 }}>|</Text>
-            <Text style={{ color: "#4827b6", fontWeight: "bold" }} onPress={() => this.props.navigation.navigate("Registerd")}>点击注册</Text>
+            <Text style={{ color: "#4827b6", fontWeight: "bold" }}
+              onPress={() => this.props.navigation.navigate("Registerd")}>点击注册</Text>
           </View>
 
         </View>

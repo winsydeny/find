@@ -11,20 +11,24 @@ import { Button } from 'react-native-elements'
 import global from "../../style";
 import EnIcon from 'react-native-vector-icons/Entypo';
 import Icon from 'react-native-vector-icons/AntDesign';
-import { ScrollView } from "react-native-gesture-handler";
+import { ScrollView, TouchableWithoutFeedback } from "react-native-gesture-handler";
 import { postData } from "../api";
-import { _retrieveData, toast } from "../assets/utils";
+import { _retrieveData, toast } from "../utils/utils";
 interface Prop {
   navigation: any
 }
 export default class ListDetail extends Component<Prop> {
+  state = {
+    position: ''
+  }
   async applyJob(info: any) {
     const email = await _retrieveData('user_info');
     const user = await _retrieveData('user_name');
     postData('apply', {
       uuid: info.uuid,
       email: email,
-      user: user
+      user: user,
+      position: this.state.position
     })
       .then(res => {
         if (res.status === 0) {
@@ -34,6 +38,11 @@ export default class ListDetail extends Component<Prop> {
         }
       })
       .catch(err => toast("申请失败"))
+  };
+  componentDidMount() {
+    const { jobdetail } = this.props.navigation.state.params;
+    this.setState({ position: jobdetail.position })
+
   };
   render() {
     // console.log(this.props.navigation.state.params)
@@ -48,12 +57,17 @@ export default class ListDetail extends Component<Prop> {
             <Image style={{ width: 60, height: 60, marginTop: 40 }} source={{ uri: 'https://facebook.github.io/react-native/img/tiny_logo.png' }}></Image>
           </View>
         </View> */}
+        <View style={{ height: 48, backgroundColor: global.bg2.backgroundColor }}>
+          <Icon onPress={() => this.props.navigation.pop()} name="arrowleft" style={styles.arrow}></Icon>
+        </View>
         <ScrollView>
           <View style={styles.header}>
-            <Icon onPress={() => this.props.navigation.pop()} name="arrowleft" style={styles.arrow}></Icon>
-            <View style={{ alignItems: 'center' }}>
-              <Image style={{ width: 60, height: 60, marginTop: 40 }} source={{ uri: 'https://facebook.github.io/react-native/img/tiny_logo.png' }}></Image>
-            </View>
+            {/* <Icon onPress={() => this.props.navigation.pop()} name="arrowleft" style={styles.arrow}></Icon> */}
+            <TouchableWithoutFeedback onPress={() => this.props.navigation.push('CompanyDetail')} style={{ alignItems: 'center' }}>
+              <Image
+                style={{ width: 60, height: 60, }}
+                source={{ uri: jobdetail.preview }}></Image>
+            </TouchableWithoutFeedback>
           </View>
           <View style={{ paddingLeft: 18, paddingRight: 18 }}>
             <Text style={{ fontSize: 18, textAlign: "center" }}>{jobdetail.company}</Text>
@@ -96,12 +110,16 @@ export default class ListDetail extends Component<Prop> {
               4.Written in: JavaScript\n{"\n"}
               Stable release: 2.6.11 / December 13, 2019; 2 months ago{"\n"} */}
             </Text>
-            <Button
-              buttonStyle={{ borderRadius: 30, backgroundColor: global.bg2.backgroundColor }}
-              onPress={() => this.applyJob(jobdetail)}
-              title="申请此职位"></Button>
+
           </View>
         </ScrollView>
+        <View style={{ paddingVertical: 8, paddingHorizontal: 16 }}>
+          <Button
+            buttonStyle={{ borderRadius: 30, backgroundColor: global.bg2.backgroundColor }}
+            onPress={() => this.applyJob(jobdetail)}
+            title="申请此职位"></Button>
+        </View>
+
       </View >
     )
   }
@@ -111,7 +129,7 @@ const fontGray = '#b0b4be';
 const fontGray2 = '#98a0b0';
 const styles = StyleSheet.create({
   header: {
-    height: 80,
+    height: 30,
     backgroundColor: global.bg2.backgroundColor,
     marginBottom: 28
   },
@@ -120,8 +138,8 @@ const styles = StyleSheet.create({
     color: "#FFFFFF",
     // color: "#000",
     fontSize: 25,
-    top: 28,
-    left: 25,
+    top: 22,
+    left: 16,
     position: "absolute"
   },
   information: {
@@ -145,7 +163,7 @@ const styles = StyleSheet.create({
   },
   content: {
     color: fontGray2,
-    fontSize: 16,
-    marginBottom: 7
+    fontSize: 14,
+    marginBottom: 7,
   }
 });

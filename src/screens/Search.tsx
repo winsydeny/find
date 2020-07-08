@@ -14,7 +14,7 @@ export default class Search extends Component<Props> {
     users: [],
     keyWord: ''
   };
-  updateSearch(search: string) {
+  async updateSearch(search: string) {
     this.setState({
       isShow: true
     })
@@ -25,6 +25,9 @@ export default class Search extends Component<Props> {
       });
       return;
     }
+    // const sug = await suggest(search);
+    // console.log(sug)
+
     // let list:any = this.state.users
     this.setState({
       search: search,
@@ -35,16 +38,17 @@ export default class Search extends Component<Props> {
 
     // console.log(list)
     return [
-      { info: 'java', key: '0' },
-      { info: '前端', key: '1' },
-      { info: 'jack', key: '2' },
-      { info: 'tom', key: '3' },
-      { info: 'hello', key: '4' },
+      // { info: 'java', key: '0' },
+      // { info: '前端', key: '1' },
+      // { info: 'jack', key: '2' },
+      // { info: 'tom', key: '3' },
+      // { info: 'hello', key: '4' },
     ];
   };
   searchInfo(item: any) {
-    this.setState({ search: item.info, isShow: false, keyWord: item.info })
-    this.props.navigation.navigate('SearchResults', { transition: 'forHorizontal', keyWord: item.info });
+    if (item === '') return false;
+    this.setState({ search: item.info, isShow: false, keyWord: item })
+    this.props.navigation.navigate('SearchResults', { transition: 'forHorizontal', keyWord: item });
     // Alert.alert(item.info)
   }
   render() {
@@ -64,6 +68,8 @@ export default class Search extends Component<Props> {
             inputStyle={styles.input}
             value={search}
             autoFocus={true}
+            returnKeyType="search"
+            onBlur={() => this.searchInfo(search)}
           />
           <Text
             style={{ marginRight: 12 }}

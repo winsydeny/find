@@ -39,9 +39,10 @@ export default class ListItem extends Component<Props> {
     return (
       <View style={[styles.listCard, { marginHorizontal: marginHorizontal, borderRadius: radius }]}>
         <TouchableWithoutFeedback onPress={() => nav.navigate('ListDetail', { transition: 'forHorizontal', jobdetail: data })}>
+          {/* source={{ uri: "https://facebook.github.io/react-native/img/tiny_logo.png" }}> */}
           <Image
             style={styles.img}
-            source={{ uri: "https://facebook.github.io/react-native/img/tiny_logo.png" }}>
+            source={{ uri: data.preview }}>
           </Image>
         </TouchableWithoutFeedback>
 
@@ -86,8 +87,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     backgroundColor: '#f1f1f1',
-    marginBottom: 8
-    // justifyContent: "center"
+    marginBottom: 8,
+
   },
   img: {
     width: 40,
@@ -96,6 +97,8 @@ const styles = StyleSheet.create({
     marginRight: 14
   },
   listCard: {
+
+
     // marginLeft: 13,
     // marginRight: 13,
     backgroundColor: '#FFFFFF',

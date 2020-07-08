@@ -8,8 +8,9 @@ import { View, Text, StyleSheet, FlatList, TouchableWithoutFeedback, Button, Ale
 import { Avatar } from 'react-native-elements';
 import ListItem from '../components/ListItem';
 import Loading from '../components/Loading';
-import { toast } from '../assets/utils'
+import { toast } from '../utils/utils'
 import { getData } from '../api';
+import { LoadingUtil } from '../utils/LoadingUtils';
 interface Prop {
   navigation: any
 }
@@ -28,18 +29,19 @@ export default class SearchResults extends Component<Prop> {
   state = {
     showLoading: false,
     jobList: [],
-    done: false //juge request has done
+    done: false, //juge request has done
+    page: 1,
   }
   listener: any;
   componentDidMount() {
     // Loading.show()
     const job = [{ key: 'a' }, { key: 'b' }, { key: 'c' }, { key: 'd' }, { key: 'a' }, { key: 'a' }]
     // const job = []
-    this.getList(job)
+    this.getList()
     this.listener = DeviceEventEmitter.addListener('@search_filter', (filter) => {
       // this.getMore();
-      this.getList(job)
-      console.log('searchResult', filter)
+      this.getList()
+      // console.log('searchResult', filter)
     })
     // if (this.props.keyword !== '') {
     //     // Alert.alert();
@@ -59,17 +61,26 @@ export default class SearchResults extends Component<Prop> {
       showLoading: false,
       done: true
     })
+    LoadingUtil.hideLoading();
   }
   componentWillUnmount() {
     this.listener.remove();
   };
-  async getList(job: any) {
+  async getList() {
+    // size page
     this.show();
     try {
-      const { data } = await getData('search', { keyword: this.props.navigation.state.params.keyWord });
-      console.log(data)
+      const { data } = await getData('search', {
+        keyword: this.props.navigation.state.params.keyWord,
+        page: this.state.page,
+        size: 2,
+      });
+      // console.log(data)
+      if (data.length === 0) {
+        // toast('无更多数据');
+      }
       this.setState({
-        jobList: data,
+        jobList: this.state.jobList.concat(data),
       })
     } catch (e) {
       toast("fail")
@@ -80,7 +91,12 @@ export default class SearchResults extends Component<Prop> {
     // return this.state.jobList;
   };
   getMore() {
-    // toast("加载更多")
+    toast("加载更多");
+    // this.setState({ page: this.state.page + 1 });
+    console.log(this.state.page);
+
+    // this.getList(); 
+    console.log('loading.....');
     // if (this..length <= 16) {
     // this.setState({
     //   jobList: this.state.jobList.concat([{ key: 'a' }, { key: 'a' }, { key: 'a' }, { key: 'a' }])
@@ -96,6 +112,7 @@ export default class SearchResults extends Component<Prop> {
 
         <View style={{ height: 50, paddingLeft: 10, paddingRight: 10, backgroundColor: "#FFFFFF", flexDirection: "row" }}>
           <TouchableWithoutFeedback
+            style={{}}
             onPress={() => this.props.navigation.pop()}>
             <View style={styles.searchBar}>
               <Icon
@@ -112,9 +129,32 @@ export default class SearchResults extends Component<Prop> {
           </TouchableWithoutFeedback>
         </View>
         {
-          this.state.jobList.length === 0 && this.state.done ? <Text style={{ textAlign: "center", marginTop: 60 }}>啊哦！无数据了</Text> : null
+          // this.state.jobList.length === 0 && this.state.done ? <Text style={{ textAlign: "center", marginTop: 60 }}>啊哦！无数据了</Text> : null
+          this.state.jobList.length === 0 && this.state.done ?
+            <View style={{ alignItems: "center", flex: 1, backgroundColor: '#fff' }}>
+              <Image style={{ height: 140, width: 160, marginTop: 80 }} source={require('../assets/pic/empty.png')}></Image>
+              <Text style={{ textAlign: "center", marginTop: 10, color: global.bg2.backgroundColor }}>啊哦！无数据了</Text>
+            </View>
+            : <FlatList
+              style={{}}
+              keyExtractor={(item, index) => index.toString()}
+              onEndReached={() => this.getMore()}
+              data={this.state.jobList}
+              onEndReachedThreshold={2}
+              renderItem={({ item }) => {
+                return (
+                  <View style={{ marginTop: 12 }}>
+                    <ListItem
+                      marginHorizontal={13}
+                      radius={6}
+                      navigate={this.props.navigation}
+                      data={item}></ListItem>
+                  </View>
+                )
+              }}></FlatList>
+
         }
-        <FlatList
+        {/* <FlatList
           keyExtractor={(item, index) => index.toString()}
           onEndReached={() => this.getMore()}
           data={this.state.jobList}
@@ -129,7 +169,7 @@ export default class SearchResults extends Component<Prop> {
                   data={item}></ListItem>
               </View>
             )
-          }}></FlatList>
+          }}></FlatList> */}
         <Loading show={this.state.showLoading}></Loading>
       </View >
     )
@@ -149,7 +189,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     backgroundColor: '#f1f1f1',
-    marginBottom: 8
+    marginBottom: 8,
+    // elevation: 10
     // justifyContent: "center"
   },
   img: {

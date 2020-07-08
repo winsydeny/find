@@ -7,7 +7,7 @@ import { ListItem, Avatar } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/AntDesign';
 import global from '../../style'
 import Geolocation from '@react-native-community/geolocation';
-import { toast, _remove, _getAllKey, _retrieveData } from '../assets/utils';
+import { toast, _remove, _getAllKey, _retrieveData, reset } from '../utils/utils';
 import { saveImg, getData } from '../api/index'
 import ImagePicker from 'react-native-image-picker';
 import { Switch } from 'react-native-gesture-handler';
@@ -22,8 +22,9 @@ export default class Mine extends Component<Props> {
   async componentDidMount() {
     DeviceEventEmitter.addListener("@personal_name", value => this.setState({ user: value }));
     const user = await _retrieveData("user_name");
-    this.setState({ user: user })
-    this.requestCarmeraPermission()
+    this.setState({ user: user });
+    this.requestCarmeraPermission();
+    this.get();
   };
   async requestCarmeraPermission() {
     try {
@@ -52,7 +53,7 @@ export default class Mine extends Component<Props> {
     };
 
     ImagePicker.showImagePicker(options, (response: any) => {
-      console.log('Response = ', response);
+      // console.log('Response = ', response);
 
       if (response.didCancel) {
         console.log('User cancelled image picker');
@@ -62,25 +63,32 @@ export default class Mine extends Component<Props> {
         console.log('User tapped custom button: ', response.customButton);
       } else {
         toast(response.uri)
+        // console.log(response)
         this.setState({
           avatarSource: response.uri
         })
-        // const msg = saveImg(response.path);
-        // toast(msg);
-        // const source = { uri: response.uri };
-        // this.setState({
-        //   avatarSource: source,
-        // });
-        // console.warn(this.state.avatarSource.uri);
+        saveImg(response.uri)
+          .then(res => {
+            console.log(res)
+            if (res.status === 0) {
+              this.setState({ avatarSource: 'https://www.vanlansh.wang' + res.url })
+            }
+          })
       }
     });
   };
   async get() {
-    const { data } = await getData('search', { keyword: 'java' });
-    console.log(data.length)
+    const { data } = await getData('mine', {}, false);
+    this.setState({ avatarSource: data.avatar });
+    // console.log(data.length)
   }
-  changeIdentity() {
-    toast("qiehua")
+  async changeIdentity() {
+    const user = await _retrieveData('user_info');
+    if (user === 'sydenny@126.com') {
+      reset(this.props.navigation, 'Agent');
+      return false;
+    }
+    Alert.alert('对不起您没有权限');
   }
   render() {
     const list = [
@@ -146,9 +154,11 @@ export default class Mine extends Component<Props> {
           }
           <View>
           </View>
-          <Button title="查看缓存" onPress={() => _getAllKey()}></Button>
+          <Button title="查看缓存1" onPress={() => _getAllKey()}></Button>
           <Button title="清除缓存" onPress={() => _remove("access_token")}></Button>
           <Button title="Request" onPress={() => this.get()}></Button>
+          <Button title="video" onPress={() => this.props.navigation.push('Video')}></Button>
+
         </View>
       </View >
     );

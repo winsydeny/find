@@ -6,19 +6,26 @@
  * @flow
  */
 
+// db263a90c4e54677a48ddde4d77bf037 agora id
+
 import React, { Component } from 'react';
 import nav from './src/navigator/index';
 import Start from './src/screens/Start'
-import { toast, _retrieveData, reset } from './src/assets/utils';
-import { AppState, Alert, StatusBar, View } from 'react-native';
+import { toast, _retrieveData, reset } from './src/utils/utils';
+import { AppState, Alert, StatusBar, View, DeviceEventEmitter } from 'react-native';
 import Login from './src/screens/Login'
 import { createAppContainer } from 'react-navigation';
+import Loading from './src/components/Loading';
+import { setGlobal } from './src/utils/LoadingUtils'
+
 class App extends Component {
+  device: any;
   handleNavigationChange() {
 
   }
   state = {
-    isLogin: false
+    isLogin: false,
+    loading: false
   }
   timer: any;
   async isLogin() {
@@ -36,6 +43,7 @@ class App extends Component {
       Alert.alert(err.toString())
     }
   };
+
   componentDidMount() {
     // this.isLogin();
     // this.timer = setInterval(() => {
@@ -73,6 +81,12 @@ class App extends Component {
             onNavigationStateChange={function (prevState, currentState) {
               // console.log(this)
             }} />
+          <Loading
+            show={this.state.loading}
+            ref={ref => {
+              setGlobal(ref);
+              // console.log(ref);
+            }}></Loading>
         </View>
       </>
 

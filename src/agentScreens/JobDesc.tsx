@@ -9,39 +9,34 @@ import {
 } from 'react-native';
 import CIon from 'react-native-vector-icons/Ionicons'
 import AntIcon from 'react-native-vector-icons/AntDesign'
-import { toast } from '../../utils/utils';
-import { saveImg, postData } from '../../api';
-import global from '../../../style'
+import { toast } from '../utils/utils';
+import { saveImg, postData } from '../api';
+import global from '../../style'
 interface Prop {
   navigation: any
 }
-export default class ResumeAdvantage extends Component<Prop> {
+export default class JobDesc extends Component<Prop> {
   state = {
     num: 0,
     value: '',
+    holder: `请输入职位描述`
 
   };
   onChangeText(text: string) {
-
-    if (text.length > 120) {
-      toast("字数限制为120字");
-      return false;
-    }
     this.setState({ value: text, num: text.length })
   };
-  async save() {
+  save() {
     // request api and save my advantage in the futrue
-    /**
-     * uio => user_info,
-     * adv => advantage
-     * exp => expectation
-     * edu => education 
-     * rum => resume
-     */
-    DeviceEventEmitter.emit("@resume_education", this.state.value);
-    const rs = await postData('resume?v=education', { education: this.state.value });
-    toast("保存成功");
+    if (this.state.value === '') {
+      toast("为空时不能提交！")
+      return false;
+    }
+    DeviceEventEmitter.emit('@agent_jd', this.state.value)
     this.props.navigation.goBack();
+  };
+  componentDidMount() {
+    const { params } = this.props.navigation.state;
+    this.setState({ value: params.desc })
   };
   render() {
     return (
@@ -49,15 +44,16 @@ export default class ResumeAdvantage extends Component<Prop> {
         <View style={{ height: 40, alignItems: "center", flexDirection: "row" }}>
           <CIon name="ios-arrow-back" style={{ fontSize: 24, marginLeft: 18 }} onPress={() => this.props.navigation.pop()}></CIon>
           <View style={{ alignItems: "center", flex: 1 }}>
-            <Text style={{ fontSize: 16, fontWeight: "bold" }}>教育经历</Text>
+            <Text style={{ fontSize: 16, fontWeight: "bold" }}>职位描述（JD）</Text>
           </View>
           <AntIcon name="check" style={{ paddingRight: 18, fontSize: 24 }} onPress={() => this.save()}></AntIcon>
         </View>
         <View
-          style={{ height: 160 }}
+          style={{ height: 260 }}
         >
           <TextInput
-            placeholder="请填写您的教育经历"
+
+            placeholder={this.state.holder}
             autoFocus={true}
             style={{ paddingLeft: 18, paddingRight: 18, fontSize: 14 }}
             multiline={true}
@@ -65,7 +61,8 @@ export default class ResumeAdvantage extends Component<Prop> {
             value={this.state.value}
           ></TextInput>
         </View>
-        {/* <Text style={{ textAlign: "right", paddingRight: 18 }}>{this.state.num}/120</Text> */}
+        {/* <Text style={{ textAlign: "right", padding
+        Right: 18 }}>{this.state.num}/240</Text> */}
       </View>
     );
   }

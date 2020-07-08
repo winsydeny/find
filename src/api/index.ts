@@ -1,25 +1,35 @@
 import {Alert} from 'react-native';
-import {_retrieveData} from '../assets/utils';
+import {_retrieveData} from '../utils/utils';
+import fetchJsonp from 'fetch-jsonp';
+import {LoadingUtil} from '../utils/LoadingUtils';
 interface Params {
   keyword: string;
   page?: number;
   size?: number;
 }
 // const BASE_URL = 'https://www.vanlansh.wang/api';
-const BASE_URL = 'http://192.168.1.149:3000/api';
-export const saveImg = (path: string) => {
-  fetch(`${BASE_URL}/upload?image=true`, {
-    method: 'POST',
-  }).then((res: any) => {
-    if (res.status === 0) {
-      return 'upload Success';
-    } else {
-      return 'upload Failed';
-    }
+const BASE_URL = 'http://192.168.1.160:3000/api';
+export const saveImg = async (data: any) => {
+  const access_token = await _retrieveData('access_token');
+  const formData = new FormData();
+  formData.append('files', {
+    uri: data,
+    type: 'multipart/form-data',
+    name: 'image.jpeg',
   });
+  return fetch(`${BASE_URL}/upload?token=${access_token}`, {
+    method: 'POST',
+    headers: {
+      // 'content-type': 'multipart/form-data',
+    },
+    body: formData,
+  }).then((res: any) => res.json());
 };
 
-export const getData = async (path: string, params: any) => {
+export const getData = async (path: string, params: any, loading = true) => {
+  if (loading) {
+    LoadingUtil.showLoading();
+  }
   const access_token = await _retrieveData('access_token');
   let last = [];
   for (let key in params) {
@@ -29,7 +39,11 @@ export const getData = async (path: string, params: any) => {
   console.log('get_path:', url);
   return fetch(url).then(res => res.json());
 };
-export const postData = async (path: string, data: any) => {
+
+export const postData = async (path: string, data: any, loading = true) => {
+  if (loading) {
+    LoadingUtil.showLoading();
+  }
   const access_token = await _retrieveData('access_token');
   data['token'] = access_token;
   return fetch(`${BASE_URL}/${path}`, {
@@ -85,7 +99,7 @@ export const xhr = (method: any, params: any) => {
   });
 };
 export const suggest = (keyword: string) => {
-  return fetch(
+  return fetchJsonp(
     `http://suggestion.baidu.com/su?wd=${keyword}&p=3&cb=window.bdsug.sug`,
   ).then(response => response.json());
 };

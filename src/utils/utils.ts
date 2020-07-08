@@ -1,6 +1,8 @@
 import {ToastAndroid, BackHandler} from 'react-native';
 import {NavigationActions, StackActions} from 'react-navigation';
 import AsyncStorage from '@react-native-community/async-storage';
+import {PermissionsAndroid} from 'react-native';
+
 export const _storeData = async (key: string, value: string) => {
   try {
     console.log('soter', key, value);
@@ -52,6 +54,31 @@ export const reset = (navigation: any, routeName: string) => {
     actions: [NavigationActions.navigate({routeName})],
   });
   navigation.dispatch(resetAction);
+};
+
+/**
+ * @name requestCameraAndAudioPermission
+ * @description Function to request permission for Audio and Camera
+ */
+export const cameraAndAudioPermission = async function requestCameraAndAudioPermission() {
+  try {
+    const granted = await PermissionsAndroid.requestMultiple([
+      PermissionsAndroid.PERMISSIONS.CAMERA,
+      PermissionsAndroid.PERMISSIONS.RECORD_AUDIO,
+    ]);
+    if (
+      granted['android.permission.RECORD_AUDIO'] ===
+        PermissionsAndroid.RESULTS.GRANTED &&
+      granted['android.permission.CAMERA'] ===
+        PermissionsAndroid.RESULTS.GRANTED
+    ) {
+      console.log('You can use the cameras & mic');
+    } else {
+      console.log('Permission denied');
+    }
+  } catch (err) {
+    console.warn(err);
+  }
 };
 // export const HardBack = (_this: any) => {
 //   BackHandler.addEventListener('hardwareBackPress', () => {

@@ -11,7 +11,8 @@ import {
   Alert,
   Platform,
   BackHandler,
-  RefreshControl
+  RefreshControl,
+  DeviceEventEmitter
 } from 'react-native'
 import { colors } from 'react-native-elements'
 import { Dialog } from 'react-native-ui-lib'
@@ -22,7 +23,7 @@ import BottomDialog from '../components/BottomDialog'
 import global from '../../style';
 import ListItem from "../components/ListItem";
 import { ScrollView } from "react-native-gesture-handler";
-import { toast } from "../assets/utils";
+import { toast } from "../utils/utils";
 import ScrollableTabView, { DefaultTabBar } from 'react-native-scrollable-tab-view';
 import Login from "./Login";
 import Registerd from "./Registerd";
@@ -48,6 +49,7 @@ export default class Forum extends Component<Prop> {
     recommendList: [],
     refress: false
   };
+  device: any;
   thumbHandle(item: any) {
     Alert.alert(item.f_id)
     // const { list } = this.state
@@ -69,7 +71,7 @@ export default class Forum extends Component<Prop> {
   };
   async getRecommend() {
     try {
-      const response = await getData('search', { keyword: '' });
+      const response = await getData('search', { keyword: '' }, false);
       // this.setState({ recommendList: data })
       console.log(response)
       if (response.status < 0 || response.data === undefined) {
@@ -83,14 +85,14 @@ export default class Forum extends Component<Prop> {
     }
   };
   async getDynamicList() {
-    const list = await getData('forum/list', {});
+    const list = await getData('forum/list', {}, false);
     list.data.reverse();
     this.setState({ dynamicList: list.data, refress: false });
 
 
   };
   publishDynamic() {
-    postData('forum/publish', {})
+    postData('forum/publish', {}, false)
       .then(res => {
         if (res.status === 0) {
           toast("发布成功");
@@ -113,30 +115,14 @@ export default class Forum extends Component<Prop> {
   };
 
   componentDidMount() {
+    this.device = DeviceEventEmitter.addListener('@dynamic', () => this.topRefresh());
     this.setState({ refress: true })
     this.getDynamicList()
     const dynamicList: any = [];
-    // for (let i = 0; i < 6; i++) {
-    //   dynamicList.push({
-    //     title: 'xiji123a',
-    //     uid: i + 1,
-    //     thumb: false,
-    //     thumb_num: 0,
-    //     comments: [],
-    //     comment_num: 0,
-    //     msg: '据国家卫健委最新消息：截至1月22日24时，我委收到国内25个省（区、市）累计报告新型冠状病毒感染的肺炎确诊病例571例，其中重症95例，死亡17例（均来自湖北省）'
-    //   })
-    // }
-    // this.setState({ dynamicList });
     this.getRecommend();
-    // if (Platform.OS === 'android') {
-    //   BackHandler.addEventListener('hardwareBackPress', () => {
-    //     BackHandler.exitApp();
-    //   });
-    // }
   };
   componentWillUnmount() {
-    // toast("exit finds")
+    this.device.remove();
   };
   render() {
     const { dynamicList, showDialog, dialogContent, tab } = this.state;
@@ -172,8 +158,6 @@ export default class Forum extends Component<Prop> {
           </FlatList>
           <View tabLabel="最新动态" style={{ flex: 1 }}>
             <FlatList
-              // refreshing={this.state.refress}
-              // onRefresh={() => this.topRefresh()}
               style={{}}
               refreshControl={
                 <RefreshControl
@@ -212,7 +196,6 @@ export default class Forum extends Component<Prop> {
                           onPress={this.commentsHandle.bind(this, item)}>
                         </Icon>
                         <Text style={styles.iconText}>{item.comment}</Text>
-
                       </View>
                     </View>
                   </View>

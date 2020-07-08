@@ -8,7 +8,7 @@ import {
 } from 'react-native-elements'
 import { View, ActivityIndicator, Alert } from 'react-native'
 import styles from '../../style.js'
-import { toast, _storeData } from '../assets/utils';
+import { toast, _storeData } from '../utils/utils';
 import { postData } from '../api/index';
 export default class Registerd extends Component {
   state = {
@@ -32,7 +32,7 @@ export default class Registerd extends Component {
         email: this.state.email
       }
       _storeData('user_info', data.email);
-      postData('register/send', data)
+      postData('register/send', data, false)
         .then(res => {
           if (res.status === 0) {
             this.setState({
@@ -71,7 +71,7 @@ export default class Registerd extends Component {
         email: this.state.email,
         passcode: this.state.passcode
       }
-      postData('register', data)
+      postData('register', data, false)
         .then(res => {
           if (res.status === 0) {
             // toast("请先完善个人信息");
@@ -100,23 +100,18 @@ export default class Registerd extends Component {
           placeholder="请输入邮箱"
           errorMessage={this.state.emailError}
           onChangeText={email => this.setState({ email: email })}></Input>
-        {/* <Input
-                    placeholder="请输入邮箱"
-                    errorMessage={this.state.emailError}
-                    onChangeText={email => this.setState({ email: email })}></Input> */}
-        {
-          this.state.sendCode ?
-            <>
-              <Input
-                secureTextEntry
-                textContentType="password"
-                placeholder="密码"
-                onChangeText={code => this.setState({ passcode: code })}></Input>
-              <Input
-                placeholder="验证码"
-                onChangeText={code => this.setState({ code: code })}></Input>
-            </>
-            : null
+        {this.state.sendCode ?
+          <>
+            <Input
+              secureTextEntry
+              textContentType="password"
+              placeholder="密码"
+              onChangeText={code => this.setState({ passcode: code })}></Input>
+            <Input
+              placeholder="验证码"
+              onChangeText={code => this.setState({ code: code })}></Input>
+          </>
+          : null
         }
         <View style={{ width: '94%', marginTop: 12 }}>
           <Button
